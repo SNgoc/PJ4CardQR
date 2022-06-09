@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".ui.login.LoginFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/chip_circuit_processor">
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="500dp"
+            android:orientation="vertical"
+            android:background="@drawable/fail_system_code">
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="40dp"
+                android:text="@string/login_header"
+                android:textSize="25sp"
+                android:textColor="@android:color/holo_orange_dark"/>
+            <TextView
+                android:id="@+id/txtLoginError"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="48dp"
+                android:text=""
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/editUsername"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Enter your username"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="300dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <Button
+                    android:id="@+id/btnLogin"
+                    android:background="@drawable/button_style"
+                    app:backgroundTint="@android:color/holo_red_light"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Sign in"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dont_have_an_account"
+                    android:textSize="20dp"
+                    android:textColor="@color/white"/>
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:background="@drawable/button_style"
+                    app:backgroundTint="@android:color/holo_red_light"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_gravity="center"
+                    android:text="@string/action_sign_up"
+                    android:textSize="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</FrameLayout>

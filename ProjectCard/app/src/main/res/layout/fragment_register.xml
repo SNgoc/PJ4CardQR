@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".ui.login.RegisterFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:background="@drawable/chip_circuit_processor">
+        <LinearLayout
+            android:layout_width="350dp"
+            android:layout_height="600dp"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:background="@drawable/fail_system_code">
+            <TextView
+                android:id="@+id/txtHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_marginTop="20dp"
+                android:text="@string/register_header"
+                android:textSize="25sp"
+                android:textColor="@android:color/holo_orange_dark"/>
+            <EditText
+                android:id="@+id/editUsername"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="User Name"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editEmail"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Email"
+                android:inputType="textEmailAddress"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editFullname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Fullname"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editLastname"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Lastname"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editPhone"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Phone"
+                android:inputType="phone"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editBirth"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Date of Birth"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editGender"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Gender"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editAddress"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Address"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editProvince"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Province"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Description"
+                android:inputType="text"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editPassword"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Password"
+                android:inputType="textPassword"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <EditText
+                android:id="@+id/editConfirmPassword"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:hint="Confirm Password"
+                android:inputType="textPassword"
+                android:textSize="18sp"
+                android:background="@drawable/edit_text"
+                android:backgroundTint="@android:color/white" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginTop="20dp">
+                <Button
+                    android:id="@+id/btnRegister"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="20sp"
+                    android:text="@string/action_sign_up"
+                    android:background="@drawable/button_style"
+                    app:backgroundTint="@android:color/holo_red_light"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>

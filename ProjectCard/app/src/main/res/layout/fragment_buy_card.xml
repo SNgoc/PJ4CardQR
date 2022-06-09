@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:focusable="true"
+    tools:context=".ui.buycard.BuyCardFragment">
+<!--NOTE: set background to fix error two fragment overwrite together-->
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/imgCard"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:background="@drawable/card_core"
+            android:layout_marginBottom="20dp"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/btnSub"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_subtract"/>
+            <EditText
+                android:id="@+id/editQuantity"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:text="1"
+                android:gravity="center"
+                android:inputType="number"/>
+            <Button
+                android:id="@+id/btnPlus"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:text="@string/btn_plus"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/txtPrice"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="2$"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/btnOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/btn_order"/>
+    </LinearLayout>
+
+</FrameLayout>

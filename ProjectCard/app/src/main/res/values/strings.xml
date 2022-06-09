@@ -1,0 +1,40 @@
+<resources>
+    <string name="app_name">Project Card</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Business Card</string>
+    <string name="nav_header_subtitle">Log in to display your username</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_buy_card">Buy Card</string>
+    <string name="menu_login">Sign in</string>
+    <string name="menu_register">Sign up</string>
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in</string>
+    <string name="action_sign_up">Sign up</string>
+    <string name="dont_have_an_account">Don\'t have an account?</string>
+    <string name="login_header">WELCOME TO SMART CARD</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <!-- Sign up an account -->
+    <string name="register_header">CREATE NEW ACCOUNT</string>
+    <!-- Order Card -->
+    <string name="btn_subtract">-</string>
+    <string name="btn_plus">+</string>
+    <string name="btn_order">Order it</string>
+    <!-- Payment -->
+    <string name="txt_card_number">Card number</string>
+    <string name="txt_expiry_date">Expiry Date</string>
+    <string name="txt_cvv">CVV</string>
+    <string name="btn_pay">Pay it</string>
+    <!-- Account Info -->
+    <string name="txt_Name">Name: Nero Saro</string>
+    <string name="txt_Email">Email: nero@gmail.com</string>
+    <string name="txt_Phone">Phone number: 0123456789</string>
+    <string name="txt_Address">Address: 224b, Baker Street, London</string>
+</resources>
