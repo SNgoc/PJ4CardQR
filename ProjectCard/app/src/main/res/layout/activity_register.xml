@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:focusable="true"
-    tools:context=".ui.login.RegisterFragment">
+    tools:context=".ui.login.RegisterActivity">
 
-    <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/chip_circuit_processor"
-        android:gravity="center">
+        android:background="@drawable/chip_circuit_processor">
 
         <LinearLayout
             android:layout_width="350dp"
@@ -32,11 +28,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="20dp"
+                android:fontFamily="cursive"
                 android:gravity="center"
                 android:text="@string/register_header"
                 android:textColor="@android:color/holo_orange_dark"
-                android:textSize="25sp"
-                android:fontFamily="cursive"/>
+                android:textSize="25sp" />
 
             <EditText
                 android:id="@+id/editUsername"
@@ -106,10 +102,10 @@
                     android:id="@+id/btnBirthday"
                     android:layout_width="wrap_content"
                     android:layout_height="33dp"
+                    android:background="@drawable/button_style"
                     android:text="Birthday"
                     android:textSize="11sp"
-                    android:background="@drawable/button_style"
-                    app:backgroundTint="@android:color/holo_red_light"/>
+                    app:backgroundTint="@android:color/holo_red_light" />
 
                 <TextView
                     android:id="@+id/txtEdBirth"
@@ -126,24 +122,26 @@
                 android:id="@+id/rgGender"
                 android:layout_width="300dp"
                 android:layout_height="27dp"
-                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
                 android:gravity="center"
-                android:layout_marginTop="10dp">
+                android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rdMale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-25dp"
-                    android:text="Male"
                     android:checked="true"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:text="Male"
+                    android:textColor="@android:color/holo_red_light" />
+
                 <RadioButton
                     android:id="@+id/rdFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="60dp"
                     android:text="Female"
-                    android:textColor="@android:color/holo_red_light"/>
+                    android:textColor="@android:color/holo_red_light" />
             </RadioGroup>
 
             <EditText

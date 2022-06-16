@@ -9,7 +9,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_buy_card">Buy Card</string>
-    <string name="menu_login">Sign in</string>
+    <string name="menu_login">Logout</string>
     <string name="menu_register">Sign up</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

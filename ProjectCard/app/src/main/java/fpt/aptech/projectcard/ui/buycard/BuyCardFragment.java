@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.R;
-import fpt.aptech.projectcard.ui.login.RegisterFragment;
 
 /**
  * A simple {@link Fragment} subclass.

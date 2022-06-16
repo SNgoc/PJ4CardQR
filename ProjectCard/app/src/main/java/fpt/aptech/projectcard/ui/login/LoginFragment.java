@@ -98,7 +98,6 @@ public class LoginFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
         //initialize your view here for use view.findViewById("your view id")
-        txtError = view.findViewById(R.id.txtLoginError);
         editUsername = view.findViewById(R.id.editUsername);
         editPassword = view.findViewById(R.id.editPassword);
         btnLogin = view.findViewById(R.id.btnLogin);
@@ -149,7 +148,6 @@ public class LoginFragment extends Fragment {
                         }
                     });
                 }
-//                loginMain(username, password);
             }
         });
 

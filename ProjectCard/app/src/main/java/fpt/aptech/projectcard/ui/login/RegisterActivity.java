@@ -1,17 +1,12 @@
 package fpt.aptech.projectcard.ui.login;
 
-import android.app.ActionBar;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -20,32 +15,25 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.navigation.NavigationView;
-
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Set;
 
-import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
+import fpt.aptech.projectcard.retrofit.catchError.APIError;
+import fpt.aptech.projectcard.retrofit.catchError.ErrorUtils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class RegisterFragment extends Fragment {
+public class RegisterActivity extends AppCompatActivity {
+
     private EditText edUsername,edPassword,edConfirmPassword,edEmail,edPhone,edFullname,edLastname,edGender,edAddress,edProvince,edDescription;
     private TextView edbirth;
     RadioGroup rgGender;
@@ -56,73 +44,28 @@ public class RegisterFragment extends Fragment {
     private int lastSelectedDayOfMonth;
     private View view;
     private Button btnRegister, btnBirthday;
-    private NavigationView navMenu;
-    //change fragment when click button
-    private FragmentTransaction fragmentTransaction;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public RegisterFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RegisterFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RegisterFragment newInstance(String param1, String param2) {
-        RegisterFragment fragment = new RegisterFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set title bar to Register
-        ((MainActivity) getActivity()).setActionBarTitle("Sign Up");
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
+        setContentView(R.layout.activity_register);
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_register, container, false);
         //initialize your view here for use view.findViewById("your view id")
-        edUsername = view.findViewById(R.id.editUsername);
-        edPassword = view.findViewById(R.id.editPassword);
-        edConfirmPassword = view.findViewById(R.id.editConfirmPassword);
-        edEmail = view.findViewById(R.id.editEmail);
-        edFullname = view.findViewById(R.id.editFullname);
-        edLastname = view.findViewById(R.id.editLastname);
-        edbirth = view.findViewById(R.id.txtEdBirth);
-        edPhone = view.findViewById(R.id.editPhone);
+        edUsername = findViewById(R.id.editUsername);
+        edPassword = findViewById(R.id.editPassword);
+        edConfirmPassword = findViewById(R.id.editConfirmPassword);
+        edEmail = findViewById(R.id.editEmail);
+        edFullname = findViewById(R.id.editFullname);
+        edLastname = findViewById(R.id.editLastname);
+        edbirth = findViewById(R.id.txtEdBirth);
+        edPhone = findViewById(R.id.editPhone);
         //gender
-        rgGender = (RadioGroup) view.findViewById(R.id.rgGender);
-        edAddress = view.findViewById(R.id.editAddress);
-        edDescription = view.findViewById(R.id.editDescription);
-        edProvince = view.findViewById(R.id.editProvince);
-        btnBirthday = view.findViewById(R.id.btnBirthday);
-        btnRegister = view.findViewById(R.id.btnRegister);
+        rgGender = (RadioGroup)findViewById(R.id.rgGender);
+        edAddress = findViewById(R.id.editAddress);
+        edDescription = findViewById(R.id.editDescription);
+        edProvince = findViewById(R.id.editProvince);
+        btnBirthday = findViewById(R.id.btnBirthday);
+        btnRegister = findViewById(R.id.btnRegister);
 
         //==========================DATE PICKER=========================================
         // Get Current Date
@@ -163,7 +106,7 @@ public class RegisterFragment extends Fragment {
                 };
                 DatePickerDialog datePickerDialog = null;
                 // Calendar Mode (Default):
-                datePickerDialog = new DatePickerDialog(getContext(), dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
+                datePickerDialog = new DatePickerDialog(RegisterActivity.this, dateSetListener, lastSelectedYear, lastSelectedMonth, lastSelectedDayOfMonth);
                 // Show
                 datePickerDialog.show();
             }
@@ -224,20 +167,25 @@ public class RegisterFragment extends Fragment {
                     apiService.signup(signupRequest).enqueue(new Callback<SignupRequest>() {
                         @Override
                         public void onResponse(@NonNull Call<SignupRequest> call, @NonNull Response<SignupRequest> response) {//connect spring boot success
-                            if (response.body() != null && response.code() == 200) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Sign up successful, please check mail to active", Toast.LENGTH_SHORT).show();
+                            if (response.isSuccessful()) {
+                                Toast.makeText(RegisterActivity.this, "Sign up successful, please check mail to active", Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                // parse the response body …
+                                APIError error = ErrorUtils.parseError(response);
+                                // … and use it to show error information
+                                Toast.makeText(RegisterActivity.this, error.message(), Toast.LENGTH_SHORT).show();
                             }
                         }
 
                         @Override
                         public void onFailure(@NonNull Call<SignupRequest> call, @NonNull Throwable t) {//when can't connect to spring boot
-                            Toast.makeText(getActivity().getApplicationContext(), "Sign up successful, please check mail to active", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterActivity.this, "Successful, please check mail to active", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
             }
         });
-        return view;
     }
 
     //validate
@@ -301,4 +249,5 @@ public class RegisterFragment extends Fragment {
         }
         return true;
     }
+
 }

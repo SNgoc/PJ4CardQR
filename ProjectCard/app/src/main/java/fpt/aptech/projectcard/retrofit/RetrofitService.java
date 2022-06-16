@@ -19,9 +19,9 @@ public class RetrofitService {
                 .baseUrl("http://192.168.241.2:8080/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder()
-                        .connectTimeout(5, TimeUnit.MINUTES) // connect timeout
-                        .writeTimeout(5, TimeUnit.MINUTES) // write timeout
-                        .readTimeout(5, TimeUnit.MINUTES) // read timeout
+                        .connectTimeout(13, TimeUnit.SECONDS) // connect timeout
+                        .writeTimeout(13, TimeUnit.SECONDS) // write timeout
+                        .readTimeout(13, TimeUnit.SECONDS) // read timeout
                         .addInterceptor(httpLoggingInterceptor).build());
         return builder.build();
     }

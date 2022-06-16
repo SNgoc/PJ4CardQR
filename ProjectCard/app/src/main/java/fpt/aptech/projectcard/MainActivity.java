@@ -1,18 +1,17 @@
 package fpt.aptech.projectcard;
 
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
@@ -23,11 +22,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fpt.aptech.projectcard.databinding.ActivityMainBinding;
-import fpt.aptech.projectcard.ui.home.HomeFragment;
-import fpt.aptech.projectcard.ui.login.LoginFragment;
+import fpt.aptech.projectcard.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
 
+    private TextView txtUsername;
     //navigation
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -56,10 +55,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //binding data as same as findViewById
         drawer = binding.drawerLayout;
         navigationView = binding.navView;
+        //set text for nav_header_main
+        View nav_header_view = navigationView.getHeaderView(0);
+        txtUsername = nav_header_view.findViewById(R.id.textViewUsername);
+        Intent intent = getIntent();
+        String username = intent.getStringExtra("usernameDisplay");
+        txtUsername.setText(username);
+        //=========
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_buycard, R.id.nav_login)
+                R.id.nav_home, R.id.nav_buycard)
                 .setOpenableLayout(drawer)
                 .build();
         navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -92,20 +98,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // Handle navigation view item clicks here.
         switch (item.getItemId()) {
 
-            case R.id.nav_login: {
-                if (item.getTitle().equals("Logout")) {
-                    //if logout, change title menu item Logout to Login
-                    Toast.makeText(getApplicationContext(),"Logout",Toast.LENGTH_LONG).show();
-                    item.setTitle("Login");
-                    //set email to default after logout
-                    TextView txtEmail = findViewById(R.id.textViewMail);
-                    txtEmail.setText(R.string.nav_header_subtitle);
-                    //change to fragment_login
-                    fragmentTransaction = this.getSupportFragmentManager().beginTransaction();
-                    LoginFragment loginFragment = new LoginFragment();
-                    fragmentTransaction.replace(R.id.nav_host_fragment_content_main,loginFragment);
-                    fragmentTransaction.commit();
-                }
+            case R.id.nav_logout: {
+                txtUsername.setText(R.string.nav_header_subtitle);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
                 break;
             }
         }
@@ -115,4 +111,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     //==============================END NAVIGATION MENU ================================================
+
+    @Override
+    public void onBackPressed(){
+        FragmentManager fm = getFragmentManager();
+        if (fm.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fm.popBackStackImmediate();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
 }
