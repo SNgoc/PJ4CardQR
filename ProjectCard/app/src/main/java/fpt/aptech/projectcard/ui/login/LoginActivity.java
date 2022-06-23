@@ -52,19 +52,23 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<LoginRequest> call, Response<LoginRequest> response) {
                             if (response.body() != null) {
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginActivity.this, "Welcome " + response.body().getEmail() + "\n"  + response.body().getAccessToken() + "\n" + response.body().getLinkImage(), Toast.LENGTH_SHORT).show();
 
                                 //change to Main Activity and pass username to display
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                //note: need create new field email, token, linkImage in model to get data return result of json
                                 intent.putExtra("usernameDisplay", response.body().getUsername());
+
                                 startActivity(intent);
 
                                 //reset fill after login success
                                 editUsername.setText("");
                                 editPassword.setText("");
                             }
-                            if(response.code() == 401){
-                                Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                            if (response.body() == null){
+                                if(response.code() == 401){
+                                    Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }
 

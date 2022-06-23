@@ -13,6 +13,42 @@ public class LoginRequest {
     @Expose
     private String password;
 
+    @SerializedName("email")
+    @Expose
+    private String email;
+
+    @SerializedName("linkImage")
+    @Expose
+    private String linkImage;
+
+    @SerializedName("accessToken")
+    @Expose
+    private String accessToken;
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getLinkImage() {
+        return linkImage;
+    }
+
+    public void setLinkImage(String linkImage) {
+        this.linkImage = linkImage;
+    }
+
+    public String getAccessToken() {
+        return accessToken;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
     public String getUsername() {
         return username;
     }

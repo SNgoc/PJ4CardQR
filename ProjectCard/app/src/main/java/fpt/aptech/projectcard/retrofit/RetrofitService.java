@@ -11,22 +11,17 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitService {
-//    private Retrofit retrofit;
 
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     public static Retrofit getInstance() {
         Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://192.168.241.2:8080/")
+                .baseUrl(ApiConstant.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder()
-                        .connectTimeout(13, TimeUnit.SECONDS) // connect timeout
-                        .writeTimeout(13, TimeUnit.SECONDS) // write timeout
-                        .readTimeout(13, TimeUnit.SECONDS) // read timeout
+                        .connectTimeout(5, TimeUnit.SECONDS) // connect timeout
+                        .writeTimeout(5, TimeUnit.SECONDS) // write timeout
+                        .readTimeout(5, TimeUnit.SECONDS) // read timeout
                         .addInterceptor(httpLoggingInterceptor).build());
         return builder.build();
     }
-
-//    public Retrofit getRetrofit() {
-//        return retrofit;
-//    }
 }
