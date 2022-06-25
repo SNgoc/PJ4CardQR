@@ -4,30 +4,61 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class SessionManager {
-    private static SessionManager jInstance;
-    private final SharedPreferences prefs;
-    private final SharedPreferences.Editor editor;
+    private static Long saveUserID;
+    private static String saveUsername;
+    private static String saveEmail;
+    private static String saveFullname;
+    private static String saveToken;
+    private static String saveLinkImage;
 
-    private SessionManager(Context context) {
-        prefs = context.getSharedPreferences("username_pref", Context.MODE_PRIVATE);
-        editor = prefs.edit();
+    public SessionManager() {
     }
 
-    public static synchronized SessionManager getInstance(Context context) {
-        if (jInstance != null) {
-            return jInstance;
-        } else {
-            jInstance = new SessionManager(context);
-            return jInstance;
-        }
+    public static Long getSaveUserID() {
+        return saveUserID;
     }
 
-    public void setUsername(String username){
-        editor.putString("username",username);
-        editor.apply();
-        editor.commit();
+    public static void setSaveUserID(Long saveUserID) {
+        SessionManager.saveUserID = saveUserID;
     }
-    public String getUsername(){
-        return prefs.getString("username","");
+
+    public static String getSaveUsername() {
+        return saveUsername;
+    }
+
+    public static void setSaveUsername(String saveUsername) {
+        SessionManager.saveUsername = saveUsername;
+    }
+
+    public static String getSaveEmail() {
+        return saveEmail;
+    }
+
+    public static void setSaveEmail(String saveEmail) {
+        SessionManager.saveEmail = saveEmail;
+    }
+
+    public static String getSaveFullname() {
+        return saveFullname;
+    }
+
+    public static void setSaveFullname(String saveFullname) {
+        SessionManager.saveFullname = saveFullname;
+    }
+
+    public static String getSaveToken() {
+        return saveToken;
+    }
+
+    public static void setSaveToken(String saveToken) {
+        SessionManager.saveToken = saveToken;
+    }
+
+    public static String getSaveLinkImage() {
+        return saveLinkImage;
+    }
+
+    public static void setSaveLinkImage(String saveLinkImage) {
+        SessionManager.saveLinkImage = saveLinkImage;
     }
 }

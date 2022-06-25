@@ -16,6 +16,7 @@ import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
+import fpt.aptech.projectcard.session.SessionManager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,11 +55,16 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.body() != null) {
                                 Toast.makeText(LoginActivity.this, "Welcome " + response.body().getEmail() + "\n"  + response.body().getAccessToken() + "\n" + response.body().getLinkImage(), Toast.LENGTH_SHORT).show();
 
+                                //save data to session after login
+                                //note: need create new field email, token, linkImage in model to get data return result of json
+                                SessionManager.setSaveUserID(response.body().getUserid());
+                                SessionManager.setSaveUsername(response.body().getUsername());
+                                SessionManager.setSaveEmail(response.body().getEmail());
+                                SessionManager.setSaveToken(response.body().getAccessToken());
+                                SessionManager.setSaveLinkImage(response.body().getLinkImage());
+
                                 //change to Main Activity and pass username to display
                                 Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                                //note: need create new field email, token, linkImage in model to get data return result of json
-                                intent.putExtra("usernameDisplay", response.body().getUsername());
-
                                 startActivity(intent);
 
                                 //reset fill after login success

@@ -22,6 +22,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import fpt.aptech.projectcard.databinding.ActivityMainBinding;
+import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.login.LoginActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -58,8 +59,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //set text for nav_header_main
         View nav_header_view = navigationView.getHeaderView(0);
         txtUsername = nav_header_view.findViewById(R.id.textViewUsername);
-        Intent intent = getIntent();
-        String username = intent.getStringExtra("usernameDisplay");
+        String username = SessionManager.getSaveUsername();
         txtUsername.setText(username);
         //=========
         // Passing each menu ID as a set of Ids because each

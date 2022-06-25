@@ -10,8 +10,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import fpt.aptech.projectcard.MainActivity;
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
+
+import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
+import fpt.aptech.projectcard.callApiService.ApiService;
+import fpt.aptech.projectcard.retrofit.RetrofitService;
+import fpt.aptech.projectcard.session.SessionManager;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -65,21 +78,31 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        //get data from other fragment
-//        savedInstanceState = this.getArguments();
-//        if (savedInstanceState == null) {
-//            Toast.makeText(getActivity().getApplicationContext(), "please login", Toast.LENGTH_SHORT).show();
-//            //change to fragment_home
-//            fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-//            LoginFragment loginFragment = new LoginFragment();
-//            fragmentTransaction.replace(R.id.nav_host_fragment_content_main,loginFragment);
-//            fragmentTransaction.commit();
-//        }
-//        else {
-//            username = savedInstanceState.getString("username");
-//            password = savedInstanceState.getString("password");
-//            Toast.makeText(getActivity().getApplicationContext(), username + " " + password, Toast.LENGTH_SHORT).show();
-//        }
+        //call api to get user info from product
+        ProductRequest productRequest = new ProductRequest();//25062022-Stopped at 2h49AM
+        productRequest.setUser_id(SessionManager.getSaveUserID());
+        //call getProduct api
+        ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+        apiService.getProduct(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
+            @Override
+            public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Success", Toast.LENGTH_SHORT).show();
+                }
+                if (response.body() == null){
+                    Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                }
+                if (response.code() == 401){
+                    Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ProductRequest> call, Throwable t) {
+                Toast.makeText(getActivity().getApplicationContext(), "Fail", Toast.LENGTH_SHORT).show();
+            }
+        });
+        //get data from other fragment or activity
         return view;
     }
 }
