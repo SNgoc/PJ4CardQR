@@ -1,31 +1,73 @@
 package fpt.aptech.projectcard.domain;
 
-import java.util.*;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
-public class User {
-
+public class User implements Serializable {
+    @SerializedName("id")
+    @Expose
     private Long id;
 
+    @SerializedName("username")
+    @Expose
     private String username;
 
+    @SerializedName("email")
+    @Expose
     private String email;
 
+    @SerializedName("password")
+    @Expose
     private String password;
 
+    @SerializedName("linkImage")
+    @Expose
     private String linkImage;
 
+    @SerializedName("dateOfbirth")
+    @Expose
+    private String dateOfbirth;//de string, de date hoac datetime se bi loi onFailure vi sai kieu du lieu voi model web
+
+    @SerializedName("province")
+    @Expose
+    private String province;
+
+    @SerializedName("gender")
+    @Expose
+    private Boolean gender;
+
+    @SerializedName("phone")
+    @Expose
     private String phone;
 
+    @SerializedName("address")
+    @Expose
     private String address;
+
+    @SerializedName("nameImage")
+    @Expose
     private String nameImage;
+
+    @SerializedName("enable")
+    @Expose
     private Boolean enable;
 
+    @SerializedName("fullname")
+    @Expose
     private String fullname;
 
+    @SerializedName("lastname")
+    @Expose
     private String lastname;
 
+    @SerializedName("description")
+    @Expose
     private String description;
+
     private Boolean locked;
 
     private Set<Role> roles = new HashSet<>();
@@ -44,7 +86,8 @@ public class User {
         this.password = password;
     }
 
-    public User(String username, String email, String password, Set<Role> roles, String nameImage, String linkImage,String phone,String address,String fullname,String lastname,String description) {
+    public User(String username, String email, String password, Set<Role> roles, String nameImage, String linkImage,String phone,String address,String fullname,String lastname
+            ,String description,String dateOfbirth,Boolean gender,String province ) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -56,6 +99,9 @@ public class User {
         this.fullname = fullname;
         this.lastname = lastname;
         this.description = description;
+        this.dateOfbirth = dateOfbirth;
+        this.gender = gender;
+        this.province = province;
     }
 
     public User(String username, String email, String password, Boolean enable, Boolean locked) {
@@ -177,5 +223,30 @@ public class User {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDateOfbirth() {
+        return dateOfbirth;
+    }
+
+    public void setDateOfbirth(String dateOfbirth) {
+        this.dateOfbirth = dateOfbirth;
+    }
+
+    public Boolean getGender() {
+        return gender;
+    }
+
+    public void setGender(Boolean gender) {
+        this.gender = gender;
+    }
+
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
     }
 }

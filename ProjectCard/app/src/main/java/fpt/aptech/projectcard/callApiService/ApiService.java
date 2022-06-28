@@ -3,6 +3,7 @@ package fpt.aptech.projectcard.callApiService;
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
+import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -21,5 +22,5 @@ public interface ApiService {
     Call<SignupRequest> signup(@Body SignupRequest signupRequest);
 
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
-    Call<ProductRequest> getProduct( @Path("user_id") Long user_id, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+    Call<ProductRequest> getProduct(@Path("user_id") Long user_id, @Query("Authorization") String token);//use @Query to Add access token to Authorization
 }

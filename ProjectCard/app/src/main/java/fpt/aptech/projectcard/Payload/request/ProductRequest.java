@@ -9,42 +9,45 @@ import fpt.aptech.projectcard.domain.User;
 import okhttp3.MultipartBody;
 
 public class ProductRequest {
+    //model to get user info from data json
+    @SerializedName("user") // key name of key:value when retrieve data from json type
+    @Expose
+    private User userInfo;
 
+    public User getUserInfo() {
+        return userInfo;
+    }
+
+    //model for ProductRequest
     @SerializedName("id")
     @Expose
     private Long id ;
 
-    private LocalDateTime create_at;
+    @SerializedName("create_at")
+    @Expose
+    private String create_at;//de string, de localdatetime se bi loi onFailure vi sai kieu du lieu voi model web
 
-    private LocalDateTime delete_at;
+    @SerializedName("delete_at")
+    @Expose
+    private String delete_at;
 
-    private LocalDateTime update_at;
+    @SerializedName("update_at")
+    @Expose
+    private String update_at;
 
     @SerializedName("description")
     @Expose
     private String description;
 
-    @SerializedName("imgQRCode")
+    @SerializedName("name")
     @Expose
-    private MultipartBody.Part qrcode;
+    private String name;
 
-    @SerializedName("urlQRCode")
-    @Expose
-    private MultipartBody.Part url;
+    @SerializedName("imageUrlcode")
+    private String qrcode;//de string, de multipart.part se bi loi onFailure vi sai kieu du lieu voi model web
 
-    private Long user_id;
-
-    @SerializedName("userInfo")
-    @Expose
-    private User userData;
-
-    public User getUserData() {
-        return userData;
-    }
-
-    public void setUserData(User userData) {
-        this.userData = userData;
-    }
+    @SerializedName("url")
+    private String url;
 
     public Long getId() {
         return id;
@@ -54,27 +57,27 @@ public class ProductRequest {
         this.id = id;
     }
 
-    public LocalDateTime getCreate_at() {
+    public String getCreate_at() {
         return create_at;
     }
 
-    public void setCreate_at(LocalDateTime create_at) {
+    public void setCreate_at(String create_at) {
         this.create_at = create_at;
     }
 
-    public LocalDateTime getDelete_at() {
+    public String getDelete_at() {
         return delete_at;
     }
 
-    public void setDelete_at(LocalDateTime delete_at) {
+    public void setDelete_at(String delete_at) {
         this.delete_at = delete_at;
     }
 
-    public LocalDateTime getUpdate_at() {
+    public String getUpdate_at() {
         return update_at;
     }
 
-    public void setUpdate_at(LocalDateTime update_at) {
+    public void setUpdate_at(String update_at) {
         this.update_at = update_at;
     }
 
@@ -86,27 +89,27 @@ public class ProductRequest {
         this.description = description;
     }
 
-    public MultipartBody.Part getQrcode() {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getQrcode() {
         return qrcode;
     }
 
-    public void setQrcode(MultipartBody.Part qrcode) {
+    public void setQrcode(String qrcode) {
         this.qrcode = qrcode;
     }
 
-    public MultipartBody.Part getUrl() {
+    public String getUrl() {
         return url;
     }
 
-    public void setUrl(MultipartBody.Part url) {
+    public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Long getUser_id() {
-        return user_id;
-    }
-
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
     }
 }

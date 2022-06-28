@@ -16,7 +16,7 @@ public class LoginRequest implements Serializable {
     private String password;
 
     // fields for get data json after login success return json data
-    @SerializedName("id") //this is name key when return data json
+    @SerializedName("id") //this is key name of key:value when return data json
     @Expose
     private Long userid;
 

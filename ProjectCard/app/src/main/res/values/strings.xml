@@ -33,8 +33,10 @@
     <string name="txt_cvv">CVV</string>
     <string name="btn_pay">Pay it</string>
     <!-- Account Info -->
-    <string name="txt_Name">Name: Nero Saro</string>
-    <string name="txt_Email">Email: nero@gmail.com</string>
-    <string name="txt_Phone">Phone number: 0123456789</string>
-    <string name="txt_Address">Address: 224b, Baker Street, London</string>
+    <string name="txt_Name">Name: N/A</string>
+    <string name="txt_Email">Email: N/A</string>
+    <string name="txt_Phone">Phone number: N/A</string>
+    <string name="txt_Address">Address: N/A</string>
+    <string name="txt_birthday">Birthday: N/A</string>
+    <string name="txt_province">Province: N/A</string>
 </resources>
