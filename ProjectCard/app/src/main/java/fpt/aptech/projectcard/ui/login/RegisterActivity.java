@@ -220,6 +220,8 @@ public class RegisterActivity extends AppCompatActivity {
 
     public void onLoginClick(View view){
         startActivity(new Intent(this,LoginActivity.class));
+        //prevent back history activity on click back button
+        finish();
 //        overridePendingTransition(R.anim.slide_in_left,android.R.anim.slide_out_right);
 
     }

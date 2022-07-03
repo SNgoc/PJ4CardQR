@@ -133,14 +133,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
     //==============================END NAVIGATION MENU ================================================
 
+
+    //back previous fragment when click back on device
     @Override
     public void onBackPressed(){
-        FragmentManager fm = getFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fm.popBackStackImmediate();
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
     }

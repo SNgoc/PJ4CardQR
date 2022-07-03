@@ -30,7 +30,7 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Here’s\nyour first\nstep with \nus! "
+                    android:text="Here’s\nyour first\nstep with \nus!"
                     android:textColor="@color/whiteTextColor" />
 
                 <ImageView
@@ -295,6 +295,5 @@
         android:layout_marginRight="11dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="false"
-        android:onClick="onLoginClick"
         android:src="@drawable/ic_back_img" />
 </RelativeLayout>

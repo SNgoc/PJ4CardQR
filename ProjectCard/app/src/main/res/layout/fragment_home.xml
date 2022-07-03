@@ -15,9 +15,9 @@
         android:layout_height="match_parent"
         android:background="#A9e4df">
 
-        <!--        FRONT CARD-->
+        <!--FRONT CARD-->
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutCard"
+            android:id="@+id/layoutCard_front"
             android:layout_width="355dp"
             android:layout_height="200dp"
             android:background="@drawable/layout_card_border"
@@ -146,7 +146,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--        BEHIND CARD-->
+        <!--BEHIND CARD-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCard_behind"
             android:layout_width="355dp"
@@ -241,6 +241,45 @@
                 </TableLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!--UPDATE PROFILE BUTTON LAYOUT-->
+        <LinearLayout
+            android:id="@+id/layout_btnUpdateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:onClick="onLoginClick"
+            android:visibility="gone"
+            android:weightSum="12"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.72">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"
+                android:background="@color/colorPrimaryDark" />
+
+            <Button
+                android:id="@+id/btnUpdateProfile"
+                style="@style/viewParent.headerText.NoMode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="6"
+                android:text="@string/btn_updateProfile"
+                android:textAlignment="center"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="3"
+                android:background="@color/colorPrimaryDark" />
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -85,6 +86,8 @@ public class LoginActivity extends AppCompatActivity {
                             if (response.body() == null){
                                 if(response.code() == 401){
                                     Toast.makeText(LoginActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                                    editUsername.setError("Invalid");
+                                    editPassword.setError("Invalid");
                                 }
                             }
                         }

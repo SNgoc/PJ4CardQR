@@ -3,6 +3,7 @@ package fpt.aptech.projectcard.ui.home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +40,7 @@ import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
+import fpt.aptech.projectcard.ui.login.LoginActivity;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -56,7 +60,10 @@ public class HomeFragment extends Fragment {
     TextView txtFacebook,txtTwitter,txtInstagram;
     ImageView imgAvatar, imgQR;
     //click event for layout
-    ConstraintLayout layoutCard, layoutCard_behind;
+    ConstraintLayout layoutCard_front, layoutCard_behind;
+    LinearLayout layout_updateProfile;
+    //Button
+    Button btnUpdateProfile;
     private String username,password;
     //change fragment
     private FragmentTransaction fragmentTransaction;
@@ -116,8 +123,12 @@ public class HomeFragment extends Fragment {
         imgAvatar = view.findViewById(R.id.imgAvatar);
         imgQR = view.findViewById(R.id.imgQRInfo);
         //set click listener
-        layoutCard = view.findViewById(R.id.layoutCard);
+        layoutCard_front = view.findViewById(R.id.layoutCard_front);
         layoutCard_behind = view.findViewById(R.id.layoutCard_behind);
+        layout_updateProfile = view.findViewById(R.id.layout_btnUpdateProfile);
+
+        //button click listener
+        btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
 
         //fix error android.os.NetworkOnMainThreadException for Bitmap image url
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -181,6 +192,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onFailure(Call<ProductRequest> call, Throwable t) {
                 Toast.makeText(getActivity().getApplicationContext(), "Fail display! Please buy product first", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                //prevent back on click back button
+                getActivity().finish();
             }
         });
         //get data from other fragment or activity
@@ -188,7 +202,7 @@ public class HomeFragment extends Fragment {
         //================================================================
         //animation flip card
         //front
-        layoutCard.setOnClickListener(new View.OnClickListener() {
+        layoutCard_front.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity().getApplicationContext(), "Click success", Toast.LENGTH_SHORT).show();
@@ -200,8 +214,8 @@ public class HomeFragment extends Fragment {
 //                } catch (IOException e) {
 //                    e.printStackTrace();
 //                }
-                final ObjectAnimator oa1 = ObjectAnimator.ofFloat(layoutCard, "scaleX", 1f, 0f);
-                final ObjectAnimator oa2 = ObjectAnimator.ofFloat(layoutCard, "scaleX", 0f, 1f);
+                final ObjectAnimator oa1 = ObjectAnimator.ofFloat(layoutCard_front, "scaleX", 1f, 0f);
+                final ObjectAnimator oa2 = ObjectAnimator.ofFloat(layoutCard_front, "scaleX", 0f, 1f);
                 oa1.setInterpolator(new DecelerateInterpolator());
                 oa2.setInterpolator(new AccelerateDecelerateInterpolator());
                 //animation duration
@@ -211,8 +225,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        layoutCard.setVisibility(View.INVISIBLE);
+                        layoutCard_front.setVisibility(View.GONE);
                         layoutCard_behind.setVisibility(View.VISIBLE);
+                        layout_updateProfile.setVisibility(View.VISIBLE);
                         oa2.start();
                     }
                 });
@@ -236,8 +251,9 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         super.onAnimationEnd(animation);
-                        layoutCard_behind.setVisibility(View.INVISIBLE);
-                        layoutCard.setVisibility(View.VISIBLE);
+                        layoutCard_behind.setVisibility(View.GONE);
+                        layoutCard_front.setVisibility(View.VISIBLE);
+                        layout_updateProfile.setVisibility(View.VISIBLE);
                         oa2.start();
                     }
                 });
@@ -246,7 +262,21 @@ public class HomeFragment extends Fragment {
         });
         //================================================================
 
+        //hide layout_UpdateProfile and btnUpdateProfile
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                layout_updateProfile.setVisibility(View.GONE);
+            }
+        });
 
+        // to update layout
+        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Update clicked", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }

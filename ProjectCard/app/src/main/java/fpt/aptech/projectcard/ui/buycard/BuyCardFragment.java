@@ -118,10 +118,11 @@ public class BuyCardFragment extends Fragment {
                 quantity = Integer.parseInt(editQuantity.getText().toString());
                 totalPrice = price*quantity;
                 //change to fragment_payment
-                fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
+                fragmentTransaction = getChildFragmentManager().beginTransaction();
                 PaymentFragment paymentFragment = new PaymentFragment();
-                fragmentTransaction.replace(R.id.nav_host_fragment_content_main,paymentFragment);
-                fragmentTransaction.commit();
+                fragmentTransaction.replace(R.id.fl_buycard,paymentFragment);
+                fragmentTransaction.addToBackStack(null).commit();
 
                 //send data from buy fragment to pay fragment
                 Bundle bundle = new Bundle();
@@ -131,6 +132,13 @@ public class BuyCardFragment extends Fragment {
                 //reset quantity and price when click order
                 editQuantity.setText("1");
                 txtPrice.setText(price + "$");
+            }
+        });
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set title bar to Buy Card
+                ((MainActivity) getActivity()).setActionBarTitle("Buy Card");
             }
         });
         return view;
