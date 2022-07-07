@@ -34,6 +34,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
@@ -41,6 +42,7 @@ import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.login.LoginActivity;
+import fpt.aptech.projectcard.ui.profile.ProfileFragment;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -97,7 +99,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Set title bar to Home
+        // can't Set title bar to Home will error null at setActionBarTitle because home is start fragment
 //        ((MainActivity) getActivity()).setActionBarTitle("Home");
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -138,9 +140,6 @@ public class HomeFragment extends Fragment {
         }
 
         //call api to get user info from getProduct
-        ProductRequest productRequest = new ProductRequest();
-        productRequest.setId(SessionManager.getSaveUserID());
-        //call getProduct api
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
         apiService.getProduct(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
             @Override
@@ -266,6 +265,8 @@ public class HomeFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Set title bar to Home
+                ((MainActivity) getActivity()).setActionBarTitle("Home");
                 layout_updateProfile.setVisibility(View.GONE);
             }
         });
@@ -275,6 +276,12 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getActivity().getApplicationContext(), "Update clicked", Toast.LENGTH_SHORT).show();
+                //change to fragment_payment
+                //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
+                fragmentTransaction = getChildFragmentManager().beginTransaction();
+                ProfileFragment profileFragment = new ProfileFragment();
+                fragmentTransaction.replace(R.id.fl_content_home, profileFragment);
+                fragmentTransaction.addToBackStack(null).commit();
             }
         });
         return view;

@@ -1,0 +1,7 @@
+name db: authdb
+we using auto create db from spring boot, so you don't have to create db manual, just
+run folder api is demo, authdb will be create and all table with relation ship will be create together.
+Notice: At the moment, demo has some minor errors about path where was used to save image qr code, so to can run it, you need to fix path to your path folder using to save on your pc.
+Android app is folder project card: using retrofit 2 to sync data with api web java.
+
+This file is written at 07/07/2022

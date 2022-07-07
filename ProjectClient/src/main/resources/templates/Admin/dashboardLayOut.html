@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="https://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>srtdash - ICO Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- General CSS Files -->
+
+    <link href="../assets/vendor/fonts/circular-std/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/libs/css/style.css">
+    <link rel="stylesheet" href="../assets/vendor/select2/css/select2.css">
+    <link rel="stylesheet" href="../assets/vendor/summernote/css/summernote-bs4.css">
+    <link rel="stylesheet" href="../assets/vendor/fonts/fontawesome/css/fontawesome-all.css">
+    <link rel="stylesheet" href="../assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.css"/>
+    <!-- CSS Libraries -->
+
+    <!-- Template CSS -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+<body>
+<div id="app">
+    <div class="main-wrapper">
+        <header th:replace="Admin/fragments/Header:: header"></header>
+        <main layout:fragment="content"></main>
+        <footer th:replace="Admin/fragments/Footer:: footer"></footer>
+    </div>
+</div>
+
+
+
+
+
+<!-- General JS Scripts -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<script src="../assets/js/stisla.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.11.5/datatables.min.js"></script>
+<!-- JS Libraies -->
+
+<!-- Template JS File -->
+<script src="../assets/js/scripts.js"></script>
+<script src="../assets/js/custom.js"></script>
+
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.js"></script>
+<script src="../assets/vendor/slimscroll/jquery.slimscroll.js"></script>
+<script src="../assets/libs/js/main-js.js"></script>
+
+
+
+<script src="../assets/vendor/select2/js/select2.min.js"></script>
+<script src="../assets/vendor/summernote/js/summernote-bs4.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-multiple').select2({ tags: true });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+            height: 300
+
+        });
+    });
+</script>
+<!-- Page Specific JS File -->
+<script type="application/javascript">
+    setTimeout(function () {
+        $('.msgAlert1').fadeOut('slow');
+    }, 5000);
+
+    $(document).ready(function() {
+        $('#example').DataTable();
+    } );
+</script>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    $('.deleteModel').on('click', function (e) {
+        e.preventDefault();
+        var href =$(this).attr('href');
+        $('#myModal #delRef').attr('href',href);
+        modal.style.display = "block";
+    });
+
+    $('#myBtn').on('click', function (e) {
+        console.log("Click button modal");
+        modal.style.display = "block";
+    });
+
+    $('#modelClose1').on('click', function (e) {
+        console.log("Click span");
+        modal.style.display = "none";
+    });
+
+    $('#modelClose2').on('click', function (e) {
+        console.log("Click button close");
+        modal.style.display = "none";
+    });
+
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+</body>
+</html>

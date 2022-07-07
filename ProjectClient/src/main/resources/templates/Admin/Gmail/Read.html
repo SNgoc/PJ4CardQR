@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+  <meta charset="UTF-8">
+  <title>Read Email</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+
+
+      <div class="dashboard-wrapper">
+          <div class="container-fluid">
+              <div class="main-content container-fluid p-0" th:each="mail : ${readMail}">
+                  <div class="email-head">
+                      <div class="email-head-subject">
+                          <div class="title"><a class="active" href="#"><span class="icon"><i
+                                  class="fas fa-star"></i></span></a> <span>Development Files</span>
+                              <div class="icons">
+                                  <a th:href="@{'/Reply/' + ${mail.getFrom().replace(' ','-') }}" class="icon"><i class="fas fa-reply"></i></a>
+                                  <a href="#" class="icon"><i class="fas fa-print"></i></a>
+                                  <a href="#" class="icon"><i class="fas fa-trash"></i></a>
+                              </div>
+                          </div>
+                      </div>
+                      <div class="email-head-sender" >
+                          <div class="date" th:text="${mail.getReceivedDate()}"></div>
+                          <div class="avatar"><img
+                                  src="https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg"
+                                  alt="Avatar" class="rounded-circle user-avatar-md"></div>
+                          <div class="sender"><a href="#" th:text="${mail.getFrom()}"></a> to <a href="#">me</a>
+
+                          </div>
+                      </div>
+                  </div>
+                  <div class="email-body"  >
+                      <p th:utext="${mail.getBodyEmail()}"></p>
+
+
+                  </div>
+                  <div class="email-attachments">
+
+                      <ul>
+                          <li><a th:href="@{'/Gmail/download1/'+${mail.getFile()}}"><span class="icon mdi mdi-attachment-alt" th:text="${mail.getFile()} +'( Size :'"></span><span th:text="${mail.getFileSize()} + ')'">)</span></a>
+                          </li>
+
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</body>
+</html>

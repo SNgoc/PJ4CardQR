@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!-- Main Content -->
+<div class="main-content" layout:fragment="content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Profile</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item">Profile</div>
+            </div>
+        </div>
+        <div class="section-body">
+            <h2 class="section-title" th:text=" 'Hi ' + ${users.getUsername()}"></h2>
+            <p class="section-lead">
+                Change information about yourself on this page.
+            </p>
+
+            <div class="row mt-sm-4">
+                <div class="col-12 col-md-12 col-lg-5">
+                    <div class="card profile-widget">
+                        <div class="profile-widget-header">
+                            <form method="post" th:action="@{/Admin/changeImageProfile}" enctype="multipart/form-data">
+                                <img alt="image" th:src="${users.getLinkImage()}"
+                                     class="rounded-circle profile-widget-picture">
+
+                                <div>
+                                    <input onchange="this.form.submit()" class="form-control" type="file" name="image"/>
+                                </div>
+
+                            </form>
+
+                            <div class="profile-widget-items">
+                                <div class="profile-widget-item">
+                                    <div class="profile-widget-item-label">Posts</div>
+                                    <div class="profile-widget-item-value">187</div>
+                                </div>
+                                <div class="profile-widget-item">
+                                    <div class="profile-widget-item-label">Followers</div>
+                                    <div class="profile-widget-item-value">6,8K</div>
+                                </div>
+                                <div class="profile-widget-item">
+                                    <div class="profile-widget-item-label">Following</div>
+                                    <div class="profile-widget-item-value">2,1K</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-widget-description">
+
+                            <div th:text="${users.getDescription()}"></div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-md-12 col-lg-7">
+
+                    <div  class="msgAlert1 alert alert-success" role="alert"  th:if="${successProfile}">
+                        [[${successProfile}]]
+                    </div>
+                    <div class="card">
+                        <form method="post" th:action="@{/Admin/profile/update}" th:object="${users}" class="needs-validation" novalidate="">
+                            <div class="card-header">
+                                <h4>Edit Profile</h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>Full Name</label>
+                                        <input  type="text" class="form-control" th:field="*{fullname}"
+                                               th:value="${users.getFullname()}">
+                                        <span class="text-danger" th:if="${errorProfileFullname}" >
+                                            [[${errorProfileFullname}]]
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>Last Name</label>
+                                        <input  type="text"  class="form-control" th:field="*{lastname}"
+                                               th:value="${users.getLastname()}" >
+                                        <span class="text-danger" th:if="${errorProfileLastname}" >
+                                            [[${errorProfileLastname}]]
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>BirthDay</label>
+                                        <input  type="date"  class="form-control" th:field="*{dateOfbirth}"
+                                                th:value="${users.getDateOfbirth()}" >
+                                    </div>
+                                    <div class="form-group col-md-6 col-12">
+                                        <label>Gender</label>
+                                        <select class="form-control" th:field="*{gender}">
+                                            <option th:value="true">Female</option>
+                                            <option th:value="false">Male</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-7 col-12">
+                                        <label>Email</label>
+                                        <input  type="email" th:field="*{email}"  class="form-control" th:value="${users.getEmail()}"
+                                               >
+                                        <span class="text-danger" th:if="${errorProfileEmail}" >
+                                            [[${errorProfileEmail}]]
+                                        </span>
+                                    </div>
+                                    <div class="form-group col-md-5 col-12">
+                                        <label>Phone</label>
+                                        <input th:classappend="${#fields.hasErrors('phone')} ?'is-invalid':''"  type="tel" class="form-control"  th:field="*{phone}" th:value="${users.getPhone()}">
+                                        <span class="text-danger" th:if="${errorProfilePhone}" >
+                                            [[${errorProfilePhone}]]
+                                        </span>
+                                    </div>
+
+                                    <div class="form-group col-md-5 col-12">
+                                        <label>Address</label>
+                                        <input  type="text" class="form-control"  th:field="*{address}" th:value="${users.getAddress()}">
+                                        <span class="text-danger" th:if="${errorProfileAddress}" >
+                                            [[${errorProfileAddress}]]
+                                        </span>
+
+                                    </div>
+
+                                    <div class="form-group col-md-5 col-12" th:each=" role : ${users.getRoles()}">
+                                        <label>Role</label>
+
+                                        <input readonly type="text" class="form-control" th:value="${role.getName()}"/>
+
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label>Description</label>
+                                        <textarea  class="form-control summernote-simple"
+                                                  th:field="*{description}"   th:text="${users.getDescription()}"></textarea>
+                                        <span class="text-danger" th:if="${errorProfileDescription}" >
+                                            [[${errorProfileDescription}]]
+                                        </span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="card-footer text-right">
+                                <button type="submit" class="btn btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+</body>
+
+</html>

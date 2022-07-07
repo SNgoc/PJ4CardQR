@@ -3,6 +3,7 @@ package fpt.aptech.projectcard.retrofit;
 import androidx.annotation.NonNull;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -16,14 +17,16 @@ import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class RetrofitService {
 
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-    //connect api
+    //connect api for login and register
     public static Retrofit getInstance() {
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ApiConstant.BASE_URL)
+                .addConverterFactory(ScalarsConverterFactory.create())//post raw json
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder()
                         .connectTimeout(5, TimeUnit.SECONDS) // connect timeout
@@ -33,12 +36,19 @@ public class RetrofitService {
         return builder.build();
     }
 
-    //add access bearer token auth
+    //add access bearer token auth for access to get product info
     public static Retrofit proceedToken() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();//view error
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ApiConstant.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(ScalarsConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(new OkHttpClient.Builder()
+                        .connectTimeout(5, TimeUnit.SECONDS) // connect timeout
+                        .writeTimeout(5, TimeUnit.SECONDS) // write timeout
+                        .readTimeout(5, TimeUnit.SECONDS) // read timeout
                         .addInterceptor(new Interceptor() {
                             @NonNull
                             @Override

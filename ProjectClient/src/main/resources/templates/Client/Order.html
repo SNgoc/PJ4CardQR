@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Client/clientLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Product</title>
+</head>
+<body>
+     <div layout:fragment="content">
+         <section class="module">
+             <div class="container">
+                 <div class="row">
+                     <div class="col-sm-8 col-sm-offset-2">
+                         <h4 class="font-alt mb-0">Basic Forms</h4>
+                         <hr class="divider-w mt-10 mb-20">
+                         <form class="form" th:action="@{/CheckOut}" method="post" th:object="${CreateOrder}" th:id="theForm">
+                             <div class="form-group">
+
+                                 <select th:field="*{category_id}" >
+                                     <option th:each="cate : ${categoriOrder}" th:value="${cate.id}" th:text="${cate.name}"></option>
+
+                                 </select>
+                             </div>
+                         <div>
+                             <div class="form-group">
+                                 <input class="form-control  input-lg" th:field="*{fullname}" type="text" placeholder="Full name"/>
+                             </div>
+                             <div class="form-group">
+                                 <input class="form-control  input-lg" th:field="*{phone}" type="text" placeholder="Phone"/>
+                             </div>
+                             <div class="form-group">
+                                 <input class="form-control  input-lg" th:field="*{address}" type="text" placeholder="Address"/>
+                             </div>
+                         </div>
+                             <div class="form-group">
+                                 <input class="form-control" type="submit" value="Order" />
+                             </div>
+                             <script
+                                     src="https://www.paypal.com/sdk/js?client-id=ATm7GR6Tr2ulSZ7sqXcSnRPY0f3So7T6fsvOgHWUaLCI_kzwS_UQobBBXRnWj59jXeUvIJUMfmsFXcoe"> // Required. Replace YOUR_CLIENT_ID with your sandbox client ID.
+                             </script>
+                             <div id="paypal-button-container" type="submit"></div>
+                             <script>
+                                 paypal.Buttons({
+                                     createOrder: function(data, actions) {
+                                         // This function sets up the details of the transaction, including the amount and line item details.
+                                         return actions.order.create({
+                                             purchase_units: [{
+                                                 amount: {
+                                                     value: 200
+                                                 }
+                                             }]
+                                         });
+                                     },
+                                     onApprove: function(data, actions) {
+                                         // This function captures the funds from the transaction.
+                                         return actions.order.capture().then(function(details) {
+                                             // This function shows a transaction success message to your buyer.
+                                             alert('Transaction completed by ' + details.payer.name.given_name);
+                                             //document.getElementById('payment').innerHTML = '<input name="payment" value="true" hidden>'
+                                             document.getElementById('theForm').submit();
+                                         });
+                                     }
+                                 }).render('#paypal-button-container');
+                                 //This function displays Smart Payment Buttons on your web page.
+                             </script>
+                         </form>
+                     </div>
+                 </div>
+             </div>
+         </section>
+     </div>
+</body>
+</html>

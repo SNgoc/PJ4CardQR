@@ -44,8 +44,25 @@
     <string name="txt_facebook">Facebook: N/A</string>
     <string name="txt_twitter">Twitter: N/A</string>
     <string name="txt_instagram">Instagram: N/A</string>
-    <!-- Update Account's Profile layout-->
+    <!--String text for Register and Update Account's Profile layout-->
     <string name="btn_updateProfile">Update Profile</string>
+    <string name="btn_saveProfile">Save Profile</string>
+    <string name="intro_header_register_text">Here’s\nyour first\nstep with \nus!</string>
+    <string name="intro_header_update_text">Here’s place \nto update\nyour profile</string>
+    <string name="register">Register</string>
+    <string name="have_already_account">Already have an account?</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="fullname">Full name</string>
+    <string name="lastname">Last name</string>
+    <string name="birthday">Birthday</string>
+    <string name="gender">Gender</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="phone_number">Phone number</string>
+    <string name="address">Address</string>
+    <string name="description">Description</string>
+    <string name="province">Province</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

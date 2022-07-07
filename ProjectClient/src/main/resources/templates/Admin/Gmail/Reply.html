@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Reply email</title>
+</head>
+<body>
+<div layout:fragment="content">
+
+
+    <div class="dashboard-wrapper">
+        <div class="container-fluid">
+            <form th:action="@{/Gmail/SendMail}" method="post" th:object="${gmail}">
+            <div class="main-content container-fluid p-0">
+                <div class="email-head">
+                    <div class="email-head-title">Send new message<span class="icon mdi mdi-edit"></span></div>
+                </div>
+                <div class="email-compose-fields">
+
+                    <div class="to">
+                        <div class="form-group row pt-0">
+                            <label class="col-md-1 control-label">To:</label>
+                            <div class="col-md-11" th:if='${email}'>
+                                <select th:field="*{to}" class="js-example-basic-multiple" multiple="multiple">
+                                    <option th:value='${email}' selected="selected">This </option>
+
+                                </select>
+                            </div>
+                            <div class="col-md-11">
+                                <select th:field="*{to}"  class="js-example-basic-multiple" multiple="multiple">
+                                    <option  value="" selected="selected">Email Sender .. </option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="subject">
+                        <div class="form-group row pt-2">
+                            <label class="col-md-1 control-label">Subject</label>
+                            <div class="col-md-11">
+                                <input th:field="*{subject}" class="form-control" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="email editor">
+                    <div class="col-md-12 p-0">
+                        <div class="form-group">
+                            <label class="control-label sr-only" for="summernote">Descriptions </label>
+                            <textarea th:field="*{bodyEmail}" class="form-control" id="summernote" name="editordata" rows="6" placeholder="Write Descriptions"></textarea>
+                        </div>
+                    </div>
+                    <div class="email action-send">
+                        <div class="col-md-12 ">
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-space" type="submit"><i class="icon s7-mail"></i> Send</button>
+                                <button class="btn btn-secondary btn-space" type="button"><i class="icon s7-close"></i> Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

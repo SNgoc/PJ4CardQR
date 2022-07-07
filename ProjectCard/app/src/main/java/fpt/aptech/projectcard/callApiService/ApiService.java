@@ -3,12 +3,14 @@ package fpt.aptech.projectcard.callApiService;
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
+import fpt.aptech.projectcard.Payload.request.UpdateProfile;
 import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -23,4 +25,15 @@ public interface ApiService {
 
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
     Call<ProductRequest> getProduct(@Path("user_id") Long user_id, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+
+    @GET(ApiConstant.URL_PROFILE)
+    Call<User> getProfile(@Path("username") String username);
+
+    @POST(ApiConstant.URL_UPDATE_PROFILE)
+    Call<UpdateProfile> updateProfile(@Path("user_id") Long user_id, @Body UpdateProfile updateProfile);
+
+    // post raw json
+//    @Headers("Content-Type: application/json")
+//    @POST(ApiConstant.URL_UPDATE_PROFILE)
+//    Call<UpdateProfile> updateProfile(@Path("user_id") Long user_id, @Body String updateProfile);
 }

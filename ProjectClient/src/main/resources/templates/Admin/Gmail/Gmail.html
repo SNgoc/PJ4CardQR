@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Gmail</title>
+</head>
+<body>
+<div layout:fragment="content">
+<!--    <table th:each="mail : ${gmail}">-->
+<!--        <tr>-->
+<!--            <td><p th:text="${mail.subject}"></p></td>-->
+<!--        </tr>-->
+<!--    </table>-->
+
+    <div class="dashboard-wrapper">
+        <div class="container-fluid">
+
+            <div class="main-content container-fluid p-0">
+                <div class="email-inbox-header">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="email-title"><span class="icon"><i class="fas fa-inbox"></i></span> Inbox <span class="new-messages"></span> </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="email-search">
+                                <div class="input-group input-search">
+                                    <input class="form-control" type="text" placeholder="Search mail..."><span class="input-group-btn">
+                                       <button class="btn btn-secondary" type="button"><i class="fas fa-search"></i></button></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="email-filters">
+                    <div class="email-filters-left">
+
+                        <div class="btn-group">
+                            <button class="btn btn-light dropdown-toggle" data-toggle="dropdown" type="button">
+                                With selected <span class="caret"></span></button>
+                            <div class="dropdown-menu" role="menu"><a class="dropdown-item" th:href="@{/Admin/Reply}">Send Mail</a><a class="dropdown-item" href="#">Mark as unread</a><a class="dropdown-item" href="#">Spam</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Delete</a>
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <div class="email-filters-right"><span class="email-pagination-indicator">1-50 of 253</span>
+                        <div class="btn-group email-pagination-nav">
+                            <button class="btn btn-light" type="button"><i class="fas fa-angle-left"></i></button>
+                            <button class="btn btn-light" type="button"><i class="fas fa-angle-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div th:each="gmail : ${gmail}">
+                <div class="email-list">
+
+
+
+
+                    <div class="email-list-item">
+                        <div class="email-list-actions">
+
+                            <label class="custom-control custom-checkbox">
+                                <input class="custom-control-input checkboxes" type="checkbox" value="8" id="eight"><span class="custom-control-label"></span>
+                            </label><a class="favorite" href="#"><span><i class="fas fa-star"></i></span></a>
+                        </div>
+
+                            <div class="email-list-detail"><span class="date float-right" th:text="${gmail.getReceivedDate()}"></span><span class="from" th:text="${gmail.getFrom()}"></span>
+                                <a th:href="@{'/Gmail/' +${gmail.getSubject().replace(' ','-') }}">      <p class="msg" th:text="${gmail.getSubject()}"></p>   </a>
+                            </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -5,9 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/register_bk_color"
+    android:background="@color/lightBlueBackground"
     android:focusableInTouchMode="true"
     android:gravity="center"
+    android:id="@+id/frmProfile"
     tools:context=".ui.profile.ProfileFragment">
 
     <ScrollView
@@ -30,10 +31,11 @@
                     style="@style/viewParent.headerText.NoMode"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:text="Here’s place \nto update\nyour profile"
+                    android:text="@string/intro_header_update_text"
                     android:textColor="@color/whiteTextColor" />
 
                 <ImageView
+                    android:id="@+id/imgAvatarProfile"
                     android:layout_width="470px"
                     android:layout_height="470px"
                     android:layout_alignParentTop="true"
@@ -53,104 +55,89 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputUsername"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editUsername"
-                            style="@style/modifiedEditText"
-                            android:hint="Username"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputPassword"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editPassword"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/prompt_password"
-                            android:inputType="textPassword"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputConfirmPassword"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editConfirmPassword"
-                            style="@style/modifiedEditText"
-                            android:hint="Confirm Password"
-                            android:inputType="textPassword"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputEmail"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editEmail"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/prompt_email"
-                            android:inputType="textEmailAddress"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputMobile"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editPhone"
-                            style="@style/modifiedEditText"
-                            android:hint="Mobile Number"
-                            android:inputType="phone"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputFullname"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editFullname"
-                            style="@style/modifiedEditText"
-                            android:hint="Full name"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputLastname"
-                        style="@style/parent"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <EditText
-                            android:id="@+id/editLastname"
-                            style="@style/modifiedEditText"
-                            android:hint="Last name"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
                     <LinearLayout
-                        android:id="@+id/textInputBirthday"
+                        android:id="@+id/textInputFullnameProfile"
                         style="@style/parent"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
-                            android:id="@+id/txtEdBirth"
+                            style="@style/viewParent"
+                            android:text="@string/fullname"/>
+
+                        <EditText
+                            android:id="@+id/editFullnameProfile"
+                            style="@style/modifiedEditText"
+                            android:hint="@string/fullname"
+                            android:inputType="textPersonName"
+                            android:maxLines="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/textInputLastnameProfile"
+                        style="@style/parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/lastname"/>
+
+                        <EditText
+                            android:id="@+id/editLastnameProfile"
+                            style="@style/modifiedEditText"
+                            android:hint="@string/lastname"
+                            android:inputType="textPersonName"
+                            android:maxLines="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/textInputEmailProfile"
+                        style="@style/parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/email"/>
+
+                        <EditText
+                            android:id="@+id/editEmailProfile"
+                            style="@style/modifiedEditText"
+                            android:hint="@string/email"
+                            android:inputType="textEmailAddress"
+                            android:maxLines="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/textInputMobileProfile"
+                        style="@style/parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/phone_number"/>
+
+                        <EditText
+                            android:id="@+id/editPhoneProfile"
+                            style="@style/modifiedEditText"
+                            android:hint="@string/phone_number"
+                            android:inputType="phone"
+                            android:maxLines="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/textInputBirthdayProfile"
+                        style="@style/parent"
+                        android:orientation="vertical"
+                        android:layout_marginTop="@dimen/loginViewsMargin">
+
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/birthday"/>
+
+                        <TextView
+                            android:id="@+id/txtEdBirthProfile"
                             style="@style/modifiedEditText"
                             android:hint="Birthday"
                             android:inputType="date"
@@ -158,25 +145,30 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/textInputGender"
+                        android:id="@+id/textInputGenderProfile"
                         style="@style/parent"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/gender"/>
+
                         <RadioGroup
-                            android:id="@+id/rgGender"
+                            android:id="@+id/rgGenderProfile"
                             android:layout_width="match_parent"
                             android:layout_height="27dp"
                             android:orientation="horizontal">
 
                             <RadioButton
-                                android:id="@+id/rdMale"
+                                android:id="@+id/rdMaleProfile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:checked="true"
                                 android:text="Male" />
 
                             <RadioButton
-                                android:id="@+id/rdFemale"
+                                android:id="@+id/rdFemaleProfile"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="60dp"
@@ -184,44 +176,59 @@
                         </RadioGroup>
                     </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputAddress"
+                    <LinearLayout
+                        android:id="@+id/textInputAddressProfile"
                         style="@style/parent"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/address"/>
+
                         <EditText
-                            android:id="@+id/editAddress"
+                            android:id="@+id/editAddressProfile"
                             style="@style/modifiedEditText"
                             android:hint="Address"
                             android:inputType="text"
                             android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputProvince"
+                    <LinearLayout
+                        android:id="@+id/textInputProvinceProfile"
                         style="@style/parent"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/province"/>
+
                         <EditText
-                            android:id="@+id/editProvince"
+                            android:id="@+id/editProvinceProfile"
                             style="@style/modifiedEditText"
                             android:hint="Province"
                             android:inputType="text"
                             android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/textInputDescription"
+                    <LinearLayout
+                        android:id="@+id/textInputDescriptionProfile"
                         style="@style/parent"
+                        android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
+                        <TextView
+                            style="@style/viewParent"
+                            android:text="@string/description"/>
+
                         <EditText
-                            android:id="@+id/editDescription"
+                            android:id="@+id/editDescriptionProfile"
                             style="@style/modifiedEditText"
                             android:hint="Description"
                             android:inputType="text"
                             android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/btnUpdate"
@@ -229,7 +236,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:layout_marginBottom="@dimen/loginViewsMargin"
-                        android:text="Save Profile" />
+                        android:text="@string/btn_saveProfile" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -243,7 +250,7 @@
         android:layout_marginRight="11dp"
         android:layout_marginBottom="30dp"
         android:adjustViewBounds="false"
-        android:onClick="onHomeClick"
+        android:id="@+id/backHomeClick"
         android:src="@drawable/ic_back_img" />
 
 </RelativeLayout>
