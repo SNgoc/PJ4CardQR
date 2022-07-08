@@ -21,6 +21,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -210,6 +216,22 @@ public class ProfileFragment extends Fragment {
                     public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(getActivity().getApplicationContext(), "Updated success", Toast.LENGTH_SHORT).show();
+                            String dynamicQR = "Email: " + response.body().getEmail()
+                                    + "\nFullname: " + response.body().getFullname()
+                                    + "\nPhone: " + response.body().getPhone()
+                                    + "\nAddress: " + response.body().getAddress()
+                                    + "\nBirthday: " + response.body().getDateOfbirth()
+                                    + "\nGender: " + response.body().getGender()
+                                    + "\nProvince: " + response.body().getProvince();
+                            MultiFormatWriter writer = new MultiFormatWriter();
+                            try {
+                                BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
+                                BarcodeEncoder encoder = new BarcodeEncoder();
+                                Bitmap bitmap = encoder.createBitmap(matrix);
+                                imgAvatarProfile.setImageBitmap(bitmap);
+                            } catch (WriterException e) {
+                                e.printStackTrace();
+                            }
                         }
                         //error validate
                         if (response.code() == 400) {
@@ -219,7 +241,7 @@ public class ProfileFragment extends Fragment {
 
                     @Override
                     public void onFailure(Call<UpdateProfile> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Updated success", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getActivity().getApplicationContext(),"Failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
             }

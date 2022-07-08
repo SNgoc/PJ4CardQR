@@ -153,7 +153,8 @@ public class AuthController  {
             u.setDateOfbirth(request.getDateOfbirth());
             u.setGender(request.getGender());
             userRepository.save(u);
-            return  ResponseEntity.ok("Update Succesfuuly");
+//            return ResponseEntity.ok("Update Succesfully");//trả về kiểu string sẽ gây ra lỗi Begin Expect Object onFailure bên Android
+            return ResponseEntity.ok(u);//trả về kiểu obj để fix lỗi này
         } else {
             throw new ApiRequestException( "Save change fails");
         }
