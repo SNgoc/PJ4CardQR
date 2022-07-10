@@ -132,7 +132,7 @@ public class AuthController  {
     public ResponseEntity<?> changeImageProfile(  ChangeImageUserRequest request) throws IOException {
         String response = userService.ChangeImageProfile(request);
         if (response != null) {
-            return ResponseEntity.ok("update  succesfully");
+            return ResponseEntity.ok("update succesfully");
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("update not found");

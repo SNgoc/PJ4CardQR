@@ -10,6 +10,10 @@ public class SessionManager {
     private static String saveFullname;
     private static String saveToken;
     private static String saveLinkImage;
+    private static String facebookLink;
+    private static String twitterLink;
+    private static String instagramLink;
+    private static boolean stopCode = false;
 
     public SessionManager() {
     }
@@ -60,5 +64,37 @@ public class SessionManager {
 
     public static void setSaveLinkImage(String saveLinkImage) {
         SessionManager.saveLinkImage = saveLinkImage;
+    }
+
+    public static String getFacebookLink() {
+        return facebookLink;
+    }
+
+    public static void setFacebookLink(String facebookLink) {
+        SessionManager.facebookLink = facebookLink;
+    }
+
+    public static String getTwitterLink() {
+        return twitterLink;
+    }
+
+    public static void setTwitterLink(String twitterLink) {
+        SessionManager.twitterLink = twitterLink;
+    }
+
+    public static String getInstagramLink() {
+        return instagramLink;
+    }
+
+    public static void setInstagramLink(String instagramLink) {
+        SessionManager.instagramLink = instagramLink;
+    }
+
+    public static boolean isStopCode() {
+        return stopCode;
+    }
+
+    public static void setStopCode(boolean stopCode) {
+        SessionManager.stopCode = stopCode;
     }
 }

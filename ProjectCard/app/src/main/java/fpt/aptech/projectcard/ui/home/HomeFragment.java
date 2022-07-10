@@ -24,6 +24,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
+
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -139,63 +145,102 @@ public class HomeFragment extends Fragment {
             StrictMode.setThreadPolicy(gfgPolicy);
         }
 
-        //call api to get user info from getProduct
+        //call api to check product if it was bought
+        SessionManager.setStopCode(false);
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
         apiService.getProduct(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
             @Override
             public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
-                //27-06-2022 04:15AM Stopped at here, got data from getProduct() success
+                //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
                 if (response.isSuccessful()) {
-                    if (response.body() != null) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Success " + response.body().getUserInfo() +"\n" + "linkurlQRcode: " + response.body().getUrl(), Toast.LENGTH_SHORT).show();
-                        //display avatar img and QR img from url
-                        try {
-                            //avatar
-                            Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(response.body().getUserInfo().getLinkImage()).getContent());
-                            imgAvatar.setImageBitmap(bitmap1);
-                            //QR
-                            Bitmap bitmap2 = BitmapFactory.decodeStream((InputStream)new URL(response.body().getUrl()).getContent());
-                            imgQR.setImageBitmap(bitmap2);
-                        } catch (MalformedURLException e) {
-                            e.printStackTrace();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
-                        //set display user info get from product info
-                        txtName.setText("Fullname: " + response.body().getUserInfo().getFullname());
-                        txtEmail.setText("Email: " + response.body().getUserInfo().getEmail());
-                        //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
-                        String[] birthday = response.body().getUserInfo().getDateOfbirth().split("T");
-                        txtBirthday.setText("Birthday: " + birthday[0]);
-                        txtPhone.setText("Phone: " + response.body().getUserInfo().getPhone());
-                        txtAddress.setText("Address: " + response.body().getUserInfo().getAddress());
-                        txtProvince.setText("Province: " + response.body().getUserInfo().getProvince());
-                        boolean gender = response.body().getUserInfo().getGender();
-                        if (gender == true) {
-                            txtGender.setText("Gender: Male");
-                        } else {
-                            txtGender.setText("Gender: Female");
-                        }
-
-                    }
-                    if (response.body() == null){
-                        Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                    }
-                    if (response.code() == 401){
-                        Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                    }
+                    Toast.makeText(getActivity().getApplicationContext(), "This is your smart card", Toast.LENGTH_LONG).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ProductRequest> call, Throwable t) {
-                Toast.makeText(getActivity().getApplicationContext(), "Fail display! Please buy product first", Toast.LENGTH_LONG).show();
+                SessionManager.setStopCode(true);
+                Toast.makeText(getActivity().getApplicationContext(), "Failed to display! Please buy product first", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 //prevent back on click back button
                 getActivity().finish();
             }
         });
+
+        //if product havent been bought, dont run this code to improve performance
+        //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
+        if (SessionManager.isStopCode() == false) {
+            //call api to get user info
+            ApiService apiServiceGetProfile = RetrofitService.proceedToken().create(ApiService.class);
+            apiServiceGetProfile.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
+                @Override
+                public void onResponse(Call<User> call, Response<User> response) {
+                    if (response.isSuccessful()) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null) {
+//                                Toast.makeText(getActivity().getApplicationContext(), "Success " + response.body(), Toast.LENGTH_SHORT).show();
+                                //display avatar img from url
+                                try {
+                                    //avatar
+                                    Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(response.body().getLinkImage()).getContent());
+                                    imgAvatar.setImageBitmap(bitmap1);
+                                } catch (MalformedURLException e) {
+                                    e.printStackTrace();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                //create QR img from user info
+                                String dynamicQR = "Email: " + response.body().getEmail()
+                                        + "\nFullname: " + response.body().getFullname()
+                                        + "\nPhone: " + response.body().getPhone()
+                                        + "\nAddress: " + response.body().getAddress()
+                                        + "\nBirthday: " + response.body().getDateOfbirth()
+                                        + "\nGender: " + (response.body().getGender() == true?"Male":"Female")
+                                        + "\nProvince: " + response.body().getProvince();
+                                MultiFormatWriter writer = new MultiFormatWriter();
+                                try {
+                                    BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
+                                    BarcodeEncoder encoder = new BarcodeEncoder();
+                                    Bitmap bitmap = encoder.createBitmap(matrix);
+                                    imgQR.setImageBitmap(bitmap);
+                                } catch (WriterException e) {
+                                    e.printStackTrace();
+                                }
+                                ////////////////////////////////////////////////////////////////////
+                                //set display user info get from product info
+                                txtName.setText("Fullname: " + response.body().getFullname());
+                                txtEmail.setText("Email: " + response.body().getEmail());
+                                //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
+                                String[] birthday = response.body().getDateOfbirth().split("T");
+                                txtBirthday.setText("Birthday: " + birthday[0]);
+                                txtPhone.setText("Phone: " + response.body().getPhone());
+                                txtAddress.setText("Address: " + response.body().getAddress());
+                                txtProvince.setText("Province: " + response.body().getProvince());
+                                txtGender.setText("Gender: " + (response.body().getGender()==true?"Male":"Female"));
+                                boolean gender = response.body().getGender();
+                                if (gender == true) {
+                                    txtGender.setText("Gender: Male");
+                                } else {
+                                    txtGender.setText("Gender: Female");
+                                }
+                            }
+                            if (response.body() == null){
+                                Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                            }
+                            if (response.code() == 401){
+                                Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<User> call, Throwable t) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Failed display profile", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
         //get data from other fragment or activity
 
         //================================================================
