@@ -9,4 +9,5 @@ public class ApiConstant {
     public static final String URL_GETPRODUCT_INFO_BY_USERID = "/api/product/getProduct/{user_id}";
     public static final String URL_PROFILE = "/api/auth/profile/{username}";
     public static final String URL_UPDATE_PROFILE = "/api/auth/profile/updateProfile/{user_id}";
+    public static final String URL_GETSOCIAL_BY_USERID = "/api/social/getSocialAndProfile/{user_id}";
 }

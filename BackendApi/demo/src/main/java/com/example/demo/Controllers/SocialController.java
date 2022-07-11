@@ -1,6 +1,8 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.Exception.ApiRequestException;
 import com.example.demo.Payload.Request.SocialNWebRequest;
+import com.example.demo.Payload.Request.UpdateProfile;
 import com.example.demo.domain.SocialNweb;
 import com.example.demo.domain.User;
 import com.example.demo.repo.UserRepo;
@@ -8,11 +10,15 @@ import com.example.demo.service.SocialNWebService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.util.Optional;
 
 @RestController
+@Validated
 @RequestMapping(value = "/api/social" , method = {RequestMethod.POST,RequestMethod.GET})
 public class SocialController {
     @Autowired
@@ -63,5 +69,20 @@ public class SocialController {
 //        socialNWebRequest.setCompany2(social.getCompany2());
 //        socialNWebRequest.setUser_id(social.getUser().getId());
         return ResponseEntity.ok(social);
+    }
+
+    //change imge avatar by url
+    @PostMapping("/avatarUrl/changeAvatarUrl/{id}")
+    public ResponseEntity<?> changeAvatar(@PathVariable("id") Long id, @RequestBody String imgUrl) throws IOException {
+        Optional<User> user = userRepo.findById(id);
+        if (user.isPresent()) {
+            User u = user.get();
+            u.setLinkImage(imgUrl);
+            userRepo.save(u);
+//            return ResponseEntity.ok("Update Succesfully");//trả về kiểu string sẽ gây ra lỗi Begin Expect Object onFailure bên Android
+            return ResponseEntity.ok(u);//trả về kiểu obj để fix lỗi này
+        } else {
+            throw new ApiRequestException( "Save change fails");
+        }
     }
 }

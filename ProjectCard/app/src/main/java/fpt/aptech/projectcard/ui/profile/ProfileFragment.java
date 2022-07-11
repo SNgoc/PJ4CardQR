@@ -216,22 +216,6 @@ public class ProfileFragment extends Fragment {
                     public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
                         if (response.isSuccessful()) {
                             Toast.makeText(getActivity().getApplicationContext(), "Updated success", Toast.LENGTH_SHORT).show();
-                            String dynamicQR = "Email: " + response.body().getEmail()
-                                    + "\nFullname: " + response.body().getFullname()
-                                    + "\nPhone: " + response.body().getPhone()
-                                    + "\nAddress: " + response.body().getAddress()
-                                    + "\nBirthday: " + response.body().getDateOfbirth()
-                                    + "\nGender: " + response.body().getGender()
-                                    + "\nProvince: " + response.body().getProvince();
-                            MultiFormatWriter writer = new MultiFormatWriter();
-                            try {
-                                BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
-                                BarcodeEncoder encoder = new BarcodeEncoder();
-                                Bitmap bitmap = encoder.createBitmap(matrix);
-                                imgAvatarProfile.setImageBitmap(bitmap);
-                            } catch (WriterException e) {
-                                e.printStackTrace();
-                            }
                         }
                         //error validate
                         if (response.code() == 400) {

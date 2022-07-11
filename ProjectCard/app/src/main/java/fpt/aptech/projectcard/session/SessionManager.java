@@ -3,6 +3,9 @@ package fpt.aptech.projectcard.session;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import fpt.aptech.projectcard.domain.SocialNweb;
+import fpt.aptech.projectcard.domain.User;
+
 public class SessionManager {
     private static Long saveUserID;
     private static String saveUsername;
@@ -10,9 +13,9 @@ public class SessionManager {
     private static String saveFullname;
     private static String saveToken;
     private static String saveLinkImage;
-    private static String facebookLink;
-    private static String twitterLink;
-    private static String instagramLink;
+    private static User saveUser;
+    private static SocialNweb saveSocialNweb;
+
     private static boolean stopCode = false;
 
     public SessionManager() {
@@ -66,28 +69,20 @@ public class SessionManager {
         SessionManager.saveLinkImage = saveLinkImage;
     }
 
-    public static String getFacebookLink() {
-        return facebookLink;
+    public static User getSaveUser() {
+        return saveUser;
     }
 
-    public static void setFacebookLink(String facebookLink) {
-        SessionManager.facebookLink = facebookLink;
+    public static void setSaveUser(User saveUser) {
+        SessionManager.saveUser = saveUser;
     }
 
-    public static String getTwitterLink() {
-        return twitterLink;
+    public static SocialNweb getSaveSocialNweb() {
+        return saveSocialNweb;
     }
 
-    public static void setTwitterLink(String twitterLink) {
-        SessionManager.twitterLink = twitterLink;
-    }
-
-    public static String getInstagramLink() {
-        return instagramLink;
-    }
-
-    public static void setInstagramLink(String instagramLink) {
-        SessionManager.instagramLink = instagramLink;
+    public static void setSaveSocialNweb(SocialNweb saveSocialNweb) {
+        SessionManager.saveSocialNweb = saveSocialNweb;
     }
 
     public static boolean isStopCode() {

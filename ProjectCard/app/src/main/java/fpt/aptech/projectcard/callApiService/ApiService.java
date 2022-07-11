@@ -4,6 +4,7 @@ import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
 import fpt.aptech.projectcard.Payload.request.UpdateProfile;
+import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -31,6 +32,11 @@ public interface ApiService {
 
     @POST(ApiConstant.URL_UPDATE_PROFILE)
     Call<UpdateProfile> updateProfile(@Path("user_id") Long user_id, @Body UpdateProfile updateProfile);
+
+    @GET(ApiConstant.URL_GETSOCIAL_BY_USERID)
+    Call<SocialNweb> getSocialInfo(@Path("user_id") Long user_id, @Query("Authorization") String token);
+
+
 
     // post raw json
 //    @Headers("Content-Type: application/json")

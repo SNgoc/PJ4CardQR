@@ -35,6 +35,8 @@
     <string name="txt_cvv">CVV</string>
     <string name="btn_pay">Pay it</string>
     <!-- Account Info -->
+    <!--  FRONT CARD  -->
+    <string name="front_header_card">PERSONAL INFORMATION</string>
     <string name="txt_Name">Name: N/A</string>
     <string name="txt_Gender">Gender: N/A</string>
     <string name="txt_Email">Email: N/A</string>
@@ -42,6 +44,8 @@
     <string name="txt_Address">Address: N/A</string>
     <string name="txt_birthday">Birthday: N/A</string>
     <string name="txt_province">Province: N/A</string>
+    <!--  BEHIND CARD  -->
+    <string name="behind_header_card">SOCIAL INFORMATION</string>
     <string name="txt_facebook">Facebook: N/A</string>
     <string name="txt_twitter">Twitter: N/A</string>
     <string name="txt_instagram">Instagram: N/A</string>
@@ -64,6 +68,10 @@
     <string name="address">Address</string>
     <string name="description">Description</string>
     <string name="province">Province</string>
+    <!--String text for Add and Update Social layout-->
+    <string name="btn_addSocialNWeb">Add New Social-Website</string>
+    <string name="btn_updateSocialNWeb">Update Social-Website</string>
+    <string name="intro_header_social_web_text">Here’s place \nto you connect \nwith everyone</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

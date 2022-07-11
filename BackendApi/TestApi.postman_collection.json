@@ -1,0 +1,649 @@
+{
+	"info": {
+		"_postman_id": "aa52cc08-940a-432d-a591-c9853a7d289e",
+		"name": "TestApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20808516"
+	},
+	"item": [
+		{
+			"name": "ResetPassword",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJOZ2hpYSIsImlhdCI6MTY0OTg2MjUxOSwiZXhwIjoxNjQ5OTQ4OTE5fQ.NB_FaX3mX0_FulMxho6uKkH4NP84OTsZs-3u0NSSvchXMRETzxEGkmZOxbV87g7Gg_RRMCCuzM2lTSszGtMd0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nghia\",\r\n    \"password\":\"123456\",\r\n    \"email\":\"nghiapham1998000@gmail.com\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"address\":\"221B, Baker Street\",\"dateOfbirth\":\"2000-03-31\",\"description\":\"awsdfs\",\"email\":\"lazada@gmail.com\",\"fullname\":\"lazada shoppee\",\"gender\":false,\"lastname\":\"shoppee\",\"password\":\"123456\",\"phone\":\"0123456789\",\"province\":\"Tay Ninh\",\"roles\":[\"ROLE_ADMIN\"],\"username\":\"lazada\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signup"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTU4OTg1MDAsImV4cCI6MTY1NTk4NDkwMH0.oxPMyBystGAyqzAx5d8pELay6ZEfxP3L3zHCUaKgdCcGVnlJXumXlGwYI0-0NJGRwUwmpEpP7qaZFbEmrLjrNw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"lazada\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/signin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"signin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeEmail",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"nghiapham1998000@gmail.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/changeEmail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"changeEmail"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdatePassword",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"Nghia\",\r\n    \"password\":\"1234567\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/updatePassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"updatePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Profile",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/lazada",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"lazada"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Test",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CategoryAdd",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"price\": 1000,\r\n    \"name\": \"TEST QR CODE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/category/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CategoryList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/category/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"category",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeImageUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "username",
+							"value": "Nghia111",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/nghia/Downloads/download (1).jfif"
+						},
+						{
+							"key": "",
+							"type": "file",
+							"src": [],
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/changeImageProfile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"changeImageProfile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateProfileUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTcwNDA1OTcsImV4cCI6MTY1NzEyNjk5N30.xcCD5sv20dPqLf4Lx0OU_ynTpOBTO2etkneiS5ZDMJd9lqlBnFf7u8eAdzDvCOm-uv1-hC0b41zntsijxZdTmw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"lastname\":\"neroki\",\r\n    \"fullname\":\"nero sarrow\",\r\n    \"description\":\"Android Java Deverloper\",\r\n    \"phone\":\"0399345342\",\r\n    \"address\":\"221B, Baker Street\",\r\n    \"email\": \"lazada@gmail.com\",\r\n    \"dateOfbirth\":\"2000-03-13\",\r\n    \"province\": \"Tây Ninh\",\r\n    \"gender\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/auth/profile/updateProfile/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"auth",
+						"profile",
+						"updateProfile",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllUserAdmin",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreateProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"lazada\",\r\n    \"fullname\":\"lazada shoppee\",\r\n    \"phone\":\"123\",\r\n    \"address\":\"Tay Ninh\",\r\n    \"category_id\":1,\r\n    \"email\":\"lazada@gmail.com\"\r\n}\r\n//email phải khớp với thông tin user, ko sẽ bị null user_id\r\n//user_id tự liên kết, ko cần add",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/order/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show All Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTczNjY3NDgsImV4cCI6MTY1NzQ1MzE0OH0.BoWAvoRDqHGHgyKUcMhFvh5JQrJs2xRwT6VtEVMv0UIVCyIZ_W-a5Ny93tJTUAY1AfmqfGCfxNwr55CT0J2Npg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/product/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Product by User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/product/getProduct/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"getProduct",
+						"3"
+					],
+					"query": [
+						{
+							"key": "Bearer",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTYxMzk5NTAsImV4cCI6MTY1NjIyNjM1MH0.Ba-qg4W2607paEDSkYJKcZRZPUl0U9SGqwbW0TJVZ4ZVp1WJ_DP2bn81kLl6ElZM75EEiKXxrSpR7NtLclN1gA",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddSocialLink",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"facebook\": \"facebook\",\r\n    \"twitter\": \"twitter\",\r\n    \"instagram\": \"instagram\",\r\n    \"tiktok\": \"tiktokk\",\r\n    \"web1\": \"web1\",\r\n    \"web2\": \"web2\",\r\n    \"company1\": \"company1\",\r\n    \"company2\": \"company2\",\r\n    \"user_id\": \"3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/addSocial",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"addSocial"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getSocialAndProfileByUserID",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/getSocialAndProfile/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"getSocialAndProfile",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateSocial",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc0NzAxNDAsImV4cCI6MTY1NzU1NjU0MH0.iufsMc8IQAM8DUbHHYB-SeyctZ087DyHAcUwUa2OWIfYQiHrT3tfN26gAl4vaZdMkE4aA1t-_xTEXO1IwNu5ew",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"facebook\": \"facebook\",\r\n    \"twitter\": \"twitter\",\r\n    \"instagram\": \"instagram\",\r\n    \"tiktok\": \"tiktok\",\r\n    \"web1\": \"web1\",\r\n    \"web2\": \"web2\",\r\n    \"company1\": \"company1\",\r\n    \"company2\": \"company2\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/updateSocial/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"updateSocial",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ChangeImgURLAndroid",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "https://images.wallpaperscraft.com/image/single/sakura_art_sky_122545_1024x768.jpg",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/social/avatarUrl/changeAvatarUrl/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"social",
+						"avatarUrl",
+						"changeAvatarUrl",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

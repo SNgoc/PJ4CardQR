@@ -9,7 +9,7 @@ import fpt.aptech.projectcard.domain.User;
 import okhttp3.MultipartBody;
 
 public class ProductRequest {
-    //model to get user info from data json
+    //model to get user info from return data json in spring boot web api
     @SerializedName("user") // key name of key:value when retrieve data from json type
     @Expose
     private User userInfo;

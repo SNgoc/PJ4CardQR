@@ -44,6 +44,7 @@ import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
+import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
@@ -62,6 +63,8 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    //header title card
+    TextView txtFrontHeaderCard,txtBehindHeaderCard;
     //front card
     TextView txtName,txtEmail,txtPhone,txtAddress,txtBirthday,txtProvince, txtGender;
     //behind card
@@ -116,8 +119,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        super.onStart();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+        txtFrontHeaderCard = view.findViewById(R.id.txt_front_header_card);
+        txtBehindHeaderCard = view.findViewById(R.id.txt_behind_header_card);
         txtName = view.findViewById(R.id.txt_Name);
         txtEmail = view.findViewById(R.id.txt_Email);
         txtBirthday = view.findViewById(R.id.txt_Birthday);
@@ -140,14 +146,32 @@ public class HomeFragment extends Fragment {
 
         //fix error android.os.NetworkOnMainThreadException for Bitmap image url
         if (android.os.Build.VERSION.SDK_INT > 9) {
-            StrictMode.ThreadPolicy gfgPolicy =
-                    new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.ThreadPolicy gfgPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(gfgPolicy);
         }
 
-        //call api to check product if it was bought
+        //hide layout_UpdateProfile and btnUpdateProfile
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set title bar to Home
+                ((MainActivity) getActivity()).setActionBarTitle("Home");
+                layout_updateProfile.setVisibility(View.GONE);
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        //to check product if it was bought
         SessionManager.setStopCode(false);
+        //retrofit connect mysql db
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+
+        //call api get product
         apiService.getProduct(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
             @Override
             public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
@@ -171,59 +195,16 @@ public class HomeFragment extends Fragment {
         //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
         if (SessionManager.isStopCode() == false) {
             //call api to get user info
-            ApiService apiServiceGetProfile = RetrofitService.proceedToken().create(ApiService.class);
-            apiServiceGetProfile.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
+            apiService.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
                 @Override
                 public void onResponse(Call<User> call, Response<User> response) {
                     if (response.isSuccessful()) {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
-//                                Toast.makeText(getActivity().getApplicationContext(), "Success " + response.body(), Toast.LENGTH_SHORT).show();
-                                //display avatar img from url
-                                try {
-                                    //avatar
-                                    Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(response.body().getLinkImage()).getContent());
-                                    imgAvatar.setImageBitmap(bitmap1);
-                                } catch (MalformedURLException e) {
-                                    e.printStackTrace();
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-
-                                //create QR img from user info
-                                String dynamicQR = "Email: " + response.body().getEmail()
-                                        + "\nFullname: " + response.body().getFullname()
-                                        + "\nPhone: " + response.body().getPhone()
-                                        + "\nAddress: " + response.body().getAddress()
-                                        + "\nBirthday: " + response.body().getDateOfbirth()
-                                        + "\nGender: " + (response.body().getGender() == true?"Male":"Female")
-                                        + "\nProvince: " + response.body().getProvince();
-                                MultiFormatWriter writer = new MultiFormatWriter();
-                                try {
-                                    BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
-                                    BarcodeEncoder encoder = new BarcodeEncoder();
-                                    Bitmap bitmap = encoder.createBitmap(matrix);
-                                    imgQR.setImageBitmap(bitmap);
-                                } catch (WriterException e) {
-                                    e.printStackTrace();
-                                }
-                                ////////////////////////////////////////////////////////////////////
-                                //set display user info get from product info
-                                txtName.setText("Fullname: " + response.body().getFullname());
-                                txtEmail.setText("Email: " + response.body().getEmail());
-                                //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
-                                String[] birthday = response.body().getDateOfbirth().split("T");
-                                txtBirthday.setText("Birthday: " + birthday[0]);
-                                txtPhone.setText("Phone: " + response.body().getPhone());
-                                txtAddress.setText("Address: " + response.body().getAddress());
-                                txtProvince.setText("Province: " + response.body().getProvince());
-                                txtGender.setText("Gender: " + (response.body().getGender()==true?"Male":"Female"));
-                                boolean gender = response.body().getGender();
-                                if (gender == true) {
-                                    txtGender.setText("Gender: Male");
-                                } else {
-                                    txtGender.setText("Gender: Female");
-                                }
+                                //save user to Session to use outside this function for create qr
+                                SessionManager.setSaveUser(response.body());
+                                SessionManager.setSaveFullname(response.body().getFullname());
+//                                Toast.makeText(getActivity().getApplicationContext(), "Success " + SessionManager.getSaveUser().getDescription(), Toast.LENGTH_SHORT).show();
                             }
                             if (response.body() == null){
                                 Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
@@ -240,6 +221,43 @@ public class HomeFragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(), "Failed display profile", Toast.LENGTH_SHORT).show();
                 }
             });
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            //call api to get social info
+            apiService.getSocialInfo(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<SocialNweb>() {
+                @Override
+                public void onResponse(Call<SocialNweb> call, Response<SocialNweb> response) {
+                    if (response.isSuccessful()){
+                        //save social to Session to use outside this function for create qr code
+                        SessionManager.setSaveSocialNweb(response.body());
+                    }
+
+                    if (response.body() == null){
+                        Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                    }
+                    if (response.code() == 401){
+                        Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SocialNweb> call, Throwable t) {
+                    Toast.makeText(getActivity().getApplicationContext(),"Get social failed: " + t.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            });
+            ///////////////////////////////////////////////////////////////////////////////////////////
+
+            //save data user and social to static session
+            try {
+                SessionManager.setSaveUser(apiService.getProfile(SessionManager.getSaveUsername()).execute().body());
+                SessionManager.setSaveSocialNweb(apiService.getSocialInfo(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).execute().body());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            //display smart card info and qr cde
+//            Toast.makeText(getActivity().getApplicationContext(),"Session: " + SessionManager.getSaveUser().getFullname(),Toast.LENGTH_LONG).show();
+            showCardInfo();
         }
         //get data from other fragment or activity
 
@@ -250,6 +268,9 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getActivity().getApplicationContext(), "Click success", Toast.LENGTH_SHORT).show();
+
+                //set change header card
+                txtBehindHeaderCard.setText(R.string.behind_header_card);
 //                try {
 //                    Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(qrImg[0]).getContent());
 //                    imgQR.setImageBitmap(bitmap);
@@ -285,6 +306,9 @@ public class HomeFragment extends Fragment {
             public void onClick(View view) {
                 Toast.makeText(getActivity().getApplicationContext(), "Click success", Toast.LENGTH_SHORT).show();
 
+                //set change header card
+                txtFrontHeaderCard.setText(R.string.front_header_card);
+
                 final ObjectAnimator oa1 = ObjectAnimator.ofFloat(layoutCard_behind, "scaleX", 1f, 0f);
                 final ObjectAnimator oa2 = ObjectAnimator.ofFloat(layoutCard_behind, "scaleX", 0f, 1f);
                 oa1.setInterpolator(new DecelerateInterpolator());
@@ -306,16 +330,6 @@ public class HomeFragment extends Fragment {
         });
         //================================================================
 
-        //hide layout_UpdateProfile and btnUpdateProfile
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Set title bar to Home
-                ((MainActivity) getActivity()).setActionBarTitle("Home");
-                layout_updateProfile.setVisibility(View.GONE);
-            }
-        });
-
         // to update layout
         btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -329,6 +343,60 @@ public class HomeFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null).commit();
             }
         });
-        return view;
+
+    }
+
+    //function to display smart card info and qr cde
+    public void showCardInfo(){
+        //user info
+        //set display user info get from user model
+         txtName.setText("Fullname: " + SessionManager.getSaveUser().getFullname());
+        txtEmail.setText("Email: " + SessionManager.getSaveUser().getEmail());
+        //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
+        String[] birthday = SessionManager.getSaveUser().getDateOfbirth().split("T");
+        SessionManager.getSaveUser().setDateOfbirth(birthday[0]);
+        txtBirthday.setText("Birthday: " + SessionManager.getSaveUser().getDateOfbirth());
+        txtPhone.setText("Phone: " + SessionManager.getSaveUser().getPhone());
+        txtAddress.setText("Address: " + SessionManager.getSaveUser().getAddress());
+        txtProvince.setText("Province: " + SessionManager.getSaveUser().getProvince());
+        txtGender.setText("Gender: " + (SessionManager.getSaveUser().getGender()==true?"Male":"Female"));
+        //display avatar img from url
+        try {
+            //avatar
+            Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(SessionManager.getSaveUser().getLinkImage()).getContent());
+            imgAvatar.setImageBitmap(bitmap1);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //social and web info
+        //set display social info get from socialNweb model
+        txtFacebook.setText("Facebook: " + SessionManager.getSaveSocialNweb().getFacebook());
+        txtTwitter.setText("Twitter: " + SessionManager.getSaveSocialNweb().getTwitter());
+        txtInstagram.setText("Instagram: " + SessionManager.getSaveSocialNweb().getInstagram());
+
+        //create QR img from user info
+        String dynamicQR = "Email: " + SessionManager.getSaveUser().getEmail()
+                + "\nFullname: " + SessionManager.getSaveUser().getFullname()
+                + "\nPhone: " + SessionManager.getSaveUser().getPhone()
+                + "\nAddress: " + SessionManager.getSaveUser().getAddress()
+                + "\nBirthday: " + SessionManager.getSaveUser().getDateOfbirth()
+                + "\nGender: " + (SessionManager.getSaveUser().getGender() == true?"Male":"Female")
+                + "\nProvince: " + SessionManager.getSaveUser().getProvince()
+                + "\nFacebook: " + SessionManager.getSaveSocialNweb().getFacebook()
+                + "\nTwitter: " + SessionManager.getSaveSocialNweb().getTwitter()
+                + "\nInstagram: " + SessionManager.getSaveSocialNweb().getInstagram();
+        MultiFormatWriter writer = new MultiFormatWriter();
+        try {
+            BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
+            BarcodeEncoder encoder = new BarcodeEncoder();
+            Bitmap bitmap = encoder.createBitmap(matrix);
+            imgQR.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
+        }
+        ////////////////////////////////////////////////////////////////////
     }
 }

@@ -36,8 +36,10 @@
 
                 <ImageView
                     android:id="@+id/imgAvatarProfile"
+                    android:background="@drawable/img8"
                     android:layout_width="470px"
                     android:layout_height="470px"
+                    android:scaleType="fitXY"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true" />
             </RelativeLayout>
