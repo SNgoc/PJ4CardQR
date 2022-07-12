@@ -3,6 +3,7 @@ package fpt.aptech.projectcard.callApiService;
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
+import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UpdateProfile;
 import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.User;
@@ -35,6 +36,12 @@ public interface ApiService {
 
     @GET(ApiConstant.URL_GETSOCIAL_BY_USERID)
     Call<SocialNweb> getSocialInfo(@Path("user_id") Long user_id, @Query("Authorization") String token);
+
+    @POST(ApiConstant.URL_ADD_SOCIAL)
+    Call<SocialNWebRequest> addSocialNWeb(@Body SocialNWebRequest socialNWebRequest, @Query("Authorization") String token);
+
+    @POST(ApiConstant.URL_UPDATE_SOCIAL)
+    Call<SocialNWebRequest> updateSocialNWeb(@Path("social_id") Long social_id, @Body SocialNWebRequest socialNWebRequest, @Query("Authorization") String token);
 
 
 

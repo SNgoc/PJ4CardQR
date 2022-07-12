@@ -63,6 +63,20 @@ public class SocialNWebRequest {
         this.user_id = user_id;
     }
 
+    //for add
+    public SocialNWebRequest(String facebook, String twitter, String instagram, String tiktok, String web1, String web2, String company1, String company2, Long user_id) {
+        this.facebook = facebook;
+        this.twitter = twitter;
+        this.instagram = instagram;
+        this.tiktok = tiktok;
+        this.web1 = web1;
+        this.web2 = web2;
+        this.company1 = company1;
+        this.company2 = company2;
+        this.user_id = user_id;
+    }
+
+    //for update
     public SocialNWebRequest(String facebook, String twitter, String instagram, String tiktok, String web1, String web2, String company1, String company2) {
         this.facebook = facebook;
         this.twitter = twitter;
@@ -73,6 +87,7 @@ public class SocialNWebRequest {
         this.company1 = company1;
         this.company2 = company2;
     }
+
 
     public Long getSocial_id() {
         return social_id;

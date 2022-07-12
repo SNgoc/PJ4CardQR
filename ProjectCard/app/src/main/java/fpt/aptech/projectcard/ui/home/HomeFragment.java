@@ -108,6 +108,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        super.onStart();
         // can't Set title bar to Home will error null at setActionBarTitle because home is start fragment
 //        ((MainActivity) getActivity()).setActionBarTitle("Home");
         if (getArguments() != null) {
@@ -154,6 +155,7 @@ public class HomeFragment extends Fragment {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onStart();
                 // Set title bar to Home
                 ((MainActivity) getActivity()).setActionBarTitle("Home");
                 layout_updateProfile.setVisibility(View.GONE);
@@ -242,6 +244,7 @@ public class HomeFragment extends Fragment {
 
                 @Override
                 public void onFailure(Call<SocialNweb> call, Throwable t) {
+                    //note: if social's record was delete in db, need re-install or delete cache and data of this app to fix error crash no value present
                     Toast.makeText(getActivity().getApplicationContext(),"Get social failed: " + t.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             });
@@ -372,12 +375,22 @@ public class HomeFragment extends Fragment {
         }
 
         //social and web info
-        //set display social info get from socialNweb model
-        txtFacebook.setText("Facebook: " + SessionManager.getSaveSocialNweb().getFacebook());
-        txtTwitter.setText("Twitter: " + SessionManager.getSaveSocialNweb().getTwitter());
-        txtInstagram.setText("Instagram: " + SessionManager.getSaveSocialNweb().getInstagram());
+        //set social default if social is not exist
+        if (SessionManager.getSaveSocialNweb() == null) {
+            txtFacebook.setText("N/A");
+            txtTwitter.setText("N/A");
+            txtInstagram.setText("N/A");
+        } else {
+            //set display social info get from socialNweb model if social was added before
+            txtFacebook.setText(SessionManager.getSaveSocialNweb().getFacebook());
+            txtTwitter.setText(SessionManager.getSaveSocialNweb().getTwitter());
+            txtInstagram.setText(SessionManager.getSaveSocialNweb().getInstagram());
+            if (txtFacebook.getText().toString().trim().isEmpty()){
+                txtFacebook.setVisibility(View.GONE);
+            }
+        }
 
-        //create QR img from user info
+        //create QR img from user info + Social + web
         String dynamicQR = "Email: " + SessionManager.getSaveUser().getEmail()
                 + "\nFullname: " + SessionManager.getSaveUser().getFullname()
                 + "\nPhone: " + SessionManager.getSaveUser().getPhone()
@@ -385,9 +398,9 @@ public class HomeFragment extends Fragment {
                 + "\nBirthday: " + SessionManager.getSaveUser().getDateOfbirth()
                 + "\nGender: " + (SessionManager.getSaveUser().getGender() == true?"Male":"Female")
                 + "\nProvince: " + SessionManager.getSaveUser().getProvince()
-                + "\nFacebook: " + SessionManager.getSaveSocialNweb().getFacebook()
-                + "\nTwitter: " + SessionManager.getSaveSocialNweb().getTwitter()
-                + "\nInstagram: " + SessionManager.getSaveSocialNweb().getInstagram();
+                + "\nFacebook: " + txtFacebook.getText().toString()
+                + "\nTwitter: " + txtTwitter.getText().toString()
+                + "\nInstagram: " + txtInstagram.getText().toString();
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);

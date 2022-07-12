@@ -153,7 +153,7 @@
             android:id="@+id/layoutCard_behind"
             android:layout_width="355dp"
             android:layout_height="200dp"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:background="@drawable/layout_card_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -200,6 +200,7 @@
 
                     <ImageView
                         android:id="@+id/imgQRInfo"
+                        android:scaleType="fitXY"
                         android:layout_width="250px"
                         android:layout_height="250px" />
                 </LinearLayout>
