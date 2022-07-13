@@ -26,7 +26,7 @@ public interface ApiService {
     Call<SignupRequest> signup(@Body SignupRequest signupRequest);
 
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
-    Call<ProductRequest> getProduct(@Path("user_id") Long user_id, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+    Call<ProductRequest> getProduct(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
 
     @GET(ApiConstant.URL_PROFILE)
     Call<User> getProfile(@Path("username") String username);

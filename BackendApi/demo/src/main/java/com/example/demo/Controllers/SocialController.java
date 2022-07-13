@@ -2,12 +2,10 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Exception.ApiRequestException;
 import com.example.demo.Payload.Request.SocialNWebRequest;
-import com.example.demo.Payload.Request.UpdateProfile;
 import com.example.demo.domain.SocialNweb;
 import com.example.demo.domain.User;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.SocialNWebService;
-import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

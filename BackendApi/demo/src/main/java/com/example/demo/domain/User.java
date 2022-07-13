@@ -41,7 +41,7 @@ public class User {
 
     private String linkImage;
 
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfbirth;
 
     private String province;

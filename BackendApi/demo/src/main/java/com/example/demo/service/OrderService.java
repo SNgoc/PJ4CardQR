@@ -89,9 +89,9 @@ public class OrderService {
 //        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
         options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/demo/Qrcode/qrcode.png").toPath());
 
-        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
+        File file = new File("N:/demo/Qrcode/qrcode.png");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "image/png", IOUtils.toByteArray(input));
@@ -99,7 +99,7 @@ public class OrderService {
        String url =  result.get("url").toString();
         String public_id =  result.get("public_id").toString();
         String token = UUID.randomUUID().toString();
-         Product p = new Product("Smart Cards","Smart Card",url,public_id,user,LocalDateTime.now(),1,token);
+         Product p = new Product("Smart Cards","Smart Card",url,public_id,user,null,1,token);
 
 
         Product productId =  productRepository.save(p);
@@ -113,7 +113,7 @@ public class OrderService {
         newOrder.setCategory(category);
         newOrder.setUser(user);
         newOrder.setProduct(productId);
-        newOrder.setOrder_process(orderProceesRepository.findById(2L).get());
+        newOrder.setOrder_process(orderProceesRepository.findById(1L).get());
         orderRepository.save(newOrder);
 
 
@@ -188,7 +188,7 @@ public class OrderService {
         setConfirmedAt(token);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:8081/ProductDetails");
+        redirectView.setUrl("http://localhost:8088/Product");
         return redirectView;
     }
     private int setConfirmedAt(String token) {

@@ -48,8 +48,6 @@ public class UpdateProfile {
     @Temporal(TemporalType.DATE)
     private Date dateOfbirth;
 
-    private Boolean gender;
 
-    @NotBlank(message = "Province is not blank")
-    private String province;//add when merge code
+    private Boolean gender;
 }

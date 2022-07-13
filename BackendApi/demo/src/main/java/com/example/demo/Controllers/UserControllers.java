@@ -29,4 +29,13 @@ public class UserControllers {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Delete not found");
         }
     }
+
+    @GetMapping("/checkUsername/{username}")
+    public ResponseEntity<?> checkUsername(@PathVariable String username){
+        if (userRepository.existsByUsername(username)){
+            return ResponseEntity.ok(HttpStatus.OK);
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
+        }
+    }
 }

@@ -38,7 +38,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
     //front card
     TextView txtName,txtEmail,txtPhone,txtAddress,txtBirthday,txtProvince, txtGender;
     //behind card
-    TextView txtFacebook,txtTwitter,txtInstagram;
+    TextView txtFacebook,txtTwitter,txtInstagram, txtWeb1, txtCompany1;
     ImageView imgAvatar, imgQR;
     //click event for layout
     ConstraintLayout layoutCard_front, layoutCard_behind;
@@ -135,6 +137,8 @@ public class HomeFragment extends Fragment {
         txtFacebook = view.findViewById(R.id.txt_Facebook);
         txtTwitter = view.findViewById(R.id.txt_Twitter);
         txtInstagram = view.findViewById(R.id.txt_Instagram);
+        txtWeb1 = view.findViewById(R.id.txt_Web1);
+        txtCompany1 = view.findViewById(R.id.txt_Company1);
         imgAvatar = view.findViewById(R.id.imgAvatar);
         imgQR = view.findViewById(R.id.imgQRInfo);
         //set click listener
@@ -174,7 +178,7 @@ public class HomeFragment extends Fragment {
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
 
         //call api get product
-        apiService.getProduct(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
+        apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
             @Override
             public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
                 //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
@@ -376,17 +380,77 @@ public class HomeFragment extends Fragment {
 
         //social and web info
         //set social default if social is not exist
+        List<String> swList = new ArrayList<>();
+        List<String> companyList = new ArrayList<>();
         if (SessionManager.getSaveSocialNweb() == null) {
-            txtFacebook.setText("N/A");
-            txtTwitter.setText("N/A");
-            txtInstagram.setText("N/A");
+            txtFacebook.setText("Facebook: N/A");
+            txtTwitter.setText("Twitter: N/A");
+            txtInstagram.setText("Instagram: N/A");
+            txtWeb1.setText("Website: N/A");
+            txtCompany1.setText("Company: N/A");
         } else {
-            //set display social info get from socialNweb model if social was added before
-            txtFacebook.setText(SessionManager.getSaveSocialNweb().getFacebook());
-            txtTwitter.setText(SessionManager.getSaveSocialNweb().getTwitter());
-            txtInstagram.setText(SessionManager.getSaveSocialNweb().getInstagram());
-            if (txtFacebook.getText().toString().trim().isEmpty()){
+            String facebook = SessionManager.getSaveSocialNweb().getFacebook();
+            String twitter = SessionManager.getSaveSocialNweb().getTwitter();
+            String instagram = SessionManager.getSaveSocialNweb().getInstagram();
+            String tiktok = SessionManager.getSaveSocialNweb().getTiktok();
+            String web1 = SessionManager.getSaveSocialNweb().getWeb1();
+            String web2 = SessionManager.getSaveSocialNweb().getWeb2();
+            String company1 = SessionManager.getSaveSocialNweb().getCompany1();
+            String company2 = SessionManager.getSaveSocialNweb().getCompany2();
+
+            //add field to array list
+            swList.add(facebook);
+            swList.add(twitter);
+            swList.add(instagram);
+            swList.add(tiktok);
+            swList.add(web1);
+            swList.add(web2);
+            swList.removeIf(String::isEmpty);//remove if a field is empty
+
+            companyList.add(company1);
+            companyList.add(company2);
+            companyList.removeIf(String::isEmpty);
+
+            //check logic
+            //for social
+            if (facebook.trim().isEmpty() && twitter.trim().isEmpty() && instagram.trim().isEmpty()) {
+                txtFacebook.setText("Facebook: N/A");
+                txtTwitter.setText("Twitter: N/A");
+                txtInstagram.setText("Instagram: N/A");
+            } else {
+                //set display social info get from socialNweb model if social was added before
+                txtFacebook.setText("Facebook: " + facebook);
+                txtTwitter.setText("Twitter: " + twitter);
+                txtInstagram.setText("Instagram: " + instagram);
+            }
+            if (facebook.trim().isEmpty()){
                 txtFacebook.setVisibility(View.GONE);
+            }
+            if (twitter.trim().isEmpty()){
+                txtTwitter.setVisibility(View.GONE);
+            }
+            if(instagram.trim().isEmpty()){
+                txtInstagram.setVisibility(View.GONE);
+            }
+
+            //for web
+            if (web1.trim().isEmpty()){
+                txtWeb1.setText("Website: " + web2);
+            } else {
+                txtWeb1.setText("Website: " + web1);
+            }
+            if (web1.trim().isEmpty() && web2.trim().isEmpty()) {
+                txtWeb1.setText("Website: N/A");
+            }
+
+            //for company
+            if (company1.trim().isEmpty()){
+                txtCompany1.setText("Company: " + company2);
+            } else{
+                txtCompany1.setText("Company: " + company1);
+            }
+            if (company1.trim().isEmpty() && web2.trim().isEmpty()) {
+                txtCompany1.setText("Company: N/A");
             }
         }
 
@@ -397,13 +461,17 @@ public class HomeFragment extends Fragment {
                 + "\nAddress: " + SessionManager.getSaveUser().getAddress()
                 + "\nBirthday: " + SessionManager.getSaveUser().getDateOfbirth()
                 + "\nGender: " + (SessionManager.getSaveUser().getGender() == true?"Male":"Female")
-                + "\nProvince: " + SessionManager.getSaveUser().getProvince()
-                + "\nFacebook: " + txtFacebook.getText().toString()
-                + "\nTwitter: " + txtTwitter.getText().toString()
-                + "\nInstagram: " + txtInstagram.getText().toString();
+                + "\nProvince: " + SessionManager.getSaveUser().getProvince();
+        //create qr removed empty field
+        for (String s:swList) {
+            dynamicQR += "\nWeb link: " + s;
+        }
+        for (String c:companyList) {
+            dynamicQR += "\nCompany: " + c;
+        }
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
-            BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,350,350);
+            BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,450,450);
             BarcodeEncoder encoder = new BarcodeEncoder();
             Bitmap bitmap = encoder.createBitmap(matrix);
             imgQR.setImageBitmap(bitmap);

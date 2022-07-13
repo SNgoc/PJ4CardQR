@@ -1,6 +1,8 @@
 package com.example.demo.domain;
 
-import lombok.*;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 

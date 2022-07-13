@@ -49,6 +49,11 @@
     <string name="txt_facebook">Facebook: N/A</string>
     <string name="txt_twitter">Twitter: N/A</string>
     <string name="txt_instagram">Instagram: N/A</string>
+    <string name="txt_tiktok">Tiktok: N/A</string>
+    <string name="txt_web1">Web: N/A</string>
+    <string name="txt_web2">Web: N/A</string>
+    <string name="txt_company1">Company: N/A</string>
+    <string name="txt_company2">Company: N/A</string>
     <!--String text for Register and Update Account's Profile layout-->
     <string name="btn_updateProfile">Update Profile</string>
     <string name="btn_saveProfile">Save Profile</string>

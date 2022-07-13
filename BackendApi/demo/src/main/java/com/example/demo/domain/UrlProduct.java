@@ -16,17 +16,19 @@ public class UrlProduct {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String title;
+    private String name;
 
     private String url;
-
-    private int Image;
 
     @ManyToOne
     @JoinColumn(name="product_id")
     private Product product;
 
-//    @ManyToOne
-//    @JoinColumn(name="type_id")
-//    private LinkType linkType;
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="type_id")
+    private LinkType linkType;
 }

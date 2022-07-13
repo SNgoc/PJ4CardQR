@@ -1,8 +1,6 @@
 package com.example.demo.domain;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -11,6 +9,8 @@ import java.util.List;
 @Data
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class LinkType {
 
     @Id
@@ -23,10 +23,6 @@ public class LinkType {
 
     private String dataUrl;
 
-    private String title;
-
     private String linkImage;
 
-//    @OneToMany(mappedBy = "linkType")
-//    private List<UrlProduct> UrlProducts;
 }

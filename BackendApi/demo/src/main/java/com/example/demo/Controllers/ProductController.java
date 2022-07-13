@@ -22,9 +22,9 @@ public class ProductController {
         return ResponseEntity.ok(productService.ShowAll());
     }
 
-    @GetMapping("/getProduct/{user_id}")
-    public ResponseEntity<?> getProduct(@PathVariable Long user_id) {
-        var user = userRepo.findById(user_id);
+    @GetMapping("/getProduct/{username}")
+    public ResponseEntity<?> getProduct(@PathVariable String username) {
+        var user = userRepo.findByUsername(username);
         return ResponseEntity.ok(productRepository.findProductByUser(user.get()));
     }
 

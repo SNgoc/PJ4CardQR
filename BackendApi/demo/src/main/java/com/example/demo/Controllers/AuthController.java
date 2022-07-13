@@ -132,7 +132,7 @@ public class AuthController  {
     public ResponseEntity<?> changeImageProfile(  ChangeImageUserRequest request) throws IOException {
         String response = userService.ChangeImageProfile(request);
         if (response != null) {
-            return ResponseEntity.ok("update succesfully");
+            return ResponseEntity.ok("update  succesfully");
         }
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("update not found");
@@ -149,12 +149,11 @@ public class AuthController  {
             u.setPhone(request.getPhone());
             u.setAddress(request.getAddress());
             u.setEmail(request.getEmail());
-            u.setProvince(request.getProvince());//add when merge code
             u.setDateOfbirth(request.getDateOfbirth());
             u.setGender(request.getGender());
             userRepository.save(u);
-//            return ResponseEntity.ok("Update Succesfully");//trả về kiểu string sẽ gây ra lỗi Begin Expect Object onFailure bên Android
-            return ResponseEntity.ok(u);//trả về kiểu obj để fix lỗi này
+            return  ResponseEntity.ok(u);
+
         } else {
             throw new ApiRequestException( "Save change fails");
         }
