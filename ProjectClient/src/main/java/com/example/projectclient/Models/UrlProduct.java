@@ -10,11 +10,13 @@ import lombok.*;
 public class UrlProduct {
     private Long id;
 
-    private String title;
+    private String name;
 
     private String url;
 
-    private int Image;
-
     private Product product;
+
+    private User user;
+
+    private LinkType linkType;
 }

@@ -25,6 +25,7 @@ public class Orders {
 
     private String fullname;
 
+    private String email;
 
     private Order_Process order_process;
 

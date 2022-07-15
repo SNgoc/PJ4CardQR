@@ -25,4 +25,8 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
             "SET c.status = 2 " +
             "WHERE c.token = ?1")
     int updateConfirmedAt(String token);
+
+    //count product(SNgoc)
+    @Query(value = "select count (id) from Product")
+    int countProduct();
 }

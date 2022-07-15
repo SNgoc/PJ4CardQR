@@ -91,7 +91,8 @@
                                     <td><p th:text="${order.price}"></p></td>
                                     <td><p th:text="${order.order_process.name}"></p></td>
                                     <td>
-                                        <a th:href="@{/Admin/Order/delete/{id}(id=${order.id})}" class="deleteModel" id="myBtn ">Delete</a>
+                                        <a th:href="@{/Admin/Order/Confirm/{id}(id=${order.id})}" class="deleteModel" id="myBtn ">Confirm</a>
+                                        | <a th:href="@{/Admin/OrderDetails-{id}(id=${order.id})}">Details</a>
                                     </td>
 
                                 </tr>
@@ -105,7 +106,7 @@
                                 <!-- Modal content -->
                                 <div class="modal-content">
                                     <span class="modelClose1">&times;</span>
-                                    <p>Do you want delete this category?</p>
+                                    <p>Do you want to confirm this order?</p>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" id="modelClose2">Close</button>
                                         <a class="btn btn-danger" id="delRef" href="">Delete</a>

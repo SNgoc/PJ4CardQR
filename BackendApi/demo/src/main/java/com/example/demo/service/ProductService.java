@@ -40,5 +40,6 @@ public class ProductService {
         return (List<Product>) productRepository.findAll();
     }
 
-
+    //count product(SNgoc)
+    public int countProductByID(){ return productRepository.countProduct();}
 }

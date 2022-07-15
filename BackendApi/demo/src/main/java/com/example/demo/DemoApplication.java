@@ -63,8 +63,12 @@ public class DemoApplication {
 			calendar.set(Calendar.SECOND,0);
 			calendar.set(Calendar.MILLISECOND,0);
 			User user = new User("John" ,"John@gmail.com",encoder.encode("1234"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","Go Vap","1234","Pham trong nghia","NGHIAPHAM","DEVERLOPER", calendar.getTime(),true,"TPHCM");
+			user.setEnable(true);
+			user.setLocked(true);
 
 			User user1 = new User("Will" ,"will@gmail.com",encoder.encode("1234"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","Go Vap","1234","Pham trong nghia","NGHIAPHAM","DEVERLOPER",calendar.getTime(),true,"TPHCM");
+			user1.setEnable(false);
+			user1.setLocked(false);
 
 			userService.saveUser(user);
 			userService.saveUser(user1);
@@ -83,10 +87,10 @@ public class DemoApplication {
 			CategoryRepository.save(c2);
 
 
-			Order_Process o1 = new Order_Process("Waiting");
-			Order_Process o2 = new Order_Process("Delivery");
-			Order_Process o3 = new Order_Process("Success");
-			Order_Process o4 = new Order_Process("Cancel");
+			Order_Process o1 = new Order_Process("Waiting", "badge badge-secondary", "confirm and deliver the order");
+			Order_Process o2 = new Order_Process("Delivery", "badge badge-primary", "complete order");
+			Order_Process o3 = new Order_Process("Success", "badge badge-success", "order completed");
+			Order_Process o4 = new Order_Process("Cancel", "badge badge-danger", "Cancel this order");
 
 			orderProceesRepository.save(o1);
 			orderProceesRepository.save(o2);

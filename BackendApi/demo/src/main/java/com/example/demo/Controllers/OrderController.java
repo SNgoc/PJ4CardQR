@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -77,6 +79,18 @@ public class OrderController {
         else{
             return ResponseEntity.ok("success");
         }
+    }
+
+    //doanh thu(SNgoc)
+    @GetMapping("/getRevenue")
+    public double getRevenueOrder(){
+        return orderService.getRevenueOrder();
+    }
+
+    //count order status
+    @GetMapping("/countOrderStatus")
+    public List<Integer> countOrderStatus(){
+        return orderService.getSumOrderStatus();
     }
 
 }

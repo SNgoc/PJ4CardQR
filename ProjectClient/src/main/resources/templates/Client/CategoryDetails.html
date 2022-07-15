@@ -9,25 +9,36 @@
 <body>
 <h2 >Category</h2>
 <div layout:fragment="content">
+    <section class="module bg-dark-60 shop-page-header" data-background="assets/images/shop/product-page-bg.jpg">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <h2 class="module-title font-alt" th:text="${category.name}"></h2>
+                    <div class="module-subtitle font-serif">One Touch has a pre-installed touch feature on the product, you just need to add information and can use it right away!</div>
+                </div>
+            </div>
+        </div>
+    </section>
     <section  class="module" id="alt-features">
         <div class="container">
             <div class="row">
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-strategy"></span></div>
-                        <h3 class="alt-features-title font-alt">Branding</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">only one touch</h3>Just TOUCH someone else's phone and their phone will show your contact information.
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-tools-2"></span></div>
-                        <h3 class="alt-features-title font-alt">Development</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">
+                            easy to add information</h3>You will be guided through everything.
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-target"></span></div>
-                        <h3 class="alt-features-title font-alt">Marketing</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">unlimited</h3>You can add as much information as you want, unlimited.
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-tools"></span></div>
-                        <h3 class="alt-features-title font-alt">Design</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">Design</h3>You can design your own style card.
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
@@ -36,19 +47,20 @@
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-camera"></span></div>
-                        <h3 class="alt-features-title font-alt">Photography</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">environment</h3>Reduce the amount of waste in the environment.
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-mobile"></span></div>
-                        <h3 class="alt-features-title font-alt">Mobile</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">compatible with smartphones</h3>
+                        Compatible with most current smartphones such as iPhone, Samsung, Oppo, Xiaomi...
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-linegraph"></span></div>
-                        <h3 class="alt-features-title font-alt">Music</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">technology fanatic</h3>ONE TOUCH is an indispensable item of technology believers.
                     </div>
                     <div class="alt-features-item">
                         <div class="alt-features-icon"><span class="icon-basket"></span></div>
-                        <h3 class="alt-features-title font-alt">Shop</h3>A wonderful serenity has taken possession of my entire soul like these sweet mornings.
+                        <h3 class="alt-features-title font-alt">Price</h3><span th:text="${category.getPrice()}+ '$'"></span>
                     </div>
                 </div>
             </div>
@@ -59,12 +71,12 @@
             <div class="row">
                 <div class="col-sm-6 col-md-8 col-lg-6 col-lg-offset-2">
                     <div class="callout-text font-alt">
-                        <h3 class="callout-title">Want to order this product?</h3>
-                        <p>We are always here to wait your order.</p>
+                        <h3 class="callout-title" th:text="'Want to order this '+ ${category.name} + '?'"></h3>
+                        <p  th:text="'Price: '+ ${category.price} + '$'"></p>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-4 col-lg-2">
-                    <div class="callout-btn-box"><a class="btn btn-w btn-round" th:href="@{/MoveToOrder}">Order This Product</a></div>
+                    <div class="callout-btn-box"><a class="btn btn-w btn-round" th:href="@{/Order-{id}(id=${category.id})}">Order</a></div>
                 </div>
             </div>
         </div>
@@ -84,7 +96,7 @@
                             <li><span>Newsletter</span></li>
                             <li><span>Working Contact Form</span></li>
                             <li><span>Unlimited Domains</span></li>
-                        </ul><a class="btn btn-d btn-round" th:href="@{/Order}">Sign Up</a>
+                        </ul><a class="btn btn-d btn-round" th:href="@{/Order-{id}(id=${category.id})}">Sign Up</a>
                     </div>
                 </div>
             </div>

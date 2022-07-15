@@ -57,6 +57,6 @@ public class OrderController {
         if (respone.statusCode() == 200){
             return "redirect:/Client";
         }
-        return "redirect:/Order";
+        return "redirect:/Order-" + request.getCategory_id();
     }
 }

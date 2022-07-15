@@ -190,6 +190,13 @@ public class UserService {
         return "Update succesfully";
     }
 
+    //count all users(SNgoc)
+    public int countAllUsers(){ return userRepository.getCountAllUsers(); }
 
+    //count users active(SNgoc)
+    public int countUsersActive(){ return userRepository.getCountUserActive(); }
+
+    //count users locked(SNgoc)
+    public int countUsersLocked(){ return userRepository.getCountUserLocked(); }
 
 }

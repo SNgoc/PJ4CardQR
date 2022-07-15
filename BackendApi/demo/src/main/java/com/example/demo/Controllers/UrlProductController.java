@@ -1,10 +1,12 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Payload.Request.AddCategoryRequest;
+import com.example.demo.Payload.Request.CreateOrderRequest;
 import com.example.demo.domain.Category;
 import com.example.demo.domain.LinkType;
 import com.example.demo.domain.UrlProduct;
 import com.example.demo.repo.LinkTypeRepository;
+import com.example.demo.repo.UserRepo;
 import com.example.demo.service.UrlProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +25,8 @@ public class UrlProductController {
     UrlProductService productService;
     @Autowired
     LinkTypeRepository linkTypeRepository;
+    @Autowired
+    UserRepo userRepo;
 
     @GetMapping("/list/{username}")
     public ResponseEntity<?> ShowAllByUsername(@PathVariable String username) {
@@ -35,10 +39,10 @@ public class UrlProductController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> add(UrlProduct url) throws IOException {
+    public ResponseEntity<?> add(@RequestBody UrlProduct url) throws IOException {
         String response = productService.addUrl(url);
         if(response != null){
-            return ResponseEntity.ok("OK");
+            return ResponseEntity.ok(url);
         }else{
             return ResponseEntity.badRequest().body("Fail");
         }

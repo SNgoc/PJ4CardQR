@@ -63,6 +63,26 @@ public class OrderService {
         this.emailSender = emailSender;
     }
 
+    //doanh thu(SNgoc)
+    public double getRevenueOrder(){
+        List<Double> orderPriceList = orderRepository.revenueOrder();
+        double sumRevenue = 0;
+        for (double p: orderPriceList) {
+            sumRevenue += p;
+        }
+        return sumRevenue;
+    }
+
+    //count order status
+    public List<Integer> getSumOrderStatus(){
+        List<Integer> orderList = new ArrayList<>();
+        orderList.add(orderRepository.orderWaiting());
+        orderList.add(orderRepository.orderDelivery());
+        orderList.add(orderRepository.orderSuccess());
+        orderList.add(orderRepository.orderCancel());
+        return orderList;
+    }
+
     public List<Orders> showAll() {
         List<Orders> list = orderRepository.findAll();
         return list;
@@ -89,18 +109,17 @@ public class OrderService {
 //        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
         options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/demo/Qrcode/qrcode.png").toPath());
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
 
-        File file = new File("N:/demo/Qrcode/qrcode.png");
+        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "image/png", IOUtils.toByteArray(input));
         Map result =   cloudinaryService.upload(multipartFile, options);
-       String url =  result.get("url").toString();
+        String url =  result.get("url").toString();
         String public_id =  result.get("public_id").toString();
         String token = UUID.randomUUID().toString();
-         Product p = new Product("Smart Cards","Smart Card",url,public_id,user,null,1,token);
-
+        Product p = new Product("Smart Cards","Smart Card",url,public_id,user,null,1,token);
 
         Product productId =  productRepository.save(p);
         String add = createOrderRequest.getAddress();
@@ -167,9 +186,9 @@ public class OrderService {
 //        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
         options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("D:/demo/Qrcode/qrcode.png").toPath());
 
-        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
+        File file = new File("D:/demo/Qrcode/qrcode.png");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "image/png", IOUtils.toByteArray(input));
@@ -188,7 +207,7 @@ public class OrderService {
         setConfirmedAt(token);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:8088/Product");
+        redirectView.setUrl("http://localhost:8081/ProductDetails");
         return redirectView;
     }
     private int setConfirmedAt(String token) {

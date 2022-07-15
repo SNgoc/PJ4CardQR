@@ -151,8 +151,6 @@ public class UserService {
     }
 
     public HttpResponse<String> CreateAccount(String json, HttpSession session) throws IOException, InterruptedException {
-
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/api/auth/signup"))
@@ -167,5 +165,22 @@ public class UserService {
         System.out.println(response.body());
 
         return response;
+    }
+
+    public Boolean checkUsername(String username,HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/User/checkUsername/" + username))
+                .GET()
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200){
+            return true;
+        }
+        return false;
     }
 }

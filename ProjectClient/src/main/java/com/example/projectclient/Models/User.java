@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -33,31 +34,7 @@ public class User {
 
     private String password;
 
-    @NotBlank(message = "phone is not blank")
-    private String phone;
-
-    @NotBlank(message = "address is not blank")
-    private String address;
-
     private String linkImage;
-
-    private String nameImage;
-
-    private Boolean enable;
-
-    private Boolean locked;
-
-    private Set<Role> roles;
-
-    @NotBlank(message = "Lastname is not blank")
-    private  String lastname;
-
-    @NotBlank(message = "fullname is not blank")
-    private String fullname;
-
-    @NotBlank(message = "description is not blank")
-    private String description;
-
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfbirth;
@@ -66,6 +43,31 @@ public class User {
 
     private Boolean gender;
 
+    @NotBlank(message = "phone is not blank")
+    private String phone;
+
+    @NotBlank(message = "address is not blank")
+    private String address;
+
+    private String nameImage;
+
+    private Boolean enable;
+
+    @NotBlank(message = "fullname is not blank")
+    private String fullname;
+
+    @NotBlank(message = "Lastname is not blank")
+    private  String lastname;
+
+    @NotBlank(message = "description is not blank")
+    private String description;
+
+    private Boolean locked;
+
+    private Set<Role> roles;
+
     public User(Long id, String username, String email, Date dateOfbirth, String phone, String address,Set<Role> roles,String province) {
     }
+
+
 }

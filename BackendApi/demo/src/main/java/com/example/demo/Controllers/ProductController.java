@@ -28,6 +28,7 @@ public class ProductController {
         return ResponseEntity.ok(productRepository.findProductByUser(user.get()));
     }
 
-
-
+    //get count product was bought(SNgoc)
+    @GetMapping("/getCountProduct/")
+    public int countSum(){ return productService.countProductByID(); }
 }

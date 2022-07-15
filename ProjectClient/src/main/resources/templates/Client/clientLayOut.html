@@ -42,8 +42,14 @@
 </head>
 <body>
 <header th:replace="Client/fragments/Header:: header"></header>
-<main layout:fragment="content"></main>
+<main>
+    <div layout:fragment="content" class="main">
+    </div>
+</main>
+
 <footer th:replace="Client/fragments/Footer:: footer"></footer>
+<div class="scroll-up"><a href="#totop"><i class="fa fa-angle-double-up"></i></a></div>
+
 <script src="Client/assets/lib/jquery/dist/jquery.js"></script>
 <script src="Client/assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 <script src="Client/assets/lib/wow/dist/wow.js"></script>
@@ -57,6 +63,14 @@
 <script src="Client/assets/lib/simple-text-rotator/jquery.simple-text-rotator.min.js"></script>
 <script src="Client/assets/js/plugins.js"></script>
 <script src="Client/assets/js/main.js"></script>
+
+
+
+
+
+
+
+
 
 
 <script src="Client/Login/js/jquery.min.js"></script>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Details</title>
+    <style>
+        body {font-family: Arial, Helvetica, sans-serif;}
+
+        /* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            padding-top: 100px; /* Location of the box */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content */
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaaaaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="main-content" layout:fragment="content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Order</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Order Details</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-md">
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <td><p th:text="${orders.fullname}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Address</th>
+                                    <td><p th:text="${orders.address}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Phone</th>
+                                    <td><p th:text="${orders.phone}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Customer Username</th>
+                                    <td><p th:text="${orders.user.username}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Product</th>
+                                    <td><p th:text="${orders.category.name}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Price</th>
+                                    <td><p th:text="${orders.category.price}"></p></td>
+                                </tr>
+                                <tr>
+                                    <th>Order status</th>
+                                    <td><div th:class="${orders.order_process.style}" th:text="${orders.order_process.name}"></div></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Process</h4>
+                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
+                            <div class="progress-bar bg-success" data-width="100"></div>
+                        </div>
+                        <div>
+                            <a href="#" class="btn btn-secondary" th:text="${orders.order_process.getDescription()}"></a>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th></th>
+                                    <th>Process</th>
+                                    <th>Date</th>
+                                </tr>
+                                <tr>
+                                    <td class="p-0 text-center">
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                            <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>Create Order</td>
+                                    <td>2018-01-20</td>
+                                    <td><div class="badge badge-success">Completed</div></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-0 text-center">
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-2">
+                                            <label for="checkbox-2" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>Redesign homepage</td>
+                                    <td class="align-middle">
+                                        <div class="progress" data-height="4" data-toggle="tooltip" title="0%">
+                                            <div class="progress-bar" data-width="0"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Nur Alpiana">
+                                        <img alt="image" src="../assets/img/avatar/avatar-3.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hariono Yusup">
+                                        <img alt="image" src="../assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Bagus Dwi Cahya">
+                                    </td>
+                                    <td>2018-04-10</td>
+                                    <td><div class="badge badge-info">Todo</div></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-0 text-center">
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-3">
+                                            <label for="checkbox-3" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>Backup database</td>
+                                    <td class="align-middle">
+                                        <div class="progress" data-height="4" data-toggle="tooltip" title="70%">
+                                            <div class="progress-bar bg-warning" data-width="70"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
+                                        <img alt="image" src="../assets/img/avatar/avatar-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Hasan Basri">
+                                    </td>
+                                    <td>2018-01-29</td>
+                                    <td><div class="badge badge-warning">In Progress</div></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="p-0 text-center">
+                                        <div class="custom-checkbox custom-control">
+                                            <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-4">
+                                            <label for="checkbox-4" class="custom-control-label">&nbsp;</label>
+                                        </div>
+                                    </td>
+                                    <td>Input data</td>
+                                    <td class="align-middle">
+                                        <div class="progress" data-height="4" data-toggle="tooltip" title="100%">
+                                            <div class="progress-bar bg-success" data-width="100"></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <img alt="image" src="../assets/img/avatar/avatar-2.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Rizal Fakhri">
+                                        <img alt="image" src="../assets/img/avatar/avatar-5.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Isnap Kiswandi">
+                                        <img alt="image" src="../assets/img/avatar/avatar-4.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Yudi Nawawi">
+                                        <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle" width="35" data-toggle="tooltip" title="Khaerul Anwar">
+                                    </td>
+                                    <td>2018-01-16</td>
+                                    <td><div class="badge badge-success">Completed</div></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

@@ -81,9 +81,6 @@ public class UserControllers {
 
         userService.changeImageUser(session,file);
 
-
-
-
         return "redirect:/Admin/Profile";
 
     }

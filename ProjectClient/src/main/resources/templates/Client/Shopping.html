@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Client/clientLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>One Touch || Home</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <section class="module bg-dark-60 shop-page-header" data-background="assets/images/shop/product-page-bg.jpg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h2 class="module-title font-alt">Shop Products</h2>
+                        <div class="module-subtitle font-serif">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <hr class="divider-w">
+        <section class="module-small">
+            <div class="container">
+                <div class="row multi-columns-row">
+                    <div class="col-sm-6 col-md-4 col-lg-4"  th:each="cate : ${categories}">
+                        <div class="shop-item">
+                            <div class="shop-item-image"><img src="assets/images/shop/product-7.jpg" alt="Accessories Pack"/>
+                                <div class="shop-item-detail"><a class="btn btn-round btn-b" th:href="@{/Details-{id}(id=${cate.id})}">Details</a></div>
+                            </div>
+                            <h4 class="shop-item-title font-alt" th:text="${cate.getName()}"></h4><span th:text="${cate.getPrice()}+ '$'"></span>
+
+                        </div>
+                        <div class="shop-item">
+                            <a class="btn btn-round btn-b" th:href="@{/Order/{id}(id=${cate.id})}"><span class="icon-basket">Order</span></a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

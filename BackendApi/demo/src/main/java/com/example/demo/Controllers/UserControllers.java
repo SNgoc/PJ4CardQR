@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.repo.UserRepo;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,4 +39,24 @@ public class UserControllers {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
         }
     }
+
+    //get count all users, active and locked(SNgoc)
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/getCountUsers")
+    public int getCountUsers(){
+        return userService.countAllUsers();
+    }
+
+    @GetMapping("/getCountUsersActive")
+    public int getCountUsersActive(){
+        return userService.countUsersActive();
+    }
+
+    @GetMapping("/getCountUsersLocked")
+    public int getCountUsersLocked(){
+        return userService.countUsersLocked();
+    }
+    /////////////////////SN//////////////////////
 }

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <style>
+        .main {
+            padding-top: 40px;
+            padding: 1rem;
+            padding-bottom: 60px;
+        }
+        .container {
+            margin: auto;
+            position: relative;
+            display: flex;
+            min-height: 80vh;
+            padding-bottom: 20px;
+        }
+        section {
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+            text-align: center;
+            margin: auto;
+            padding: 15px 15px 20px;
+            z-index: 1;
+            display: block;
+        }
+        .avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            border-radius: 50%;
+            border: 1px solid #f2f2f2;
+        }
+        .desc {
+            color: #777;
+            font-size: 20px;
+            line-height: 24px;
+            min-height: 24px;
+            margin-bottom: 12px;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .btn {
+            counter-reset: buttonLinkSort;
+            background-color: white;
+            border-radius: 50vh;
+            position: relative;
+            text-align: center;
+            display: block;
+            margin-bottom: 20px;
+            margin: 18px 0;
+            min-height: 55px;
+            line-height: 55px;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .btn-img {
+            position: absolute;
+            height: 44px;
+            left: 3%;
+            width: 44px;
+            line-height: 44px;
+        }
+
+        .link {
+            max-width: 600px;
+            margin: auto;
+        }
+        .btn-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            line-height: 1.6em;
+        }
+    </style>
+    <title>Title</title>
+</head>
+<body style="background-image: url(https://iweb.tatthanh.com.vn/pic/3/blog/20-background-dep-cho-website.png);
+background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+<div class="main">
+    <div class="container">
+        <section>
+            <div class="container-fluid bg-1 text-center">
+                <div class="avatar">
+                    <img th:src="${Product.user.getLinkImage()}" class="img-circle" alt="@Model.Title" width="98px" height="98px">
+                </div>
+                <h3 th:text="${Product.name}"></h3>
+                <h3 class="desc" th:text="${Product.description}"></h3>
+            </div>
+            <div class="container-fluid bg-2 text-center">
+                <div class="link" th:if="${listUrl.size()} > 0" th:each="url : ${listUrl}">
+                    <a th:href="${url.url}" target="_blank" data-title="@item.Title" data-url="@item.Type.DataUrl" data-html="@item.Type.DataUrl" autocomplete="off" class="btn">
+                        <div class="btn-img"><img th:src="${url.linkType.linkImage}" width="44px" height="44px"/></div>
+                        <span class="btn-text" th:text="${url.name}"></span>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+</body>
+</html>

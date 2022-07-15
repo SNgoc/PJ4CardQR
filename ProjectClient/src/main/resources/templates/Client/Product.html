@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Client/clientLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .review {
+            padding-top: 40px;
+            padding: 1rem;
+            padding-bottom: 60px;
+            margin: auto;
+            position: relative;
+            display: flex;
+            min-height: 80vh;
+            padding-bottom: 20px;
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+            text-align: center;
+            margin: auto;
+            padding: 15px 15px 20px;
+            z-index: 1;
+            display: block;
+        }
+        .avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            border-radius: 50%;
+            border: 1px solid #f2f2f2;
+        }
+        .desc {
+            color: #777;
+            font-size: 20px;
+            line-height: 24px;
+            min-height: 24px;
+            margin-bottom: 12px;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .btn-review {
+            counter-reset: buttonLinkSort;
+            background-color: white;
+            border-radius: 50vh;
+            position: relative;
+            text-align: center;
+            display: block;
+            margin-bottom: 20px;
+            margin: 18px 0;
+            min-height: 55px;
+            line-height: 55px;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .btn-img {
+            position: absolute;
+            height: 44px;
+            left: 3%;
+            width: 44px;
+            line-height: 44px;
+        }
+        .link {
+            max-width: 600px;
+            margin: auto;
+        }
+        .btn-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            line-height: 1.6em;
+        }
+    </style>
+    <title>One Touch || My Product</title>
+
+</head>
+<body>
+    <div layout:fragment="content">
+        <section class="module" id="alt-features">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-sm-offset-3">
+                        <h2 class="module-title font-alt" th:text="${Product.name}"></h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-6 col-lg-6 wrap" style="background-image: url(Client/assets/images/testimonial_bg.jpg); background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
+                        <section class="review">
+                            <div class="container-fluid bg-1 text-center">
+                                <div class="avatar">
+                                    <img th:src="${Product.user.getLinkImage()}" class="img-circle" alt="@Model.Title" width="98px" height="98px">
+                                </div>
+                                <h3 th:text="${Product.user.fullname}"></h3>
+                                <h3 class="desc" th:text="${Product.description}"></h3>
+                            </div>
+                            <div class="container-fluid bg-2 text-center">
+
+                                <div class="link" th:each="url :  ${listUrl}" th:if="${listUrl.size()} > 0">
+                                    <a th:href="${url.url}" target="_blank" data-title="@item.Title" data-url="@item.Type.DataUrl" data-html="@item.Type.DataUrl" autocomplete="off" class="btn-review">
+                                        <div class="btn-img"><img th:src="${url.linkType.linkImage}" width="44px" height="44px"/></div>
+                                        <span class="btn-text" th:text="${url.name}"></span>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </section>
+                    </div>
+
+                    <div class="col-sm-6 col-md-6 col-lg-6">
+                        <form class="form" role="form" enctype="multipart/form-data" asp-action="EditCard">
+                            <input type="hidden" value="@Model.Id"  name="CardId">
+                            <div class="form-group">
+                                <lable>Avatar</lable>
+                                <input class="form-control" type="file" id="input-image" onchange="delete_oldImage()" name="Image"/>
+                                <div id="preview-image"></div>
+                                <div id="oldImage" height="88px"><img th:src="${Product.user.getLinkImage()}" style="height:88px"/></div>
+                            </div>
+                            <div class="form-group">
+                                <lable>Name</lable>
+                                <input class="form-control" type="text"  th:value="${Product.name}" name="Title"/>
+                            </div>
+                            <div class="form-group">
+                                <lable>Description</lable>
+                                <input class="form-control" type="text" th:value="${Product.description}" name="Description"/>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit">Save</button>
+                            </div>
+                        </form>
+
+                        <hr class="divider-w mt-10 mb-20">
+
+                        <h4 class="font-alt mb-0">Your Buttons</h4>
+                        <button type="submit" class="btn btn-success" data-target="#AddLink" data-toggle="modal" title="Add New Button">Add New Button</button>
+                        <hr class="divider-w mt-10 mb-20">
+                        <div class="panel-group" id="accordion">
+                            <div class="panel panel-default" th:if="${listUrl.size()} > 0" th:each="url :  ${listUrl}">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title font-alt">
+                                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" th:href="'#accordion'+${url.id}" th:text="${url.name}"></a>
+                                    </h4>
+                                </div>
+                                <div class="panel-collapse collapse" th:id="'accordion'+${url.id}">
+                                    <div class="panel-body">
+                                        <form class="form" role="form" th:action="@{/Product/EditUrl}" method="post">
+                                            <input type="hidden" th:value="${url.getId()}" th:name="urlId">
+                                            <div class="form-group">
+                                                <lable>Button Name</lable>
+                                                <input class="form-control"  th:name="name" th:value="${url.name}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <lable>Button Type</lable>
+                                                <select class="form-control" th:name="type" id="TypeId"  onChange="update()">
+                                                    <option th:each="LinkType : ${listLinkType}" th:text="${LinkType.name}" th:value="${LinkType.id}"></option>
+                                                </select>
+                                                <span id="text"></span>
+                                                <input class="form-control" type="text"  th:value="${url.url}" th:name="url"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit">Save</button>
+                                            </div>
+                                        </form>
+                                        <a class="btn btn-danger" asp-action="DeleteLink" asp-controller="The" asp-route-id="@item.Id" asp-route-CardId="@item.CardId">Delete Button</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+            <div style="margin-top: 60px" id="AddLink" class="modal fade"  tabindex="-1" role="dialog" data-backdrop="false">
+                <div id="productModal">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-product">
+                                    <div class="product-info">
+                                        <form class="form" th:object="${UrlProduct}" th:action="@{/Product/AddNewUrl}" method="post">
+                                            <div class="form-group">
+                                                <lable>Button name</lable>
+                                                <input class="form-control" type="text" placeholder="Button name" th:field="*{name}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <lable>Button Type</lable>
+                                                <select class="form-control"  id="NewTypeId" onChange="NewUpdate()" th:name="type">
+                                                    <option th:each="LinkType : ${listLinkType}" th:text="${LinkType.name}" th:value="${LinkType.id}"></option>
+                                                </select>
+                                                <span id="NewText"></span>
+                                                <input class="form-control" type="text" placeholder="Button url" th:field="*{url}"/>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit">Create Button</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+    </div>
+</body>
+</html>
+
+<script>
+    function delete_oldImage(){
+        var oldImage = document.getElementById('oldImage');
+        oldImage.remove();
+    }
+    function previewImages() {
+        var $preview = $('#preview-image').empty();
+        if (this.files) $.each(this.files, readAndPreview);
+        function readAndPreview(i, file) {
+            if (!/\.(jpe?g|png|gif)$/i.test(file.name)){
+                return alert(file.name +" is not an image");
+                file.delete();
+            } // else...
+            var reader = new FileReader();
+            $(reader).on("load", function() {
+                $preview.append($("<img/>", {src:this.result, height:88}));
+            });
+            reader.readAsDataURL(file);
+        }
+    }
+    $('#input-image').on("change", previewImages);
+
+</script>
+
+<script type="text/javascript">
+    function update() {
+        var select = document.getElementById('TypeId');
+        var option = select.options[select.selectedIndex];
+        var url = "";
+        if(option.value ==1){
+            url = "Nhập đường dẫn";
+        }
+        if(option.value ==2){
+            url = "https://www.instagram.com/";
+        }
+        if(option.value ==3){
+            url = "https://www.facebook.com/";
+        }
+        if(option.value ==4){
+            url = "https://wa.me/";
+        }
+        if(option.value ==5){
+            url = "https://t.me/";
+        }
+        if(option.value ==6){
+            url = "https://twitter.com/";
+        }
+        if(option.value ==7){
+            url = "Nhập Email";
+        }
+        if(option.value ==8){
+            url = "Nhập Số điện thoại";
+        }
+        document.getElementById('text').innerHTML = url;
+    }
+    update();
+
+    function NewUpdate() {
+        var select = document.getElementById('NewTypeId');
+        var option = select.options[select.selectedIndex];
+        var url = "";
+        if(option.value ==1){
+            url = "Nhập đường dẫn";
+        }
+        if(option.value ==2){
+            url = "https://www.instagram.com/";
+        }
+        if(option.value ==3){
+            url = "https://www.facebook.com/";
+        }
+        if(option.value ==4){
+            url = "https://wa.me/";
+        }
+        if(option.value ==5){
+            url = "https://t.me/";
+        }
+        if(option.value ==6){
+            url = "https://twitter.com/";
+        }
+        document.getElementById('NewText').innerHTML = url;
+    }
+    NewUpdate();
+</script>

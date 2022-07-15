@@ -10,4 +10,6 @@ import lombok.*;
 public class Order_Process {
     private Long id;
     private String name;
+    private String style;
+    private String description;
 }

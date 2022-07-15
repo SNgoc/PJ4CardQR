@@ -48,6 +48,17 @@
 		},
 		{
 			"name": "SignUp",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -84,7 +95,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTU4OTg1MDAsImV4cCI6MTY1NTk4NDkwMH0.oxPMyBystGAyqzAx5d8pELay6ZEfxP3L3zHCUaKgdCcGVnlJXumXlGwYI0-0NJGRwUwmpEpP7qaZFbEmrLjrNw",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4MDI4NTEsImV4cCI6MTY1Nzg4OTI1MX0.5NAOFfBOTw7kJGXdbzwIZ6Jg_exP9WOVm2NwUmFlS9Oc125TiTPFLiRdgL70DJdUxP9NTGPFaNB1GabbqBheIw",
 							"type": "string"
 						}
 					]
@@ -179,6 +190,16 @@
 		{
 			"name": "Profile",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc2ODAzOTgsImV4cCI6MTY1Nzc2Njc5OH0.BNXhcY0bkv4Ptv0i_KxyOLxAd9i-sWlNJavLC_PNxntgGI2qr-hIJn8z4Df0qpVj3pGQoM0o9as_32xPPoFx8A",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
@@ -364,7 +385,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4NjAxMDYsImV4cCI6MTY1Nzk0NjUwNn0.r4oX9wCTpvV49TZkO511sPLJWjVQr3rAbNYD7wjg1v8nwXu--9nE-ouC2jjx-H4sFW6hBPV0gDBocqUl2GifTA",
 							"type": "string"
 						}
 					]
@@ -438,7 +459,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc3ODkzNzQsImV4cCI6MTY1Nzg3NTc3NH0.1KGRiF6B8Jgo5kdlZx4SI_wPHZZRNNRdcZpg0eIV7V8s2nCZK2FdcW2bCryaZeRj2z6kxCe1j7J3U8YMtDvqrg",
 							"type": "string"
 						}
 					]
@@ -455,7 +476,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/product/getProduct/3",
+					"raw": "http://localhost:8080/api/product/getProduct/lazada",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -465,7 +486,7 @@
 						"api",
 						"product",
 						"getProduct",
-						"3"
+						"lazada"
 					],
 					"query": [
 						{
@@ -486,7 +507,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4NTk3OTAsImV4cCI6MTY1Nzk0NjE5MH0.7VE4Z7m5DP-fHCTGvQysXen_KQAqIjW_xSazeSB72QSU4PgRp73vN7R_GQqvKCUegikW6bbjzQY_GeMES_GkFg",
 							"type": "string"
 						}
 					]
@@ -529,7 +550,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc1NTg1NzgsImV4cCI6MTY1NzY0NDk3OH0.YjcuG-TyV0uop4UitJv2zgqaWiFNB28b4VYuX1fJEE3P11Y879fO1QXBfgVUP5RFTd3r_X9mcQjbjpSr-lVU3Q",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc2NDU0MjAsImV4cCI6MTY1NzczMTgyMH0.GX9a0zO2EHIMUiUi4US7bY8GXrDxPRVJmbkhCXLbjMRgaXC5Mc7QZwLknhYRmIRNP_5X4rUikk46UTSQ0ibpLg",
 							"type": "string"
 						}
 					]
@@ -640,6 +661,204 @@
 						"avatarUrl",
 						"changeAvatarUrl",
 						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getCountProduct",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc5MDAwNDgsImV4cCI6MTY1Nzk4NjQ0OH0.IY92HOEEOiUM7XwahywcJfF-ALh1IwjyS2rR78urv-cILeu5LVfC-psA_CQOljoBqTBhh-RIntLd-N0pjRZmrw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/product/getCountProduct/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"getCountProduct",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ShowAllOrder",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/order/list",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetRevenueOrder",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4NzgxMjAsImV4cCI6MTY1Nzk2NDUyMH0.Ia4xSnBCy7e8v_KM4J0uc5Gsi9gBUKb3FwPpzyESNv39mFN7RBx1c7cw4SU959gaH_XBc--cC14TzJj0npDtLQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/order/getRevenue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"getRevenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CountUsersActive",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4MDIwNTQsImV4cCI6MTY1Nzg4ODQ1NH0.JzojLPqKTHPtaxrHeHikopopAtTgpdo6K4djTN-cAyHxnrKAr4LT1bLQ2f9mFQSlfwW-y8_sl-gVTaA5sNJJXQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/User/getCountUsersActive",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"User",
+						"getCountUsersActive"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CountUsersLocked",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4MDI4NTEsImV4cCI6MTY1Nzg4OTI1MX0.5NAOFfBOTw7kJGXdbzwIZ6Jg_exP9WOVm2NwUmFlS9Oc125TiTPFLiRdgL70DJdUxP9NTGPFaNB1GabbqBheIw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/User/getCountUsersLocked",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"User",
+						"getCountUsersLocked"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count order status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/order/getRevenue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"getRevenue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CountAllUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc5MDgxNTMsImV4cCI6MTY1Nzk5NDU1M30.yh7qIZ06Km4hZKWGxa_jb9nlYrknZfTve1lZyy-6XUjjNUHE7FT5rcvWJ73uJL8LL5JYISL4FaB0liu6BZA3Lw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/User/getCountUsers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"User",
+						"getCountUsers"
 					]
 				}
 			},

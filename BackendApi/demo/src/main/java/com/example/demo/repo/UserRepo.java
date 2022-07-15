@@ -34,5 +34,16 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user LEFT JOIN user.roles role WHERE role.id = ?1")
     List<User> findUserByRole(Integer role);
 
+    //count all user role user(SNgoc)
+    @Query(value = "select count(users.id) from User users left join users.roles role where role.id = 1")
+    int getCountAllUsers();
+
+    //count user active role user(SNgoc)
+    @Query(value = "select count(users) from User users left join users.roles role where role.id = 1 and users.locked = true and users.enable = true")
+    int getCountUserActive();
+
+    //count user was locked role user(SNgoc)
+    @Query(value = "select count(users) from User users left join users.roles role where role.id = 1 and users.locked = false and users.enable = false")
+    int getCountUserLocked();
 
 }

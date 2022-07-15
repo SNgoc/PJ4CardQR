@@ -23,20 +23,26 @@ public class Product {
 
     private String imageUrlcode;
 
-
     private User user;
 
     private int status;
 
     private String token;
 
-    private Date create_at;
+    private LocalDateTime create_at;
 
     private LocalDateTime update_at;
 
     private LocalDateTime delete_at;
 
-
-
-
+    public Product(String description, String name, String url, String imageUrlcode, User user, LocalDateTime create_at,int status,String token) {
+        this.description = description;
+        this.name = name;
+        this.url = url;
+        this.imageUrlcode = imageUrlcode;
+        this.user = user;
+        this.create_at = create_at;
+        this.status = status;
+        this.token = token;
+    }
 }
