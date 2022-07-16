@@ -1,11 +1,15 @@
 package fpt.aptech.projectcard.callApiService;
 
+import java.util.List;
+
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
 import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UpdateProfile;
+import fpt.aptech.projectcard.domain.Orders;
 import fpt.aptech.projectcard.domain.SocialNweb;
+import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,6 +29,9 @@ public interface ApiService {
     @POST(ApiConstant.URL_SIGNUP)
     Call<SignupRequest> signup(@Body SignupRequest signupRequest);
 
+    @GET(ApiConstant.URL_GET_ORDER_BY_USERNAME)
+    Call<List<Orders>> getOrdersByUsername(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
     Call<ProductRequest> getProduct(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
 
@@ -43,6 +50,9 @@ public interface ApiService {
     @POST(ApiConstant.URL_UPDATE_SOCIAL)
     Call<SocialNWebRequest> updateSocialNWeb(@Path("social_id") Long social_id, @Body SocialNWebRequest socialNWebRequest, @Query("Authorization") String token);
 
+    //new
+    @GET(ApiConstant.URL_GET_SOCIALURL_BY_USERNAME)
+    Call<List<UrlProduct>> getUrlProduct(@Path("username") String username);
 
 
     // post raw json

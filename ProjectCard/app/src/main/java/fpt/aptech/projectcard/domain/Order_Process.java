@@ -2,39 +2,49 @@ package fpt.aptech.projectcard.domain;
 
 public class Order_Process {
 
-    private Integer id;
+    private Long id;
+    private String name;
+    private String style;
+    private String description;
 
-    private EProecess name;
-
-    private Orders order;
-
-    public Order_Process(Integer id, EProecess name) {
-        this.id = id;
+    public Order_Process(String name, String style, String description) {
         this.name = name;
-    }
-
-    public Order_Process(EProecess name) {
-        this.name = name;
+        this.style= style;
+        this.description= description;
     }
 
     public Order_Process() {
-
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public EProecess getName() {
+    public String getName() {
         return name;
     }
 
-    public void setName(EProecess name) {
+    public void setName(String name) {
         this.name = name;
     }
 
+    public String getStyle() {
+        return style;
+    }
+
+    public void setStyle(String style) {
+        this.style = style;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 }

@@ -86,6 +86,7 @@
 
                         <TextView
                             android:id="@+id/txt_Name"
+                            android:autoLink="web"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/txt_Name" />
@@ -117,16 +118,6 @@
                             android:layout_height="wrap_content"
                             android:autoLink="email"
                             android:text="@string/txt_Email" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Phone"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="phone"
-                            android:text="@string/txt_Phone" />
                     </TableRow>
 
                     <TableRow>
@@ -176,7 +167,7 @@
                     android:id="@+id/linearLayout2_behind"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/tableLayout_behind"
+                    app:layout_constraintBottom_toTopOf="@+id/gvUrl"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -196,7 +187,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/tableLayout_behind"
+                    app:layout_constraintEnd_toStartOf="@+id/gvUrl"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.7"
@@ -209,67 +200,20 @@
                         android:layout_height="320px" />
                 </LinearLayout>
 
-                <TableLayout
-                    android:id="@+id/tableLayout_behind"
+                <GridView
+                    android:id="@+id/gvUrl"
                     android:layout_width="190dp"
                     android:layout_height="wrap_content"
+                    android:horizontalSpacing="4dp"
+                    android:numColumns="4"
+                    android:verticalSpacing="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintHorizontal_bias="1.0"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.6">
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Facebook"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="web"
-                            android:text="@string/txt_facebook" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Twitter"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="web"
-                            android:text="@string/txt_twitter" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Instagram"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="web"
-                            android:text="@string/txt_instagram" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Web1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="web"
-                            android:text="@string/txt_web1" />
-                    </TableRow>
-
-                    <TableRow>
-
-                        <TextView
-                            android:id="@+id/txt_Company1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:autoLink="web"
-                            android:text="@string/txt_company1" />
-                    </TableRow>
-                </TableLayout>
+                    app:layout_constraintVertical_bias="0.5">
+                </GridView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

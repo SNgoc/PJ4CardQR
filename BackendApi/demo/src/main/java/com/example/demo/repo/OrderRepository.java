@@ -2,6 +2,7 @@ package com.example.demo.repo;
 
 
 import com.example.demo.domain.Orders;
+import com.example.demo.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -13,6 +14,10 @@ import java.util.List;
 @EnableJpaRepositories
 @Repository
 public interface OrderRepository extends JpaRepository<Orders,Long> {
+
+    //get Orders List by user
+    @Query(value = "select order from Orders order where order.user =: user")
+    List<Orders> findOrdersByUser(User user);
 
     //tính doanh thu(SNgoc)
     @Query(value = "select price from Orders where order_process.id = 3")

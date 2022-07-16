@@ -87,6 +87,116 @@ public class SocialFragment extends Fragment {
         edCompany2 = view.findViewById(R.id.editCompany2);
         btnAdd_UpdateSocial = view.findViewById(R.id.btnSave_UpdateSocial);
 
+
+        if (SessionManager.getSaveSocialNweb() == null) {
+            //add new social
+            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String facebook = edFacebook.getText().toString();
+                    String twitter = edTwitter.getText().toString();
+                    String instagram = edInstagram.getText().toString();
+                    String tiktok = edTiktok.getText().toString();
+                    String web1 = edWeb1.getText().toString();
+                    String web2 = edWeb2.getText().toString();
+                    String company1 = edCompany1.getText().toString();
+                    String company2 = edCompany2.getText().toString();
+                    //retrofit connect mysql db
+                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+
+                    //add social and web
+                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2,SessionManager.getSaveUserID());
+                    apiService.addSocialNWeb(socialNWebRequest, SessionManager.getSaveToken())
+                            .enqueue(new Callback<SocialNWebRequest>() {
+                                @Override
+                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response != null) {
+                                            Toast.makeText(getActivity().getApplicationContext(), "Added success Social", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (response.body() == null){
+                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (response.code() == 401){
+                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                                        }
+                                        //error validate
+                                        if (response.code() == 400) {
+                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            });
+            //end btn social event
+        }
+        else {
+            //change name btn to update
+            btnAdd_UpdateSocial.setText(R.string.btn_updateSocialNWeb);
+            //update social
+            edFacebook.setText(SessionManager.getSaveSocialNweb().getFacebook());
+            edTwitter.setText(SessionManager.getSaveSocialNweb().getTwitter());
+            edInstagram.setText(SessionManager.getSaveSocialNweb().getInstagram());
+            edTiktok.setText(SessionManager.getSaveSocialNweb().getTiktok());
+            edWeb1.setText(SessionManager.getSaveSocialNweb().getWeb1());
+            edWeb2.setText(SessionManager.getSaveSocialNweb().getWeb2());
+            edCompany1.setText(SessionManager.getSaveSocialNweb().getCompany1());
+            edCompany2.setText(SessionManager.getSaveSocialNweb().getCompany2());
+
+            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String facebook = edFacebook.getText().toString();
+                    String twitter = edTwitter.getText().toString();
+                    String instagram = edInstagram.getText().toString();
+                    String tiktok = edTiktok.getText().toString();
+                    String web1 = edWeb1.getText().toString();
+                    String web2 = edWeb2.getText().toString();
+                    String company1 = edCompany1.getText().toString();
+                    String company2 = edCompany2.getText().toString();
+                    //retrofit connect mysql db
+                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+
+                    //update social and web
+                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2);
+                    apiService.updateSocialNWeb(SessionManager.getSaveSocialNweb().getSocial_id(),socialNWebRequest, SessionManager.getSaveToken())
+                            .enqueue(new Callback<SocialNWebRequest>() {
+                                @Override
+                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
+                                    if (response.isSuccessful()) {
+                                        if (response != null) {
+                                            Toast.makeText(getActivity().getApplicationContext(), "Updated success Social", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (response.body() == null){
+                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                                        }
+                                        if (response.code() == 401){
+                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                                        }
+                                        //error validate
+                                        if (response.code() == 400) {
+                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
+                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
+            });
+            //end btn social event
+        }
+
+
         return view;
     }
 

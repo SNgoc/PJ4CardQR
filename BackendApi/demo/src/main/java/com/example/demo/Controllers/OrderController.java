@@ -81,6 +81,12 @@ public class OrderController {
         }
     }
 
+    //api for revenue web and android app
+    //get order list by username
+    @GetMapping("/listByUsername/{username}")
+    public ResponseEntity<?> getOrdersByUsername(@PathVariable String username) {
+        return ResponseEntity.ok(orderService.getOrdersByUsername(username));
+    }
     //doanh thu(SNgoc)
     @GetMapping("/getRevenue")
     public double getRevenueOrder(){

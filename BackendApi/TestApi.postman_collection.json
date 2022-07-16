@@ -758,7 +758,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4MDIwNTQsImV4cCI6MTY1Nzg4ODQ1NH0.JzojLPqKTHPtaxrHeHikopopAtTgpdo6K4djTN-cAyHxnrKAr4LT1bLQ2f9mFQSlfwW-y8_sl-gVTaA5sNJJXQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc5MDAwNDgsImV4cCI6MTY1Nzk4NjQ0OH0.IY92HOEEOiUM7XwahywcJfF-ALh1IwjyS2rR78urv-cILeu5LVfC-psA_CQOljoBqTBhh-RIntLd-N0pjRZmrw",
 							"type": "string"
 						}
 					]
@@ -789,7 +789,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4MDI4NTEsImV4cCI6MTY1Nzg4OTI1MX0.5NAOFfBOTw7kJGXdbzwIZ6Jg_exP9WOVm2NwUmFlS9Oc125TiTPFLiRdgL70DJdUxP9NTGPFaNB1GabbqBheIw",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc5MDY2MzEsImV4cCI6MTY1Nzk5MzAzMX0.5d2Pc9Mnv4d3BnM4-kvzigjbC5__2bmsKK_616oOa3yS-GzYorstjCf-qpB40zCGvpVIMANHBd2-X_iY8MkKdQ",
 							"type": "string"
 						}
 					]
@@ -815,10 +815,20 @@
 		{
 			"name": "Count order status",
 			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc5MDgxNTMsImV4cCI6MTY1Nzk5NDU1M30.yh7qIZ06Km4hZKWGxa_jb9nlYrknZfTve1lZyy-6XUjjNUHE7FT5rcvWJ73uJL8LL5JYISL4FaB0liu6BZA3Lw",
+							"type": "string"
+						}
+					]
+				},
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/order/getRevenue",
+					"raw": "http://localhost:8080/api/order/countOrderStatus",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -827,7 +837,7 @@
 					"path": [
 						"api",
 						"order",
-						"getRevenue"
+						"countOrderStatus"
 					]
 				}
 			},
@@ -859,6 +869,58 @@
 						"api",
 						"User",
 						"getCountUsers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/urlProduct",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"urlProduct"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getOrderListByUsername",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4MDAyMjcwLCJleHAiOjE2NTgwODg2NzB9.HEwKJLb29Q20kSLSphsdjjcO1GEzmf9_S1M-7bJviEhldSGVLx2HeLn1GJmS0TF3REh-TySBIXLCB88UPxU9dg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/order/listByUsername/nero",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"order",
+						"listByUsername",
+						"nero"
 					]
 				}
 			},

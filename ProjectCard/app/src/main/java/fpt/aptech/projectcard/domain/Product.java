@@ -9,27 +9,32 @@ public class Product {
 
     private String description;
 
+    private String name;
+
+    private String url;
+
+    private String imageUrlcode;
+
+    private User user;
+
+    private int status;
+
+    private String token;
+
     private LocalDateTime create_at;
 
     private LocalDateTime update_at;
 
     private LocalDateTime delete_at;
 
-    private String link_image_back;
-
-    private String link_image_font;
-
-    private String name;
-
-    private String name_image_back;
-
-    private String name_image_font;
-
-    private Category category;
-
-    private List<Review> reviews;
-
-    private List<UrlProduct> UrlProducts;
-
-    private List<OrderDetails> orderDetails;
+    public Product(String description, String name, String url, String imageUrlcode, User user, LocalDateTime create_at,int status,String token) {
+        this.description = description;
+        this.name = name;
+        this.url = url;
+        this.imageUrlcode = imageUrlcode;
+        this.user = user;
+        this.create_at = create_at;
+        this.status = status;
+        this.token = token;
+    }
 }

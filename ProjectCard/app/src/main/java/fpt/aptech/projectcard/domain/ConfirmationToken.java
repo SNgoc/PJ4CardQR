@@ -2,6 +2,7 @@ package fpt.aptech.projectcard.domain;
 
 import java.time.LocalDateTime;
 
+
 public class ConfirmationToken {
 
     private Long id;

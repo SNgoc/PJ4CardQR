@@ -3,7 +3,11 @@ package fpt.aptech.projectcard.session;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.List;
+
+import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.SocialNweb;
+import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
 
 public class SessionManager {
@@ -14,6 +18,8 @@ public class SessionManager {
     private static String saveToken;
     private static String saveLinkImage;
     private static User saveUser;
+    private static UrlProduct saveUrlProduct;
+    private static List<UrlProduct> saveUrlProductList;
     private static SocialNweb saveSocialNweb;
 
     private static boolean stopCode = false;
@@ -75,6 +81,22 @@ public class SessionManager {
 
     public static void setSaveUser(User saveUser) {
         SessionManager.saveUser = saveUser;
+    }
+
+    public static UrlProduct getSaveUrlProduct() {
+        return saveUrlProduct;
+    }
+
+    public static void setSaveUrlProduct(UrlProduct saveUrlProduct) {
+        SessionManager.saveUrlProduct = saveUrlProduct;
+    }
+
+    public static List<UrlProduct> getSaveUrlProductList() {
+        return saveUrlProductList;
+    }
+
+    public static void setSaveUrlProductList(List<UrlProduct> saveUrlProductList) {
+        SessionManager.saveUrlProductList = saveUrlProductList;
     }
 
     public static SocialNweb getSaveSocialNweb() {

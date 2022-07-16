@@ -12,9 +12,48 @@ public class LinkType {
 
     private String dataUrl;
 
-    private String title;
-
     private String linkImage;
 
-    private List<UrlProduct> UrlProducts;
+    public LinkType() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPlaceholder() {
+        return placeholder;
+    }
+
+    public void setPlaceholder(String placeholder) {
+        this.placeholder = placeholder;
+    }
+
+    public String getDataUrl() {
+        return dataUrl;
+    }
+
+    public void setDataUrl(String dataUrl) {
+        this.dataUrl = dataUrl;
+    }
+
+    public String getLinkImage() {
+        return linkImage;
+    }
+
+    public void setLinkImage(String linkImage) {
+        this.linkImage = linkImage;
+    }
 }

@@ -3,9 +3,11 @@ package fpt.aptech.projectcard.ui.home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -13,14 +15,20 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.StrictMode;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +55,7 @@ import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.SocialNweb;
+import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
@@ -65,12 +74,15 @@ public class HomeFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    View view;
     //header title card
     TextView txtFrontHeaderCard,txtBehindHeaderCard;
     //front card
-    TextView txtName,txtEmail,txtPhone,txtAddress,txtBirthday,txtProvince, txtGender;
+    TextView txtName,txtEmail,txtAddress,txtBirthday,txtProvince, txtGender;
     //behind card
-    TextView txtFacebook,txtTwitter,txtInstagram, txtWeb1, txtCompany1;
+    List<UrlProduct> checkDuplicate;
+    GridView gridViewUrl;
+    List<UrlProduct> urlProductList;
     ImageView imgAvatar, imgQR;
     //click event for layout
     ConstraintLayout layoutCard_front, layoutCard_behind;
@@ -110,7 +122,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.onStart();
         // can't Set title bar to Home will error null at setActionBarTitle because home is start fragment
 //        ((MainActivity) getActivity()).setActionBarTitle("Home");
         if (getArguments() != null) {
@@ -122,23 +133,18 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onStart();
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
+        view = inflater.inflate(R.layout.fragment_home, container, false);
         txtFrontHeaderCard = view.findViewById(R.id.txt_front_header_card);
         txtBehindHeaderCard = view.findViewById(R.id.txt_behind_header_card);
         txtName = view.findViewById(R.id.txt_Name);
         txtEmail = view.findViewById(R.id.txt_Email);
         txtBirthday = view.findViewById(R.id.txt_Birthday);
-        txtPhone = view.findViewById(R.id.txt_Phone);
         txtAddress = view.findViewById(R.id.txt_Address);
         txtProvince = view.findViewById(R.id.txt_Province);
         txtGender = view.findViewById(R.id.txt_Gender);
-        txtFacebook = view.findViewById(R.id.txt_Facebook);
-        txtTwitter = view.findViewById(R.id.txt_Twitter);
-        txtInstagram = view.findViewById(R.id.txt_Instagram);
-        txtWeb1 = view.findViewById(R.id.txt_Web1);
-        txtCompany1 = view.findViewById(R.id.txt_Company1);
+        //behind card
+        gridViewUrl = view.findViewById(R.id.gvUrl);
         imgAvatar = view.findViewById(R.id.imgAvatar);
         imgQR = view.findViewById(R.id.imgQRInfo);
         //set click listener
@@ -155,51 +161,27 @@ public class HomeFragment extends Fragment {
             StrictMode.setThreadPolicy(gfgPolicy);
         }
 
-        //hide layout_UpdateProfile and btnUpdateProfile
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onStart();
-                // Set title bar to Home
-                ((MainActivity) getActivity()).setActionBarTitle("Home");
-                layout_updateProfile.setVisibility(View.GONE);
-            }
-        });
-
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
         //to check product if it was bought
         SessionManager.setStopCode(false);
+        ProductRequest productRequest = null;
         //retrofit connect mysql db
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
 
-        //call api get product
-        apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).enqueue(new Callback<ProductRequest>() {
-            @Override
-            public void onResponse(Call<ProductRequest> call, Response<ProductRequest> response) {
-                //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
-                if (response.isSuccessful()) {
-                    Toast.makeText(getActivity().getApplicationContext(), "This is your smart card", Toast.LENGTH_LONG).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ProductRequest> call, Throwable t) {
-                SessionManager.setStopCode(true);
-                Toast.makeText(getActivity().getApplicationContext(), "Failed to display! Please buy product first", Toast.LENGTH_LONG).show();
-                startActivity(new Intent(getActivity(), LoginActivity.class));
-                //prevent back on click back button
-                getActivity().finish();
-            }
-        });
-
+        //call api check product order status
+        try {
+            productRequest = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         //if product havent been bought, dont run this code to improve performance
         //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
-        if (SessionManager.isStopCode() == false) {
+        if (productRequest == null){
+            Toast.makeText(getActivity().getApplicationContext(), "Failed to display! Please order product first", Toast.LENGTH_LONG).show();
+            startActivity(new Intent(getActivity(), LoginActivity.class));
+            //prevent back on click back button
+            getActivity().finish();
+        }
+        if (productRequest != null) {
             //call api to get user info
             apiService.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
                 @Override
@@ -207,9 +189,7 @@ public class HomeFragment extends Fragment {
                     if (response.isSuccessful()) {
                         if (response.isSuccessful()) {
                             if (response.body() != null) {
-                                //save user to Session to use outside this function for create qr
-                                SessionManager.setSaveUser(response.body());
-                                SessionManager.setSaveFullname(response.body().getFullname());
+                                //can't save session value in onResponse, because it will null after finish run this function
 //                                Toast.makeText(getActivity().getApplicationContext(), "Success " + SessionManager.getSaveUser().getDescription(), Toast.LENGTH_SHORT).show();
                             }
                             if (response.body() == null){
@@ -229,13 +209,13 @@ public class HomeFragment extends Fragment {
             });
             ///////////////////////////////////////////////////////////////////////////////////////////
 
-            //call api to get social info
-            apiService.getSocialInfo(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).enqueue(new Callback<SocialNweb>() {
+            //get url social link by user
+            apiService.getUrlProduct(SessionManager.getSaveUsername()).enqueue(new Callback<List<UrlProduct>>() {
                 @Override
-                public void onResponse(Call<SocialNweb> call, Response<SocialNweb> response) {
+                public void onResponse(Call<List<UrlProduct>> call, Response<List<UrlProduct>> response) {
                     if (response.isSuccessful()){
                         //save social to Session to use outside this function for create qr code
-                        SessionManager.setSaveSocialNweb(response.body());
+//                        SessionManager.setSaveUrlProduct(response.body());
                     }
 
                     if (response.body() == null){
@@ -247,24 +227,22 @@ public class HomeFragment extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<SocialNweb> call, Throwable t) {
-                    //note: if social's record was delete in db, need re-install or delete cache and data of this app to fix error crash no value present
-                    Toast.makeText(getActivity().getApplicationContext(),"Get social failed: " + t.getMessage(),Toast.LENGTH_SHORT).show();
+                public void onFailure(Call<List<UrlProduct>> call, Throwable t) {
+                    Toast.makeText(getActivity().getApplicationContext(),"Get url product failed: " + t.getMessage(),Toast.LENGTH_SHORT).show();
                 }
             });
-            ///////////////////////////////////////////////////////////////////////////////////////////
-
-            //save data user and social to static session
+            //save data user and social, url product to static session
             try {
                 SessionManager.setSaveUser(apiService.getProfile(SessionManager.getSaveUsername()).execute().body());
-                SessionManager.setSaveSocialNweb(apiService.getSocialInfo(SessionManager.getSaveUserID(), SessionManager.getSaveToken()).execute().body());
+                urlProductList = apiService.getUrlProduct(SessionManager.getSaveUsername()).execute().body();
             } catch (IOException e) {
                 e.printStackTrace();
             }
 
-            //display smart card info and qr cde
+            //display smart card info, url link product and qr cde
 //            Toast.makeText(getActivity().getApplicationContext(),"Session: " + SessionManager.getSaveUser().getFullname(),Toast.LENGTH_LONG).show();
             showCardInfo();
+            showUrlProduct();
         }
         //get data from other fragment or activity
 
@@ -351,6 +329,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        //hide layout_UpdateProfile and btnUpdateProfile
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Set title bar to Home
+                ((MainActivity) getActivity()).setActionBarTitle("Home");
+                layout_updateProfile.setVisibility(View.GONE);
+            }
+        });
+
+        return view;
     }
 
     //function to display smart card info and qr cde
@@ -358,12 +347,11 @@ public class HomeFragment extends Fragment {
         //user info
         //set display user info get from user model
          txtName.setText("Fullname: " + SessionManager.getSaveUser().getFullname());
-        txtEmail.setText("Email: " + SessionManager.getSaveUser().getEmail());
+        txtEmail.setText("Main email: " + SessionManager.getSaveUser().getEmail());
         //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
         String[] birthday = SessionManager.getSaveUser().getDateOfbirth().split("T");
         SessionManager.getSaveUser().setDateOfbirth(birthday[0]);
         txtBirthday.setText("Birthday: " + SessionManager.getSaveUser().getDateOfbirth());
-        txtPhone.setText("Phone: " + SessionManager.getSaveUser().getPhone());
         txtAddress.setText("Address: " + SessionManager.getSaveUser().getAddress());
         txtProvince.setText("Province: " + SessionManager.getSaveUser().getProvince());
         txtGender.setText("Gender: " + (SessionManager.getSaveUser().getGender()==true?"Male":"Female"));
@@ -378,97 +366,10 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
 
-        //social and web info
-        //set social default if social is not exist
-        List<String> swList = new ArrayList<>();
-        List<String> companyList = new ArrayList<>();
-        if (SessionManager.getSaveSocialNweb() == null) {
-            txtFacebook.setText("Facebook: N/A");
-            txtTwitter.setText("Twitter: N/A");
-            txtInstagram.setText("Instagram: N/A");
-            txtWeb1.setText("Website: N/A");
-            txtCompany1.setText("Company: N/A");
-        } else {
-            String facebook = SessionManager.getSaveSocialNweb().getFacebook();
-            String twitter = SessionManager.getSaveSocialNweb().getTwitter();
-            String instagram = SessionManager.getSaveSocialNweb().getInstagram();
-            String tiktok = SessionManager.getSaveSocialNweb().getTiktok();
-            String web1 = SessionManager.getSaveSocialNweb().getWeb1();
-            String web2 = SessionManager.getSaveSocialNweb().getWeb2();
-            String company1 = SessionManager.getSaveSocialNweb().getCompany1();
-            String company2 = SessionManager.getSaveSocialNweb().getCompany2();
-
-            //add field to array list
-            swList.add(facebook);
-            swList.add(twitter);
-            swList.add(instagram);
-            swList.add(tiktok);
-            swList.add(web1);
-            swList.add(web2);
-            swList.removeIf(String::isEmpty);//remove if a field is empty
-
-            companyList.add(company1);
-            companyList.add(company2);
-            companyList.removeIf(String::isEmpty);
-
-            //check logic
-            //for social
-            if (facebook.trim().isEmpty() && twitter.trim().isEmpty() && instagram.trim().isEmpty()) {
-                txtFacebook.setText("Facebook: N/A");
-                txtTwitter.setText("Twitter: N/A");
-                txtInstagram.setText("Instagram: N/A");
-            } else {
-                //set display social info get from socialNweb model if social was added before
-                txtFacebook.setText("Facebook: " + facebook);
-                txtTwitter.setText("Twitter: " + twitter);
-                txtInstagram.setText("Instagram: " + instagram);
-            }
-            if (facebook.trim().isEmpty()){
-                txtFacebook.setVisibility(View.GONE);
-            }
-            if (twitter.trim().isEmpty()){
-                txtTwitter.setVisibility(View.GONE);
-            }
-            if(instagram.trim().isEmpty()){
-                txtInstagram.setVisibility(View.GONE);
-            }
-
-            //for web
-            if (web1.trim().isEmpty()){
-                txtWeb1.setText("Website: " + web2);
-            } else {
-                txtWeb1.setText("Website: " + web1);
-            }
-            if (web1.trim().isEmpty() && web2.trim().isEmpty()) {
-                txtWeb1.setText("Website: N/A");
-            }
-
-            //for company
-            if (company1.trim().isEmpty()){
-                txtCompany1.setText("Company: " + company2);
-            } else{
-                txtCompany1.setText("Company: " + company1);
-            }
-            if (company1.trim().isEmpty() && web2.trim().isEmpty()) {
-                txtCompany1.setText("Company: N/A");
-            }
-        }
-
         //create QR img from user info + Social + web
-        String dynamicQR = "Email: " + SessionManager.getSaveUser().getEmail()
-                + "\nFullname: " + SessionManager.getSaveUser().getFullname()
-                + "\nPhone: " + SessionManager.getSaveUser().getPhone()
-                + "\nAddress: " + SessionManager.getSaveUser().getAddress()
-                + "\nBirthday: " + SessionManager.getSaveUser().getDateOfbirth()
-                + "\nGender: " + (SessionManager.getSaveUser().getGender() == true?"Male":"Female")
-                + "\nProvince: " + SessionManager.getSaveUser().getProvince();
-        //create qr removed empty field
-        for (String s:swList) {
-            dynamicQR += "\nWeb link: " + s;
-        }
-        for (String c:companyList) {
-            dynamicQR += "\nCompany: " + c;
-        }
+        //note: to qr show button type access link must have https:// + name + .com or .net (follow type web link)
+        String dynamicQR = "https://facebook.net";
+
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
             BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,450,450);
@@ -479,5 +380,31 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
         ////////////////////////////////////////////////////////////////////
+    }
+
+    //show url product from db mysql
+    public void showUrlProduct(){
+        ArrayList<UrlProduct> urlProductArrayList = new ArrayList<>();
+        for (UrlProduct u: urlProductList) {
+            // function create TextView, Imageview by code  must be in onCreateView of fragment, if not will create duplicate TextView when click back fragment after click link url
+            TextView txtUrl = new TextView(getContext());
+            //display avatar img from url
+            urlProductArrayList.add(u);
+            GridViewURLAdapter adapter = new GridViewURLAdapter(getContext(),urlProductArrayList);
+            gridViewUrl.setAdapter(adapter);
+            txtUrl.setId(u.getId());
+            txtUrl.setText(u.getUrl());
+            //facebook,twitter,instagram,whatsapp,telegram,url
+            if (u.getLinkType().getId() == 1 || u.getLinkType().getId() == 2 || u.getLinkType().getId() == 3
+                || u.getLinkType().getId() == 4 || u.getLinkType().getId() == 5 || u.getLinkType().getId() == 8){
+                Linkify.addLinks(txtUrl,Linkify.WEB_URLS);
+            }
+            if (u.getLinkType().getId() == 7){//email
+                Linkify.addLinks(txtUrl,Linkify.EMAIL_ADDRESSES);
+            }
+            if (u.getLinkType().getId() == 6){//phone
+                Linkify.addLinks(txtUrl,Linkify.PHONE_NUMBERS);
+            }
+        }
     }
 }
