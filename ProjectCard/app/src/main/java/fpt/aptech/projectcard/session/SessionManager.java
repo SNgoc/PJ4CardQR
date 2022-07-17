@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import java.util.List;
 
 import fpt.aptech.projectcard.domain.LinkType;
+import fpt.aptech.projectcard.domain.Product;
 import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
@@ -18,11 +19,11 @@ public class SessionManager {
     private static String saveToken;
     private static String saveLinkImage;
     private static User saveUser;
+    private static Product saveProduct;
     private static UrlProduct saveUrlProduct;
+    private static List<LinkType> saveLinkTypeList;
     private static List<UrlProduct> saveUrlProductList;
     private static SocialNweb saveSocialNweb;
-
-    private static boolean stopCode = false;
 
     public SessionManager() {
     }
@@ -83,12 +84,28 @@ public class SessionManager {
         SessionManager.saveUser = saveUser;
     }
 
+    public static Product getSaveProduct() {
+        return saveProduct;
+    }
+
+    public static void setSaveProduct(Product saveProduct) {
+        SessionManager.saveProduct = saveProduct;
+    }
+
     public static UrlProduct getSaveUrlProduct() {
         return saveUrlProduct;
     }
 
     public static void setSaveUrlProduct(UrlProduct saveUrlProduct) {
         SessionManager.saveUrlProduct = saveUrlProduct;
+    }
+
+    public static List<LinkType> getSaveLinkTypeList() {
+        return saveLinkTypeList;
+    }
+
+    public static void setSaveLinkTypeList(List<LinkType> saveLinkTypeList) {
+        SessionManager.saveLinkTypeList = saveLinkTypeList;
     }
 
     public static List<UrlProduct> getSaveUrlProductList() {
@@ -105,13 +122,5 @@ public class SessionManager {
 
     public static void setSaveSocialNweb(SocialNweb saveSocialNweb) {
         SessionManager.saveSocialNweb = saveSocialNweb;
-    }
-
-    public static boolean isStopCode() {
-        return stopCode;
-    }
-
-    public static void setStopCode(boolean stopCode) {
-        SessionManager.stopCode = stopCode;
     }
 }

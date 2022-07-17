@@ -10,5 +10,5 @@
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp" />
 <!--set border line cho text-->
-    <stroke android:width="3dp" android:color="#f06060" />
+    <stroke android:width="3dp" android:color="@color/wallet_hint_foreground_holo_light" />
 </shape>

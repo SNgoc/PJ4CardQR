@@ -56,173 +56,70 @@
                     android:layout_margin="10dp"
                     android:orientation="vertical">
 
-                    <!-- Facebook -->
+                    <!-- Button type spinner -->
                     <LinearLayout
-                        android:id="@+id/textInputFacebook"
+                        android:id="@+id/textInputBtnSpinner"
                         style="@style/parent"
                         android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
                             style="@style/viewParent"
-                            android:text="Facebook"/>
+                            android:text="URL TYPE"/>
 
-                        <EditText
-                            android:id="@+id/editFacebook"
+                        <Spinner
+                            android:id="@+id/spUrlType"
+                            android:layout_weight="1"
                             style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_facebook"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
+                            android:dropDownVerticalOffset="65dp"
                             android:maxLines="1" />
                     </LinearLayout>
 
-                    <!-- Twitter -->
+                    <!-- URL name -->
                     <LinearLayout
-                        android:id="@+id/textInputTwitter"
+                        android:id="@+id/textInputUrlName"
                         style="@style/parent"
                         android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
                             style="@style/viewParent"
-                            android:text="Twitter"/>
+                            android:text="@string/txt_url_name"/>
 
                         <EditText
-                            android:id="@+id/editTwitter"
+                            android:id="@+id/editUrlName"
                             style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_twitter"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
+                            android:hint="@string/ed_hint_url_name"
+                            android:inputType="textPersonName"
                             android:maxLines="1" />
                     </LinearLayout>
 
-                    <!-- Instagram -->
+                    <!-- URL Link -->
                     <LinearLayout
-                        android:id="@+id/textInputInstagram"
+                        android:id="@+id/textInputUrlLink"
                         style="@style/parent"
                         android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
                             style="@style/viewParent"
-                            android:text="Instagram"/>
+                            android:text="@string/txt_url_name"/>
 
                         <EditText
-                            android:id="@+id/editInstagram"
+                            android:id="@+id/editUrlLink"
                             style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_instagram"
+                            android:hint="@string/ed_hint_url_link"
                             android:inputType="textWebEditText"
-                            android:visibility="visible"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- Tiktok -->
-                    <LinearLayout
-                        android:id="@+id/textInputTiktok"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Tiktok"/>
-
-                        <EditText
-                            android:id="@+id/editTiktok"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_tiktok"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- Web 1 -->
-                    <LinearLayout
-                        android:id="@+id/textInputWeb1"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Web1"/>
-
-                        <EditText
-                            android:id="@+id/editWeb1"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_web1"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- Web 2 -->
-                    <LinearLayout
-                        android:id="@+id/textInputWeb2"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Web2"/>
-
-                        <EditText
-                            android:id="@+id/editWeb2"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_web2"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- Company 1 -->
-                    <LinearLayout
-                        android:id="@+id/textInputCompany1"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Company1"/>
-
-                        <EditText
-                            android:id="@+id/editCompany1"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_company1"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- Company 2 -->
-                    <LinearLayout
-                        android:id="@+id/textInputCompany2"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Company2"/>
-
-                        <EditText
-                            android:id="@+id/editCompany2"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/ed_hint_company2"
-                            android:inputType="textWebEditText"
-                            android:visibility="visible"
                             android:maxLines="1" />
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnSave_UpdateSocial"
+                        android:id="@+id/btnSave_UpdateURL"
                         style="@style/updateButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:layout_marginBottom="@dimen/loginViewsMargin"
-                        android:text="@string/btn_addSocialNWeb" />
+                        android:text="@string/btn_add_URL" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
@@ -234,7 +131,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
         android:layout_marginRight="11dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="200dp"
         android:adjustViewBounds="false"
         android:id="@+id/backHomeClick"
         android:src="@drawable/ic_back_img" />

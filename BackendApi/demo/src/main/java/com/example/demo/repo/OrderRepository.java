@@ -16,7 +16,6 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Orders,Long> {
 
     //get Orders List by user
-    @Query(value = "select order from Orders order where order.user =: user")
     List<Orders> findOrdersByUser(User user);
 
     //tính doanh thu(SNgoc)

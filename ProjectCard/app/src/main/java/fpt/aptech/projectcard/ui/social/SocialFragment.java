@@ -7,14 +7,24 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
+import fpt.aptech.projectcard.Payload.request.UrlRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
+import fpt.aptech.projectcard.domain.LinkType;
+import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import retrofit2.Call;
@@ -32,10 +42,16 @@ public class SocialFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    //SOCIAL
-    TextView txtFacebook,txtTwitter,txtInstagram,txtTiktok,txtWeb1,txtWeb2,txtCompany1,txtCompany2;
-    EditText edFacebook,edTwitter,edInstagram,edTiktok,edWeb1,edWeb2,edCompany1,edCompany2;
-    Button btnAdd_UpdateSocial;
+    //Retrofit
+    ApiService apiService;
+    //SOCIAL URL
+    UrlRequest urlRequest;
+    EditText edUrlName, edUrlLink;
+    ImageView imgBackHome;
+    Spinner spUrlType;
+    List<LinkType> linkTypeList;
+    Button btnAdd_UpdateURL;
+    private Long type_id;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -77,125 +93,24 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_social, container, false);
-        edFacebook =view.findViewById(R.id.editFacebook);
-        edTwitter = view.findViewById(R.id.editTwitter);
-        edInstagram =view.findViewById(R.id.editInstagram);
-        edTiktok = view.findViewById(R.id.editTiktok);
-        edWeb1 = view.findViewById(R.id.editWeb1);
-        edWeb2 = view.findViewById(R.id.editWeb2);
-        edCompany1 = view.findViewById(R.id.editCompany1);
-        edCompany2 = view.findViewById(R.id.editCompany2);
-        btnAdd_UpdateSocial = view.findViewById(R.id.btnSave_UpdateSocial);
+        edUrlName = view.findViewById(R.id.editUrlName);
+        edUrlLink = view.findViewById(R.id.editUrlLink);
+        imgBackHome = view.findViewById(R.id.backHomeClick);
+        spUrlType = view.findViewById(R.id.spUrlType);
+        btnAdd_UpdateURL = view.findViewById(R.id.btnSave_UpdateURL);
 
 
-        if (SessionManager.getSaveSocialNweb() == null) {
-            //add new social
-            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String facebook = edFacebook.getText().toString();
-                    String twitter = edTwitter.getText().toString();
-                    String instagram = edInstagram.getText().toString();
-                    String tiktok = edTiktok.getText().toString();
-                    String web1 = edWeb1.getText().toString();
-                    String web2 = edWeb2.getText().toString();
-                    String company1 = edCompany1.getText().toString();
-                    String company2 = edCompany2.getText().toString();
-                    //retrofit connect mysql db
-                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+        //retrofit call api connect mysql db
+        apiService = RetrofitService.proceedToken().create(ApiService.class);
 
-                    //add social and web
-                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2,SessionManager.getSaveUserID());
-                    apiService.addSocialNWeb(socialNWebRequest, SessionManager.getSaveToken())
-                            .enqueue(new Callback<SocialNWebRequest>() {
-                                @Override
-                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response != null) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Added success Social", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.body() == null){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.code() == 401){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                                        }
-                                        //error validate
-                                        if (response.code() == 400) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
-            //end btn social event
+        //get list link type
+        try {
+            linkTypeList = apiService.getAllLinkType().execute().body();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        else {
-            //change name btn to update
-            btnAdd_UpdateSocial.setText(R.string.btn_updateSocialNWeb);
-            //update social
-            edFacebook.setText(SessionManager.getSaveSocialNweb().getFacebook());
-            edTwitter.setText(SessionManager.getSaveSocialNweb().getTwitter());
-            edInstagram.setText(SessionManager.getSaveSocialNweb().getInstagram());
-            edTiktok.setText(SessionManager.getSaveSocialNweb().getTiktok());
-            edWeb1.setText(SessionManager.getSaveSocialNweb().getWeb1());
-            edWeb2.setText(SessionManager.getSaveSocialNweb().getWeb2());
-            edCompany1.setText(SessionManager.getSaveSocialNweb().getCompany1());
-            edCompany2.setText(SessionManager.getSaveSocialNweb().getCompany2());
-
-            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String facebook = edFacebook.getText().toString();
-                    String twitter = edTwitter.getText().toString();
-                    String instagram = edInstagram.getText().toString();
-                    String tiktok = edTiktok.getText().toString();
-                    String web1 = edWeb1.getText().toString();
-                    String web2 = edWeb2.getText().toString();
-                    String company1 = edCompany1.getText().toString();
-                    String company2 = edCompany2.getText().toString();
-                    //retrofit connect mysql db
-                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
-
-                    //update social and web
-                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2);
-                    apiService.updateSocialNWeb(SessionManager.getSaveSocialNweb().getSocial_id(),socialNWebRequest, SessionManager.getSaveToken())
-                            .enqueue(new Callback<SocialNWebRequest>() {
-                                @Override
-                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response != null) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Updated success Social", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.body() == null){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.code() == 401){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                                        }
-                                        //error validate
-                                        if (response.code() == 400) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
-            //end btn social event
-        }
-
+        //create dropdown list : using toString return name at LinkType class to show name
+        spUrlType.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, linkTypeList));
 
         return view;
     }
@@ -203,113 +118,43 @@ public class SocialFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        if (SessionManager.getSaveSocialNweb() == null) {
-            //add new social
-            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String facebook = edFacebook.getText().toString();
-                    String twitter = edTwitter.getText().toString();
-                    String instagram = edInstagram.getText().toString();
-                    String tiktok = edTiktok.getText().toString();
-                    String web1 = edWeb1.getText().toString();
-                    String web2 = edWeb2.getText().toString();
-                    String company1 = edCompany1.getText().toString();
-                    String company2 = edCompany2.getText().toString();
-                    //retrofit connect mysql db
-                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
-
-                    //add social and web
-                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2,SessionManager.getSaveUserID());
-                    apiService.addSocialNWeb(socialNWebRequest, SessionManager.getSaveToken())
-                            .enqueue(new Callback<SocialNWebRequest>() {
-                                @Override
-                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response != null) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Added success Social", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.body() == null){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.code() == 401){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                                        }
-                                        //error validate
-                                        if (response.code() == 400) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
+        btnAdd_UpdateURL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String urlName = edUrlName.getText().toString().trim();
+                String urlLink = edUrlLink.getText().toString().trim();
+                LinkType type_id = (LinkType) spUrlType.getSelectedItem();
+                Long product_id = SessionManager.getSaveProduct().getId();
+                Long user_id = SessionManager.getSaveUser().getId();
+                urlRequest = new UrlRequest(urlName,urlLink,type_id.getId(),product_id,user_id);
+                apiService.addNewUrl(urlRequest).enqueue(new Callback<UrlRequest>() {
+                    @Override
+                    public void onResponse(Call<UrlRequest> call, Response<UrlRequest> response) {
+                        if (response.isSuccessful()) {
+                            if (response.isSuccessful()) {
+                                if (response.body() != null) {
+                                    //can't save session value in onResponse, because it will null after finish run this function
+                                Toast.makeText(getActivity().getApplicationContext(), "Added success", Toast.LENGTH_SHORT).show();
+                                spUrlType.setSelection(0);
+                                edUrlName.setText("");
+                                edUrlLink.setText("");
                                 }
-
-                                @Override
-                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                                if (response.body() == null){
+                                    Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
                                 }
-                            });
-                }
-            });
-            //end btn social event
-        }
-        else {
-            //change name btn to update
-            btnAdd_UpdateSocial.setText(R.string.btn_updateSocialNWeb);
-            //update social
-            edFacebook.setText(SessionManager.getSaveSocialNweb().getFacebook());
-            edTwitter.setText(SessionManager.getSaveSocialNweb().getTwitter());
-            edInstagram.setText(SessionManager.getSaveSocialNweb().getInstagram());
-            edTiktok.setText(SessionManager.getSaveSocialNweb().getTiktok());
-            edWeb1.setText(SessionManager.getSaveSocialNweb().getWeb1());
-            edWeb2.setText(SessionManager.getSaveSocialNweb().getWeb2());
-            edCompany1.setText(SessionManager.getSaveSocialNweb().getCompany1());
-            edCompany2.setText(SessionManager.getSaveSocialNweb().getCompany2());
-
-            btnAdd_UpdateSocial.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String facebook = edFacebook.getText().toString();
-                    String twitter = edTwitter.getText().toString();
-                    String instagram = edInstagram.getText().toString();
-                    String tiktok = edTiktok.getText().toString();
-                    String web1 = edWeb1.getText().toString();
-                    String web2 = edWeb2.getText().toString();
-                    String company1 = edCompany1.getText().toString();
-                    String company2 = edCompany2.getText().toString();
-                    //retrofit connect mysql db
-                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
-
-                    //update social and web
-                    SocialNWebRequest socialNWebRequest = new SocialNWebRequest(facebook,twitter,instagram,tiktok,web1,web2,company1,company2);
-                    apiService.updateSocialNWeb(SessionManager.getSaveSocialNweb().getSocial_id(),socialNWebRequest, SessionManager.getSaveToken())
-                            .enqueue(new Callback<SocialNWebRequest>() {
-                                @Override
-                                public void onResponse(Call<SocialNWebRequest> call, Response<SocialNWebRequest> response) {
-                                    if (response.isSuccessful()) {
-                                        if (response != null) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Updated success Social", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.body() == null){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                                        }
-                                        if (response.code() == 401){
-                                            Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                                        }
-                                        //error validate
-                                        if (response.code() == 400) {
-                                            Toast.makeText(getActivity().getApplicationContext(), "Add failed, error field", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
+                                if (response.code() == 401){
+                                    Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
                                 }
+                            }
+                        }
+                    }
 
-                                @Override
-                                public void onFailure(Call<SocialNWebRequest> call, Throwable t) {
-                                    Toast.makeText(getActivity().getApplicationContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                            });
-                }
-            });
-            //end btn social event
-        }
-
+                    @Override
+                    public void onFailure(Call<UrlRequest> call, Throwable t) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Add Url failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
     }
 }

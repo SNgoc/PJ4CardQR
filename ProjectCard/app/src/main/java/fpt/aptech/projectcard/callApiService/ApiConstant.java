@@ -16,4 +16,6 @@ public class ApiConstant {
 
     //new
     public static final String URL_GET_SOCIALURL_BY_USERNAME = "/api/urlProduct/list/{username}";
+    public static final String URL_GET_LIST_LINK_TYPE_URL = "/api/android/listLinkType";
+    public static final String URL_ADD_NEW_URL = "/api/android/addUrl";
 }

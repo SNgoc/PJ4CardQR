@@ -59,6 +59,7 @@ import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.Orders;
+import fpt.aptech.projectcard.domain.Product;
 import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
@@ -81,7 +82,7 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     View view;
     //check order status for login;
-    ProductRequest productRequest;
+    Product getProduct;
     List<Orders> ordersListUser;
     //header title card
     TextView txtFrontHeaderCard,txtBehindHeaderCard;
@@ -183,7 +184,8 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)//api > 24 for set tooltiptext
+    @RequiresApi(api = Build.VERSION_CODES.O)//api > 24 for set TooltipText imageView
+    //refresh data on click
     @Override
     public void onStart() {
         super.onStart();
@@ -193,7 +195,9 @@ public class HomeFragment extends Fragment {
         //call api check product order status
         try {
             ordersListUser = apiService.getOrdersByUsername(SessionManager.getSaveUsername()).execute().body();
-//            productRequest = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
+            getProduct = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
+            SessionManager.setSaveProduct(getProduct);
+            SessionManager.setSaveUser(apiService.getProfile(SessionManager.getSaveUsername()).execute().body());
         } catch (IOException e) {
             e.printStackTrace();
         }

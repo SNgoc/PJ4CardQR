@@ -385,7 +385,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4NjAxMDYsImV4cCI6MTY1Nzk0NjUwNn0.r4oX9wCTpvV49TZkO511sPLJWjVQr3rAbNYD7wjg1v8nwXu--9nE-ouC2jjx-H4sFW6hBPV0gDBocqUl2GifTA",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJvIiwiaWF0IjoxNjU4MDQ1NTI4LCJleHAiOjE2NTgxMzE5Mjh9.GC8PQHfiQbGJSWJNVyEdPsAQ94JOmwMs_Ke84ihpYaVAKs49Ar6eZVEXlHdl4wUmS5xJTM2xTzirtbailT2Jkg",
 							"type": "string"
 						}
 					]
@@ -459,7 +459,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc3ODkzNzQsImV4cCI6MTY1Nzg3NTc3NH0.1KGRiF6B8Jgo5kdlZx4SI_wPHZZRNNRdcZpg0eIV7V8s2nCZK2FdcW2bCryaZeRj2z6kxCe1j7J3U8YMtDvqrg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTgwNzc3ODksImV4cCI6MTY1ODE2NDE4OX0.iSqRDcrtkMryNyrYur_fFnFMapKAtprrC0shTlTXjAlGnSakt1bSAO2jvVjkFhcizQRYt4k0dkilXesTUrDCzQ",
 							"type": "string"
 						}
 					]
@@ -507,7 +507,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc4NTk3OTAsImV4cCI6MTY1Nzk0NjE5MH0.7VE4Z7m5DP-fHCTGvQysXen_KQAqIjW_xSazeSB72QSU4PgRp73vN7R_GQqvKCUegikW6bbjzQY_GeMES_GkFg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU3OTYwMDEyLCJleHAiOjE2NTgwNDY0MTJ9.ZyQSQxrhHbjWUnk4JOnlAwwiWLbA-i83S7TZD-P0mXHYx8QQqMxmqpSJOmy1GG8nsupaTlHMnLIglPYRAeZSfA",
 							"type": "string"
 						}
 					]
@@ -516,7 +516,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"facebook\": \"facebook\",\r\n    \"twitter\": \"twitter\",\r\n    \"instagram\": \"instagram\",\r\n    \"tiktok\": \"tiktokk\",\r\n    \"web1\": \"web1\",\r\n    \"web2\": \"web2\",\r\n    \"company1\": \"company1\",\r\n    \"company2\": \"company2\",\r\n    \"user_id\": \"3\"\r\n}",
+					"raw": "{\r\n    \"facebook\": \"facebook\",\r\n    \"twitter\": \"twitter\",\r\n    \"instagram\": \"instagram\",\r\n    \"tiktok\": \"tiktokk\",\r\n    \"web1\": \"web1\",\r\n    \"web2\": \"web2\",\r\n    \"company1\": \"company1\",\r\n    \"company2\": \"company2\",\r\n    \"user_id\": \"8\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -550,7 +550,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTc2NDU0MjAsImV4cCI6MTY1NzczMTgyMH0.GX9a0zO2EHIMUiUi4US7bY8GXrDxPRVJmbkhCXLbjMRgaXC5Mc7QZwLknhYRmIRNP_5X4rUikk46UTSQ0ibpLg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU3OTYwMjM1LCJleHAiOjE2NTgwNDY2MzV9.z_lEmcWyVPULLagFZUF4YdnBx7PusVSteACAAI3_iW6_HnHfGAkJYtNiH7QP1YWdkpNysvuBNFBFMJXk1dMylA",
 							"type": "string"
 						}
 					]
@@ -567,7 +567,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/social/getSocialAndProfile/3",
+					"raw": "http://localhost:8080/api/social/getSocialAndProfile/8",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -577,7 +577,7 @@
 						"api",
 						"social",
 						"getSocialAndProfile",
-						"3"
+						"8"
 					]
 				}
 			},
@@ -875,12 +875,22 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "GetAllUrlByUsername",
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU3OTYwMjM1LCJleHAiOjE2NTgwNDY2MzV9.z_lEmcWyVPULLagFZUF4YdnBx7PusVSteACAAI3_iW6_HnHfGAkJYtNiH7QP1YWdkpNysvuBNFBFMJXk1dMylA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/urlProduct",
+					"raw": "http://localhost:8080/api/urlProduct/list/nero",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -888,7 +898,9 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"urlProduct"
+						"urlProduct",
+						"list",
+						"nero"
 					]
 				}
 			},
@@ -921,6 +933,46 @@
 						"order",
 						"listByUsername",
 						"nero"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Android Add Url Product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4MDc4MDk4LCJleHAiOjE2NTgxNjQ0OTh9.td32zRltcldMnBNk0NfL4pnA7W-_Y6AviHXm4X77VKqbdDVCJ_zaFaAsumQcxdLxC3M3XD_DpaxsCjBCSytbJw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"name\": \"Twitter\",\r\n        \"url\": \"twitter.com/nero3103\",\r\n        \"type_id\" : 5,\r\n        \"product_id\" : 6\r\n    ,\r\n        \"user_id\" : 8\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/android/addUrl",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"android",
+						"addUrl"
 					]
 				}
 			},

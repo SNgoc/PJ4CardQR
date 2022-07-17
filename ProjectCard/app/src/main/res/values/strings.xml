@@ -73,18 +73,14 @@
     <string name="address">Address</string>
     <string name="description">Description</string>
     <string name="province">Province</string>
-    <!--String text for Add and Update Social layout-->
-    <string name="btn_addSocialNWeb">Add New Social-Website</string>
-    <string name="btn_updateSocialNWeb">Update Social-Website</string>
+    <!--String text for Add and Update Link Url layout-->
+    <string name="btn_add_URL">Add New URL</string>
+    <string name="btn_update_URL">Update URL</string>
+    <string name="sp_url_type">URL TYPE</string>
     <string name="intro_header_social_web_text">Here’s place \nto you connect \nwith everyone</string>
-    <string name="ed_hint_facebook">https://www.facebook.com</string>
-    <string name="ed_hint_twitter">https://www.twitter.com</string>
-    <string name="ed_hint_instagram">https://www.instagram.com</string>
-    <string name="ed_hint_tiktok">https://www.tiktok.com</string>
-    <string name="ed_hint_web1">https://www.web1.com</string>
-    <string name="ed_hint_web2">https://www.web2.com</string>
-    <string name="ed_hint_company1">Your company1\'s name</string>
-    <string name="ed_hint_company2">Your company2\'s name</string>
+    <string name="txt_url_name">URL NAME</string>
+    <string name="ed_hint_url_name">Set name for your URL</string>
+    <string name="ed_hint_url_link">example.com</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

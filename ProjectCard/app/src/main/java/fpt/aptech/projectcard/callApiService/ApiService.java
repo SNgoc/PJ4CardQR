@@ -3,20 +3,19 @@ package fpt.aptech.projectcard.callApiService;
 import java.util.List;
 
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
-import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
 import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UpdateProfile;
+import fpt.aptech.projectcard.Payload.request.UrlRequest;
+import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.Orders;
+import fpt.aptech.projectcard.domain.Product;
 import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
-import retrofit2.http.Header;
-import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -33,7 +32,7 @@ public interface ApiService {
     Call<List<Orders>> getOrdersByUsername(@Path("username") String username);//use @Query to Add access token to Authorization
 
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
-    Call<ProductRequest> getProduct(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+    Call<Product> getProduct(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
 
     @GET(ApiConstant.URL_PROFILE)
     Call<User> getProfile(@Path("username") String username);
@@ -54,6 +53,11 @@ public interface ApiService {
     @GET(ApiConstant.URL_GET_SOCIALURL_BY_USERNAME)
     Call<List<UrlProduct>> getUrlProduct(@Path("username") String username);
 
+    @GET(ApiConstant.URL_GET_LIST_LINK_TYPE_URL)
+    Call<List<LinkType>> getAllLinkType();
+
+    @POST(ApiConstant.URL_ADD_NEW_URL)
+    Call<UrlRequest> addNewUrl(@Body UrlRequest urlRequest);
 
     // post raw json
 //    @Headers("Content-Type: application/json")

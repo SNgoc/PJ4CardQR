@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.1359375" />
         <entry key="..\:/Programs/Github/PJ4CardQR/ProjectCard/app/src/main/res/layout/activity_login.xml" value="0.2421875" />
         <entry key="..\:/Programs/Github/PJ4CardQR/ProjectCard/app/src/main/res/layout/fragment_home.xml" value="0.2421875" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/drawable-hdpi/rounded_corner.xml" value="0.1475" />
@@ -26,7 +27,7 @@
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/fragment_payment.xml" value="0.13697916666666668" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/fragment_profile.xml" value="0.264" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/fragment_register.xml" value="0.264" />
-        <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/fragment_social.xml" value="0.2" />
+        <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/fragment_social.xml" value="0.264" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/layout/nav_header_main.xml" value="0.16799999999999998" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/menu/activity_main_drawer.xml" value="0.2" />
         <entry key="..\:/Programs/ProjectCardUI/ProjectCard/app/src/main/res/menu/main.xml" value="0.10104166666666667" />

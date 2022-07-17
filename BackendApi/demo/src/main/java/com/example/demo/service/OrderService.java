@@ -190,9 +190,9 @@ public class OrderService {
 //        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
         BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
         options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("D:/demo/Qrcode/qrcode.png").toPath());
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
 
-        File file = new File("D:/demo/Qrcode/qrcode.png");
+        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "image/png", IOUtils.toByteArray(input));
