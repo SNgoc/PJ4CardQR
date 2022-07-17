@@ -18,16 +18,16 @@
         <!--FRONT CARD-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCard_front"
-            android:layout_width="355dp"
-            android:layout_height="200dp"
+            android:layout_width="370dp"
+            android:layout_height="250dp"
             android:background="@drawable/layout_card_border"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="340dp"
-                android:layout_height="200dp"
+                android:layout_width="355dp"
+                android:layout_height="250dp"
                 android:background="@drawable/layout_card_border"
                 android:backgroundTint="@android:color/holo_orange_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -62,12 +62,12 @@
                     app:layout_constraintEnd_toStartOf="@+id/tableLayout"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.43">
+                    app:layout_constraintVertical_bias="0.6">
 
                     <ImageView
                         android:id="@+id/imgAvatar"
-                        android:layout_width="270px"
-                        android:layout_height="270px"
+                        android:layout_width="300px"
+                        android:layout_height="300px"
                         android:scaleType="fitXY"/>
                 </LinearLayout>
 
@@ -145,8 +145,8 @@
         <!--BEHIND CARD-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCard_behind"
-            android:layout_width="355dp"
-            android:layout_height="200dp"
+            android:layout_width="370dp"
+            android:layout_height="250dp"
             android:visibility="gone"
             android:background="@drawable/layout_card_border"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -154,8 +154,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="340dp"
-                android:layout_height="200dp"
+                android:layout_width="355dp"
+                android:layout_height="250dp"
                 android:background="@drawable/layout_card_border"
                 android:backgroundTint="@android:color/holo_orange_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -190,22 +190,22 @@
                     app:layout_constraintEnd_toStartOf="@+id/gvUrl"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.7"
+                    app:layout_constraintVertical_bias="0.6"
                     app:layout_constraintHorizontal_bias="0.5">
 
                     <ImageView
                         android:id="@+id/imgQRInfo"
                         android:scaleType="fitXY"
-                        android:layout_width="320px"
-                        android:layout_height="320px" />
+                        android:layout_width="330px"
+                        android:layout_height="330px" />
                 </LinearLayout>
 
                 <GridView
                     android:id="@+id/gvUrl"
-                    android:layout_width="190dp"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
                     android:horizontalSpacing="4dp"
-                    android:numColumns="4"
+                    android:numColumns="5"
                     android:verticalSpacing="15dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,6 +67,14 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
                     intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
                 }
                 getContext().startActivity(intent);
+            }
+        });
+        img.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public boolean onLongClick(View v) {
+                img.setTooltipText(urlProduct.getName());
+                return false;
             }
         });
         return listItemView;

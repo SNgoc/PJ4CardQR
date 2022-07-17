@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -47,6 +49,8 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +58,7 @@ import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
+import fpt.aptech.projectcard.domain.Orders;
 import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
@@ -75,12 +80,14 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     View view;
+    //check order status for login;
+    ProductRequest productRequest;
+    List<Orders> ordersListUser;
     //header title card
     TextView txtFrontHeaderCard,txtBehindHeaderCard;
     //front card
     TextView txtName,txtEmail,txtAddress,txtBirthday,txtProvince, txtGender;
     //behind card
-    List<UrlProduct> checkDuplicate;
     GridView gridViewUrl;
     List<UrlProduct> urlProductList;
     ImageView imgAvatar, imgQR;
@@ -130,6 +137,7 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)//api > 24
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -161,27 +169,61 @@ public class HomeFragment extends Fragment {
             StrictMode.setThreadPolicy(gfgPolicy);
         }
 
-        //to check product if it was bought
-        SessionManager.setStopCode(false);
-        ProductRequest productRequest = null;
+        //hide layout_UpdateProfile and btnUpdateProfile
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onStart();
+                // Set title bar to Home
+                ((MainActivity) getActivity()).setActionBarTitle("Home");
+                layout_updateProfile.setVisibility(View.GONE);
+            }
+        });
+
+        return view;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)//api > 24 for set tooltiptext
+    @Override
+    public void onStart() {
+        super.onStart();
         //retrofit connect mysql db
         ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
 
         //call api check product order status
         try {
-            productRequest = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
+            ordersListUser = apiService.getOrdersByUsername(SessionManager.getSaveUsername()).execute().body();
+//            productRequest = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //if product havent been bought, dont run this code to improve performance
-        //27-06-2022 04:15AM Stopped at here, got data from getProfile() success
-        if (productRequest == null){
+        //if product had been order but order status not completed, dont run this code to improve performance
+        if (ordersListUser == null || ordersListUser.isEmpty()){
             Toast.makeText(getActivity().getApplicationContext(), "Failed to display! Please order product first", Toast.LENGTH_LONG).show();
             startActivity(new Intent(getActivity(), LoginActivity.class));
             //prevent back on click back button
             getActivity().finish();
         }
-        if (productRequest != null) {
+        else {
+            //found order by username, not null, not empty
+            //check order status, can only login when status is success
+            boolean foundSuccess = false;
+            for (Orders o : ordersListUser) {
+                if (o.getOrder_process().getId() == 3){// 1: Waiting, 2:Delivery, 3:Success, 4:Cancel
+                    foundSuccess = true;
+                    break;
+                }
+            }
+            if (foundSuccess == false){
+                for (Orders o : ordersListUser) {
+                    Toast.makeText(getActivity().getApplicationContext(), "Now, your order status is " + o.getOrder_process().getName() + "! \nPlease waiting for order status is Success!", Toast.LENGTH_LONG).show();
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    //prevent back on click back button
+                    getActivity().finish();
+                }
+            }
+            ///////////////////////////////////////////////////////////////
+
             //call api to get user info
             apiService.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
                 @Override
@@ -244,6 +286,7 @@ public class HomeFragment extends Fragment {
             showCardInfo();
             showUrlProduct();
         }
+
         //get data from other fragment or activity
 
         //================================================================
@@ -328,21 +371,12 @@ public class HomeFragment extends Fragment {
                 fragmentTransaction.addToBackStack(null).commit();
             }
         });
-
-        //hide layout_UpdateProfile and btnUpdateProfile
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Set title bar to Home
-                ((MainActivity) getActivity()).setActionBarTitle("Home");
-                layout_updateProfile.setVisibility(View.GONE);
-            }
-        });
-
-        return view;
     }
 
+    //check order status for login
+
     //function to display smart card info and qr cde
+    @RequiresApi(api = Build.VERSION_CODES.O) //api > 24
     public void showCardInfo(){
         //user info
         //set display user info get from user model
@@ -368,7 +402,7 @@ public class HomeFragment extends Fragment {
 
         //create QR img from user info + Social + web
         //note: to qr show button type access link must have https:// + name + .com or .net (follow type web link)
-        String dynamicQR = "https://facebook.net";
+        String dynamicQR = "http://localhost:8088/Display/" + SessionManager.getSaveUsername();
 
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
@@ -376,6 +410,7 @@ public class HomeFragment extends Fragment {
             BarcodeEncoder encoder = new BarcodeEncoder();
             Bitmap bitmap = encoder.createBitmap(matrix);
             imgQR.setImageBitmap(bitmap);
+            imgQR.setTooltipText("http://localhost:8088/Display/" + SessionManager.getSaveUsername());
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -384,27 +419,19 @@ public class HomeFragment extends Fragment {
 
     //show url product from db mysql
     public void showUrlProduct(){
-        ArrayList<UrlProduct> urlProductArrayList = new ArrayList<>();
-        for (UrlProduct u: urlProductList) {
-            // function create TextView, Imageview by code  must be in onCreateView of fragment, if not will create duplicate TextView when click back fragment after click link url
-            TextView txtUrl = new TextView(getContext());
-            //display avatar img from url
-            urlProductArrayList.add(u);
-            GridViewURLAdapter adapter = new GridViewURLAdapter(getContext(),urlProductArrayList);
-            gridViewUrl.setAdapter(adapter);
-            txtUrl.setId(u.getId());
-            txtUrl.setText(u.getUrl());
-            //facebook,twitter,instagram,whatsapp,telegram,url
-            if (u.getLinkType().getId() == 1 || u.getLinkType().getId() == 2 || u.getLinkType().getId() == 3
-                || u.getLinkType().getId() == 4 || u.getLinkType().getId() == 5 || u.getLinkType().getId() == 8){
-                Linkify.addLinks(txtUrl,Linkify.WEB_URLS);
+        //sort item by name
+        urlProductList.sort(new Comparator<UrlProduct>() {
+            public int compare(UrlProduct u1, UrlProduct u2) {
+                return u1.getLinkType().getName().compareTo(u2.getLinkType().getName());
             }
-            if (u.getLinkType().getId() == 7){//email
-                Linkify.addLinks(txtUrl,Linkify.EMAIL_ADDRESSES);
-            }
-            if (u.getLinkType().getId() == 6){//phone
-                Linkify.addLinks(txtUrl,Linkify.PHONE_NUMBERS);
-            }
-        }
+        });
+        // function create TextView, Imageview by code must be in onCreateView of fragment,
+        // if not will create duplicate TextView when click back fragment after click link url;
+        // or using it with grid view to fix error duplicate
+        //display avatar img from url
+        ArrayList<UrlProduct> urlProductArrayList = new ArrayList<>(urlProductList);
+        GridViewURLAdapter adapter = new GridViewURLAdapter(getContext(),urlProductArrayList);
+        adapter.notifyDataSetChanged();
+        gridViewUrl.setAdapter(adapter);
     }
 }

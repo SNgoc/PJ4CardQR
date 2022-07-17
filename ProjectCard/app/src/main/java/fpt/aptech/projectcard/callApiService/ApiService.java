@@ -30,7 +30,7 @@ public interface ApiService {
     Call<SignupRequest> signup(@Body SignupRequest signupRequest);
 
     @GET(ApiConstant.URL_GET_ORDER_BY_USERNAME)
-    Call<List<Orders>> getOrdersByUsername(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization
+    Call<List<Orders>> getOrdersByUsername(@Path("username") String username);//use @Query to Add access token to Authorization
 
     @GET(ApiConstant.URL_GETPRODUCT_INFO_BY_USERID)
     Call<ProductRequest> getProduct(@Path("username") String username, @Query("Authorization") String token);//use @Query to Add access token to Authorization

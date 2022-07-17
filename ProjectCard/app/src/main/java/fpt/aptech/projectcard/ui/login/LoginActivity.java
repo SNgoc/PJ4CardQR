@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(Call<LoginRequest> call, Response<LoginRequest> response) {
                             if (response.body() != null) {
-                                Toast.makeText(LoginActivity.this, "Welcome " + response.body().getEmail() + "\n"  + response.body().getAccessToken() + "\n" + response.body().getLinkImage(), Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(LoginActivity.this, "Welcome " + response.body().getEmail() + "\n"  + response.body().getAccessToken() + "\n" + response.body().getLinkImage(), Toast.LENGTH_SHORT).show();
 
                                 //save data to session after login
                                 //note: need create new field email, token, linkImage in model to get data return result of json
