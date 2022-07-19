@@ -42,6 +42,21 @@ public class OrderService {
         return response;
     }
 
+    public HttpResponse<String> cancel(int id,HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/order/cancelOrder/" + id))
+                .GET()
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
+
     public HttpResponse<String> details(Long id,HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()

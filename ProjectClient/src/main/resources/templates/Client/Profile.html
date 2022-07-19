@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Client/clientLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .review {
+            padding-top: 40px;
+            padding: 1rem;
+            padding-bottom: 60px;
+            margin: auto;
+            position: relative;
+            display: flex;
+            min-height: 80vh;
+            padding-bottom: 20px;
+            position: relative;
+            width: 100%;
+            min-height: 320px;
+            text-align: center;
+            margin: auto;
+            padding: 15px 15px 20px;
+            z-index: 1;
+            display: block;
+        }
+        .avatar {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: auto;
+            border-radius: 50%;
+            border: 1px solid #f2f2f2;
+        }
+        .desc {
+            color: #777;
+            font-size: 20px;
+            line-height: 24px;
+            min-height: 24px;
+            margin-bottom: 12px;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .btn-review {
+            counter-reset: buttonLinkSort;
+            background-color: white;
+            border-radius: 50vh;
+            position: relative;
+            text-align: center;
+            display: block;
+            margin-bottom: 20px;
+            margin: 18px 0;
+            min-height: 55px;
+            line-height: 55px;
+            position: relative;
+            max-width: 600px;
+        }
+
+        .btn-img {
+            position: absolute;
+            height: 44px;
+            left: 3%;
+            width: 44px;
+            line-height: 44px;
+        }
+        .link {
+            max-width: 600px;
+            margin: auto;
+        }
+        .btn-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            line-height: 1.6em;
+        }
+    </style>
+    <title>One Touch || My Profile</title>
+
+</head>
+<body>
+<div layout:fragment="content">
+    <section class="module" id="alt-features">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <form method="post" th:action="@{/changeImageProfile}" enctype="multipart/form-data">
+                        <div>
+                            <input onchange="this.form.submit()" class="form-control" type="file" name="image"/>
+                        </div>
+
+                    </form>
+
+                    <form class="form" method="post" role="form" th:action="@{/updateProfile}" th:object="${users}" >
+                        <div class="form-group">
+                            <lable>Avatar</lable>
+
+                            <div id="preview-image"></div>
+                            <div id="oldImage" height="88px"><img th:src="${users.linkImage}" style="height:88px"/></div>
+                        </div>
+                        <div class="form-group">
+                            <lable>Last Name</lable>
+                            <input class="form-control" type="text" th:field="*{lastname}" th:value="${users.lastname}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <lable>FullName</lable>
+                            <input class="form-control" type="text" th:field="*{fullname}" th:value="${users.fullname}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <lable>Email</lable>
+                            <input class="form-control" type="text" th:field="*{email}" th:value="${users.email}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" th:field="*{gender}">
+                                <option th:value="true">Female</option>
+                                <option th:value="false">Male</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <lable>Phone</lable>
+                            <input class="form-control" type="text" th:field="*{phone}" th:value="${users.phone}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <lable>Address</lable>
+                            <input class="form-control" type="text" th:field="*{address}" th:value="${users.address}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <lable>BirthDay</lable>
+                            <input class="form-control" type="date" th:field="*{dateOfbirth}" th:value="${users.dateOfbirth}"  name="Title"/>
+                        </div>
+                        <div class="form-group">
+                            <lable>Description</lable>
+                            <input class="form-control" type="text" th:field="*{description}" th:value="${users.description}"  name="Description"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="form-control" type="submit">Save</button>
+                        </div>
+                    </form>
+
+                    <hr class="divider-w mt-10 mb-20">
+
+
+
+                </div>
+            </div>
+        </div>
+</div>
+</section>
+
+
+
+
+</div>
+</body>
+</html>
+

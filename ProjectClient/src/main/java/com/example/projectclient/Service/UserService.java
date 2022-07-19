@@ -28,7 +28,7 @@ public class UserService {
     public User userProfile(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/auth/profile/" + session.getAttribute("usernames")))
+                .uri(URI.create("http://localhost:8080/api/auth/profile/" + session.getAttribute("usernamesClient")))
                 .GET()
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
@@ -49,12 +49,12 @@ public class UserService {
     public void changeImageUser(HttpSession session, File file) throws URISyntaxException, IOException, InterruptedException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        Path currentRelativePath = Paths.get("C:/Users/havy5/Desktop/project/ProjectClient/user-photos");
+        Path currentRelativePath = Paths.get("D:/ProjectClient/ProjectClient/user-photos");
         String path = currentRelativePath.toAbsolutePath().toString();
         System.out.println(path);
         MediaType mediaType = MediaType.parse("text/plain");
         RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("username", (String) session.getAttribute("usernames"))
+                .addFormDataPart("username", (String) session.getAttribute("usernamesClient"))
                 .addFormDataPart("image", path+"/"+file.getName(),
                         RequestBody.create(MediaType.parse("application/octet-stream"),
                                 new File(path+"/"+file.getName())))

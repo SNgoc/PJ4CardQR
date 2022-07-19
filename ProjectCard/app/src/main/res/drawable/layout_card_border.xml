@@ -10,5 +10,5 @@
         android:topLeftRadius="15dp"
         android:topRightRadius="15dp" />
     <!--set border line cho text-->
-    <stroke android:width="10dp" android:color="#873e23" />
+    <stroke android:width="10dp" android:color="@color/white" />
 </shape>

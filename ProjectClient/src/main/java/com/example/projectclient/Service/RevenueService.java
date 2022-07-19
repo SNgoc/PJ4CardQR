@@ -1,7 +1,6 @@
 package com.example.projectclient.Service;
 
 import com.example.projectclient.Config.JSONUtils;
-import com.example.projectclient.Models.UrlProduct;
 import org.json.JSONArray;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,7 @@ public class RevenueService {
     public String showAllRevenue(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/order/getRevenue/"))
+                .uri(URI.create( BASE_URL + "api/android/getRevenue/"))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")
@@ -35,7 +34,7 @@ public class RevenueService {
     public String countUsersActive(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/User/getCountUsersActive"))
+                .uri(URI.create( BASE_URL + "api/android/getCountUsersActive"))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")
@@ -50,7 +49,7 @@ public class RevenueService {
     public String countUsersLocked(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/User/getCountUsersLocked"))
+                .uri(URI.create( BASE_URL + "api/android/getCountUsersLocked"))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")
@@ -65,7 +64,7 @@ public class RevenueService {
     public String countAllProductOrder(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/product/getCountProduct/"))
+                .uri(URI.create( BASE_URL + "api/android/getCountProduct/"))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")
@@ -80,7 +79,7 @@ public class RevenueService {
     public List<Integer> countOrderByStatus(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/order/countOrderStatus"))
+                .uri(URI.create( BASE_URL + "api/android/countOrderStatus"))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")

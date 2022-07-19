@@ -3,20 +3,19 @@ package com.example.projectclient.Controllers.Admin;
 import com.example.projectclient.Config.JSONUtils;
 import com.example.projectclient.Models.*;
 import com.example.projectclient.Service.CategoryService;
+import com.example.projectclient.Service.CloudBinary.CloudBinaryService;
 import com.example.projectclient.Service.FileUploadUtil;
 import com.example.projectclient.Service.UserService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,12 +24,11 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 @Controller
 @MultipartConfig
@@ -38,6 +36,11 @@ import java.util.Locale;
 public class CategoryController {
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private CloudBinaryService cloudBinaryService;
+    private Map<String, String> options = new HashMap<>();
+    @Value("${javadocfast.cloudinary.folder.category}")
+    private String image;
 
     public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
@@ -54,7 +57,7 @@ public class CategoryController {
 
 
     @GetMapping("Admin/Category/delete/{id}")
-    public String deleteUser(@PathVariable int id, HttpSession session , RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+    public String delete(@PathVariable int id, HttpSession session , RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
         var response = categoryService.delete(id,session);
         if (response.statusCode() != 200){
             redirectAttributes.addFlashAttribute("Success",response.body());
@@ -65,35 +68,108 @@ public class CategoryController {
     }
 
     @GetMapping(value = "Category/Add")
-    public String  addUser(HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
-        model.addAttribute("Category", new Category());
+    public String add (HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        model.addAttribute("CreateCategory", new CreateCategory());
         return "Admin/Category/addNew";
     }
 
     @PostMapping(value = "/Category/AddNew")
-    public String  addNewUser(@RequestParam("name") String name, @RequestParam("price") int price, @RequestParam("frontImage") MultipartFile front,
-                              @RequestParam("backImage") MultipartFile back, HttpSession session,
-                              RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
+    public String SaveAddNew(@ModelAttribute("CreateCategory") CreateCategory createCategory , HttpSession session, RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
+        Category category = new Category();
+        category.setName(createCategory.getName());
+        category.setPrice(createCategory.getPrice());
+        category.setCreate_at(new Date());
 
-        String uploadDir = "user-photos";
-        String frontName = StringUtils.cleanPath(front.getOriginalFilename());
-        FileUploadUtil.saveFile(uploadDir, frontName, front);
-        File frontFile = new File(front.getOriginalFilename());
+        options.put("folder", image);
+        if(!createCategory.getFrontImage().isEmpty()){
+            // Folder To Save Image
+            MultipartFile frontFile = createCategory.getFrontImage();
+            // Update New Image
+            Map frontResult = cloudBinaryService.upload(frontFile, options);
+            category.setFrontImage(frontResult.get("url").toString());
+        }
+        if(!createCategory.getBackImage().isEmpty()){
+            MultipartFile backFile = createCategory.getBackImage();
+            Map backResult = cloudBinaryService.upload(backFile, options);
+            category.setBackImage(backResult.get("url").toString());
+        }
 
-        String backName = StringUtils.cleanPath(back.getOriginalFilename());
-        FileUploadUtil.saveFile(uploadDir, backName, back);
-        File backFile = new File(back.getOriginalFilename());
+        String json = JSONUtils.convertToJSON(category);
+        var response  = categoryService.add(json,session);
+        redirectAttributes.addFlashAttribute("Success",response.body());
+        return "redirect:/Admin/Category";
 
-        var response = categoryService.add(new Category(price,name), frontFile, backFile, session);
+    }
 
-//        if (respone.statusCode() != 200){
-//            JSONObject ob = new JSONObject(respone.body());
-//            Category cateParse = JSONUtils.convertToObject(Category.class,ob.toString());
-//            redirectAttributes.addFlashAttribute("errorName",cateParse.getName());
-//            redirectAttributes.addFlashAttribute("errorPrice",cateParse.getPrice());
-//            return "redirect:/Users/Add";
-//        }
-        redirectAttributes.addFlashAttribute("Success","Add new Categoru successfully");
+    @GetMapping(value = "Admin/Category-{id}")
+    public String edit (@PathVariable Long id, HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        var response = categoryService.details(id,session);
+        if(response == null){
+            redirectAttributes.addFlashAttribute("Error", "Not Found Category");
+            return "redirect:/Admin/Category";
+        }
+        CreateCategory createCategory = new CreateCategory();
+        createCategory.setId(response.getId());
+        createCategory.setName(response.getName());
+        createCategory.setPrice(response.getPrice());
+        createCategory.setQuantity(response.getPrice());
+        model.addAttribute("front",response.getFrontImage());
+        model.addAttribute("back",response.getBackImage());
+        model.addAttribute("CreateCategory", createCategory);
+        return "Admin/Category/edit";
+    }
+
+    @PostMapping(value = "/Category/SaveEdit")
+    public String SaveEdit(@ModelAttribute("Category") CreateCategory createCategory , HttpSession session, RedirectAttributes redirectAttributes) throws IOException, InterruptedException, ParseException {
+        Category category = new Category();
+        category.setId(createCategory.getId());
+        category.setName(createCategory.getName());
+        category.setPrice(createCategory.getPrice());
+        category.setQuantity(createCategory.getPrice());
+        category.setCreate_at(new Date());
+
+        options.put("folder", image);
+        if(!createCategory.getFrontImage().isEmpty()){
+            // Folder To Save Image
+            MultipartFile frontFile = createCategory.getFrontImage();
+            // Update New Image
+            Map frontResult = cloudBinaryService.upload(frontFile, options);
+            category.setFrontImage(frontResult.get("url").toString());
+        }else{
+            category.setFrontImage(categoryService.details(createCategory.getId(),session).getFrontImage());
+        }
+        if(!createCategory.getBackImage().isEmpty()){
+            MultipartFile backFile = createCategory.getBackImage();
+            Map backResult = cloudBinaryService.upload(backFile, options);
+            category.setBackImage(backResult.get("url").toString());
+        }else{
+            category.setBackImage(categoryService.details(createCategory.getId(),session).getBackImage());
+        }
+
+        String json = JSONUtils.convertToJSON(category);
+        var response  = categoryService.edit(json,session);
+        redirectAttributes.addFlashAttribute("Success","Edit Successfully");
+        return "redirect:/Admin/Category";
+    }
+
+    @GetMapping(value = "Admin/AddQuantity-{id}")
+    public String addQuantity (@PathVariable Long id,HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        var response = categoryService.details(id,session);
+        model.addAttribute("quantity", response.getQuantity());
+        response.setQuantity(0);
+        model.addAttribute("Category", response);
+
+        return "Admin/Category/addQuantity";
+    }
+
+    @PostMapping(value = "Admin/SaveAddQuantity")
+    public String SaveAddQuantity (@ModelAttribute("Category") Category category, HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        var response = categoryService.AddQuantity(category.getId(),category.getQuantity(),session);
+        if(response.statusCode() == 200){
+            redirectAttributes.addFlashAttribute("Success", "Add Quantity Successfully");
+        }else{
+            redirectAttributes.addFlashAttribute("Error", "Not Found Category");
+        }
         return "redirect:/Admin/Category";
     }
 }

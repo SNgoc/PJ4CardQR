@@ -22,12 +22,12 @@ import java.util.Date;
 public class UpdateProfile {
 
     @NotBlank(message = "Lastname is not blank")
-    @Size(min = 5,max = 15,message = "Lastname is min 5 character and max 15 character")
+    @Size(min = 2,max = 50,message = "Lastname is min 2 character and max 15 character")
     private String lastname;
 
 
-    @NotBlank(message = "Lastname is not blank")
-    @Size(min = 20,max = 200,message = "description is min 20 character and max 200 character")
+    @NotBlank(message = "Description is not blank")
+    @Size(min = 5,max = 200,message = "description is min 5 character and max 200 character")
     private String description;
 
     @NotBlank(message = "Lastname is not blank")

@@ -10,6 +10,8 @@
     <string name="menu_home">Home</string>
     <string name="menu_buy_card">Buy Card</string>
     <string name="menu_social">Social</string>
+    <string name="menu_contactus">Contact Us</string>
+    <string name="menu_order_information">Check card status</string>
     <string name="menu_login">Logout</string>
     <string name="menu_register">Sign up</string>
     <!-- Strings related to login -->
@@ -36,7 +38,7 @@
     <string name="btn_pay">Pay it</string>
     <!-- Account Info -->
     <!--  FRONT CARD  -->
-    <string name="front_header_card">PERSONAL INFORMATION</string>
+    <string name="front_header_card">BASIC INFORMATION</string>
     <string name="txt_Name">Name: N/A</string>
     <string name="txt_Gender">Gender: N/A</string>
     <string name="txt_Email">Email: N/A</string>
@@ -45,7 +47,9 @@
     <string name="txt_birthday">Birthday: N/A</string>
     <string name="txt_province">Province: N/A</string>
     <!--  BEHIND CARD  -->
-    <string name="behind_header_card">SOCIAL INFORMATION</string>
+    <string name="behind_header_card">ONE TOUCH CONNECT</string>
+    <string name="popup_edit_url">Edit</string>
+    <string name="popup_delete_url">Drop</string>
     <string name="txt_facebook">Facebook: N/A</string>
     <string name="txt_twitter">Twitter: N/A</string>
     <string name="txt_instagram">Instagram: N/A</string>
@@ -78,7 +82,9 @@
     <string name="btn_update_URL">Update URL</string>
     <string name="sp_url_type">URL TYPE</string>
     <string name="intro_header_social_web_text">Here’s place \nto you connect \nwith everyone</string>
+    <string name="intro_header_contact_us">We’ll listen \nto your opinion \nfrom here</string>
     <string name="txt_url_name">URL NAME</string>
+    <string name="txt_url_link">URL LINK</string>
     <string name="ed_hint_url_name">Set name for your URL</string>
     <string name="ed_hint_url_link">example.com</string>
     <!-- TODO: Remove or change this placeholder text -->

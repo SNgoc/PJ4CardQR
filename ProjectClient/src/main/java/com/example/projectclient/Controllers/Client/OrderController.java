@@ -31,7 +31,6 @@ public class OrderController {
     @GetMapping("MoveToOrder")
     public String getOrder(ModelMap model,HttpSession session) throws IOException, InterruptedException {
         if (session.getAttribute("token") == null){
-
             return "redirect:/Login";
         }
 

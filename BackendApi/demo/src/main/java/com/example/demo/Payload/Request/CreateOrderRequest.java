@@ -21,4 +21,6 @@ public class CreateOrderRequest {
 
     private String address;
 
+    private int year;
+
 }

@@ -3,10 +3,12 @@ package com.example.demo.service;
 import com.example.demo.Exception.ApiRequestException;
 import com.example.demo.Payload.Request.AddCategoryRequest;
 import com.example.demo.Payload.Request.CategoryRequest;
+import com.example.demo.Payload.Request.ChangeImageUserRequest;
 import com.example.demo.domain.Category;
 import com.example.demo.domain.User;
 import com.example.demo.repo.CategoryRepository;
 import com.example.demo.service.CloudBinary.CloudBinaryService;
+import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,32 +34,8 @@ public class CategoryService {
     @Autowired
     private CloudBinaryService cloudinaryService;
 
-    public String addNew(AddCategoryRequest request)throws IOException{
-        Category cate = new Category(Integer.parseInt(request.getPrice()), request.getName(),new Date(), null,null);
-        MultipartFile frontMulti = request.getFront();
-        MultipartFile backMulti = request.getBack();
-
-        if (frontMulti != null) {
-            BufferedImage bufferedImage = ImageIO.read(frontMulti.getInputStream());
-            if (bufferedImage == null) {
-                throw new   ApiRequestException("Error: Invalid image");
-            }
-            options.put("folder", image);
-            Map front = cloudinaryService.upload(frontMulti, options);
-
-            cate.setFrontImage(front.get("url").toString());
-        }
-
-        if (backMulti != null) {
-            BufferedImage bufferedImage = ImageIO.read(backMulti.getInputStream());
-            if (bufferedImage == null) {
-                throw new   ApiRequestException("Error: Invalid image");
-            }
-            options.put("folder", image);
-            Map back = cloudinaryService.upload(backMulti, options);
-            cate.setBackImage(back.get("url").toString());
-        }
-        cateRepo.save(cate);
+    public String addNew(Category category)throws IOException{
+        cateRepo.save(category);
         return "OK";
     }
 

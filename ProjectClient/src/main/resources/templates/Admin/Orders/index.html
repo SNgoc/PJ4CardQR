@@ -91,8 +91,7 @@
                                     <td><p th:text="${order.price}"></p></td>
                                     <td><p th:text="${order.order_process.name}"></p></td>
                                     <td>
-                                        <a th:href="@{/Admin/Order/Confirm/{id}(id=${order.id})}" class="deleteModel" id="myBtn ">Confirm</a>
-                                        | <a th:href="@{/Admin/OrderDetails-{id}(id=${order.id})}">Details</a>
+                                        <a th:href="@{/Admin/OrderDetails-{id}(id=${order.id})}">Details</a>
                                     </td>
 
                                 </tr>

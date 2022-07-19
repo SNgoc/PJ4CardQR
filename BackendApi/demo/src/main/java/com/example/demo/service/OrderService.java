@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -76,22 +77,14 @@ public class OrderService {
     }
 
     public String create(CreateOrderRequest createOrderRequest) throws IOException, WriterException {
-
-
-
         User user = userRepository.findByEmail(createOrderRequest.getEmail());
-        Map<String, String> qrCodeDataMap = Map.of(
-                "Email" , user.getEmail()
-        );
-
         Map hintMap = new HashMap();
-        String jsonString = new JSONObject(qrCodeDataMap).toString();
 //        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
+        BitMatrix bitMatrix = new MultiFormatWriter().encode("http://localhost:8081/Display/"+user.getUsername(), BarcodeFormat.QR_CODE, 500, 500, hintMap);
         options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/demo/Qrcode/qrcode.png").toPath());
+        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
 
-        File file = new File("N:/demo/Qrcode/qrcode.png");
+        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
         FileInputStream input = new FileInputStream(file);
         MultipartFile multipartFile = new MockMultipartFile("file",
                 file.getName(), "image/png", IOUtils.toByteArray(input));
@@ -99,33 +92,42 @@ public class OrderService {
         String url =  result.get("url").toString();
         String public_id =  result.get("public_id").toString();
         String token = UUID.randomUUID().toString();
-        Product p = new Product("Smart Cards","Smart Card",url,public_id,user,null,1,token);
+        Product p = new Product("Description",user.getFullname(),user.getLinkImage(),"http://localhost:8081/Display/"+user.getUsername(),url,user, new Date(),0, createOrderRequest.getYear(), token);
 
         Product productId =  productRepository.save(p);
-        String add = createOrderRequest.getAddress();
 
         Orders newOrder = new Orders();
         newOrder.setFullname(createOrderRequest.getFullname());
         newOrder.setAddress(createOrderRequest.getAddress());
         newOrder.setPhone(createOrderRequest.getPhone());
+
+        int price = 0;
+        if(createOrderRequest.getYear()==1){
+            price = 12;
+        }else if(createOrderRequest.getYear()==3){
+            price = 27;
+        }else if(createOrderRequest.getYear()==10){
+            price = 82;
+        }
+
+        newOrder.setPrice(price);
         Category category = categoryRepository.findById(createOrderRequest.getCategory_id()).get();
+        //stogare
+        category.setQuantity(category.getQuantity()-1);
+        categoryRepository.save(category);
+
         newOrder.setCategory(category);
         newOrder.setUser(user);
         newOrder.setProduct(productId);
+        newOrder.setCreatedAt(new Date());
         newOrder.setOrder_process(orderProceesRepository.findById(1L).get());
         orderRepository.save(newOrder);
 
-
-
-
-
         String link = "http://localhost:8080/api/order/confirmProduct?token=" + token;
         emailSender.send(
-                createOrderRequest.getEmail(),"Kich hoat tai khoan",
+                createOrderRequest.getEmail(),"Active your Product account",
                 buildEmail(createOrderRequest.getEmail(), link));
-
         return token;
-
     }
 
     public Boolean nextProcess(Long id){
@@ -133,6 +135,15 @@ public class OrderService {
         Long idProcess = order.getOrder_process().getId();
         if( idProcess < 4 ){
             order.setOrder_process(orderProceesRepository.findById(idProcess + 1L).get());
+            if(order.getOrder_process().getId() ==2){
+                order.setConfirmedAt(new Date());
+            }
+            if(order.getOrder_process().getId()==3){
+                order.setFinishedAt(new Date());
+                Product product = order.getProduct();
+                product.setStatus(1);
+                productRepository.save(product);
+            }
             orderRepository.save(order);
             return true;
         }
@@ -142,63 +153,13 @@ public class OrderService {
     public Boolean cancelOrder(Long id){
         Orders order = orderRepository.findById(id).get();
         if(order != null){
-            order.setOrder_process(orderProceesRepository.findById(5L).get());
+            order.setOrder_process(orderProceesRepository.findById(4L).get());
+            order.setCanceledAt(new Date());
             orderRepository.save(order);
             return true;
         }else{
             return false;
         }
-    }
-
-    //api for revenue web and android app///////////////////
-    //get order list by user
-    public List<Orders> getOrdersByUsername(String username){
-        return orderRepository.findOrdersByUser(userRepository.findByUsername(username).get());
-    }
-    //doanh thu(SNgoc)
-    public double getRevenueOrder(){
-        List<Double> orderPriceList = orderRepository.revenueOrder();
-        double sumRevenue = 0;
-        for (double p: orderPriceList) {
-            sumRevenue += p;
-        }
-        return sumRevenue;
-    }
-
-    //count order status
-    public List<Integer> getSumOrderStatus(){
-        List<Integer> orderList = new ArrayList<>();
-        orderList.add(orderRepository.orderWaiting());
-        orderList.add(orderRepository.orderDelivery());
-        orderList.add(orderRepository.orderSuccess());
-        orderList.add(orderRepository.orderCancel());
-        return orderList;
-    }
-    /////////////////////////////ANDROID//////////////////
-
-
-
-    private Map generateQrUrl(String email) throws IOException, WriterException {
-        QRCodeWriter writer = new QRCodeWriter();
-
-        Map<String, String> qrCodeDataMap = Map.of(
-                "Email" , "asd"
-        );
-
-        Map hintMap = new HashMap();
-        String jsonString = new JSONObject(qrCodeDataMap).toString();
-//        createQRCode(jsonString, filePath, charset, hintMap, 500, 500);
-        BitMatrix bitMatrix = new MultiFormatWriter().encode(new String(jsonString.getBytes(StandardCharsets.UTF_8)), BarcodeFormat.QR_CODE, 500, 500, hintMap);
-        options.put("folder", image);
-        MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
-
-        File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
-        FileInputStream input = new FileInputStream(file);
-        MultipartFile multipartFile = new MockMultipartFile("file",
-                file.getName(), "image/png", IOUtils.toByteArray(input));
-        Map result =   cloudinaryService.upload(multipartFile, options);
-        System.out.println(file);
-        return result;
     }
 
     @Transactional
@@ -286,5 +247,31 @@ public class OrderService {
                         "\n" +
                         "</div></div>";
     }
+
+    //api for revenue web and android app///////////////////
+    //get order list by user
+    public List<Orders> getOrdersByUsername(String username){
+        return orderRepository.findOrdersByUser(userRepository.findByUsername(username).get());
+    }
+    //doanh thu(SNgoc)
+    public double getRevenueOrder(){
+        List<Double> orderPriceList = orderRepository.revenueOrder();
+        double sumRevenue = 0;
+        for (double p: orderPriceList) {
+            sumRevenue += p;
+        }
+        return sumRevenue;
+    }
+
+    //count order status
+    public List<Integer> getSumOrderStatus(){
+        List<Integer> orderList = new ArrayList<>();
+        orderList.add(orderRepository.orderWaiting());
+        orderList.add(orderRepository.orderDelivery());
+        orderList.add(orderRepository.orderSuccess());
+        orderList.add(orderRepository.orderCancel());
+        return orderList;
+    }
+    /////////////////////////////ANDROID//////////////////
 
 }

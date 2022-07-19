@@ -3,10 +3,14 @@ package fpt.aptech.projectcard.ui.social;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,14 +23,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UrlRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.LinkType;
+import fpt.aptech.projectcard.domain.Product;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
+import fpt.aptech.projectcard.ui.home.HomeFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -47,11 +54,15 @@ public class SocialFragment extends Fragment {
     //SOCIAL URL
     UrlRequest urlRequest;
     EditText edUrlName, edUrlLink;
-    ImageView imgBackHome;
+
     Spinner spUrlType;
+    Product product;
     List<LinkType> linkTypeList;
     Button btnAdd_UpdateURL;
     private Long type_id;
+    //back to home
+    ImageView imgBackHome;
+    private FragmentTransaction fragmentTransaction;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -99,6 +110,12 @@ public class SocialFragment extends Fragment {
         spUrlType = view.findViewById(R.id.spUrlType);
         btnAdd_UpdateURL = view.findViewById(R.id.btnSave_UpdateURL);
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
 
         //retrofit call api connect mysql db
         apiService = RetrofitService.proceedToken().create(ApiService.class);
@@ -106,25 +123,43 @@ public class SocialFragment extends Fragment {
         //get list link type
         try {
             linkTypeList = apiService.getAllLinkType().execute().body();
+            product = apiService.getProduct(SessionManager.getSaveUsername(),SessionManager.getSaveToken()).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
         //create dropdown list : using toString return name at LinkType class to show name
         spUrlType.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, linkTypeList));
 
-        return view;
-    }
+        // set windowSoftInputMode in manifest to use this event for change input type
+        spUrlType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                LinkType type_id = (LinkType) spUrlType.getSelectedItem();
+                if (type_id.getId() == 6){
+                    edUrlLink.setInputType(InputType.TYPE_CLASS_NUMBER);
+                }
+                if (type_id.getId() == 7){
+                    edUrlLink.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+                }
+                if (type_id.getId() != 6 && type_id.getId() != 7){
+                    edUrlLink.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
+                }
+            }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        //btn add/update
         btnAdd_UpdateURL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                LinkType type_id = (LinkType) spUrlType.getSelectedItem();
                 String urlName = edUrlName.getText().toString().trim();
                 String urlLink = edUrlLink.getText().toString().trim();
-                LinkType type_id = (LinkType) spUrlType.getSelectedItem();
-                Long product_id = SessionManager.getSaveProduct().getId();
+                Long product_id = product.getId();
                 Long user_id = SessionManager.getSaveUser().getId();
                 urlRequest = new UrlRequest(urlName,urlLink,type_id.getId(),product_id,user_id);
                 apiService.addNewUrl(urlRequest).enqueue(new Callback<UrlRequest>() {
@@ -154,6 +189,20 @@ public class SocialFragment extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), "Add Url failed", Toast.LENGTH_SHORT).show();
                     }
                 });
+            }
+        });
+
+        //back home click
+        imgBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change to fragment_payment
+                //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
+                fragmentTransaction = getChildFragmentManager().beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction.replace(R.id.frmSocialNWeb, homeFragment);
+                fragmentTransaction.addToBackStack(null).commit();
+                ((MainActivity) getActivity()).setActionBarTitle("Home");
             }
         });
     }

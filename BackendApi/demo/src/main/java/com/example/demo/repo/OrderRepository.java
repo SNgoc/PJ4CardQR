@@ -15,6 +15,7 @@ import java.util.List;
 @Repository
 public interface OrderRepository extends JpaRepository<Orders,Long> {
 
+    //for android
     //get Orders List by user
     List<Orders> findOrdersByUser(User user);
 

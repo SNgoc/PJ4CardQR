@@ -1,11 +1,16 @@
 package com.example.demo.Controllers;
 
+import com.example.demo.domain.Category;
+import com.example.demo.domain.Product;
 import com.example.demo.repo.ProductRepository;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -25,10 +30,21 @@ public class ProductController {
     @GetMapping("/getProduct/{username}")
     public ResponseEntity<?> getProduct(@PathVariable String username) {
         var user = userRepo.findByUsername(username);
-        return ResponseEntity.ok(productRepository.findProductByUser(user.get()));
+        Product product = productRepository.findProductByUser(user.get());
+        if(product.getStatus() == 1){
+            return ResponseEntity.ok(product);
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fails");
+        }
     }
 
-    //get count product was bought(SNgoc)
-    @GetMapping("/getCountProduct/")
-    public int countSum(){ return productService.countProductByID(); }
+    @PostMapping("/edit")
+    public ResponseEntity<?> editCategory(@RequestBody Product productUpdate) {
+        if (productRepository.existsById(productUpdate.getId())) {
+            productRepository.save(productUpdate);
+            return ResponseEntity.ok(productUpdate);
+        } else {
+            return ResponseEntity.badRequest().body("Product is not exist...");
+        }
+    }
 }

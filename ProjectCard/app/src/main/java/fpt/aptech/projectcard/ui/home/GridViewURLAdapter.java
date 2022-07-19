@@ -7,11 +7,14 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,7 +67,7 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
                     intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + urlProduct.getUrl()));
                 }
                 if (urlProduct.getLinkType().getId() == 7){
-                    intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:"));
+                    intent = new Intent(Intent.ACTION_SENDTO, Uri.parse("mailto:" + urlProduct.getUrl()));
                 }
                 getContext().startActivity(intent);
             }
@@ -73,9 +76,45 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public boolean onLongClick(View v) {
-                img.setTooltipText(urlProduct.getName());
+                PopupMenu popup = new PopupMenu(getContext(),img);
+                popup.inflate(R.menu.popup_menu_item);
+
+                //set title item to url name
+                Menu menuOpts = popup.getMenu();
+                menuOpts.getItem(0).setTitle(urlProduct.getName());
+
+                // Register Menu Item Click event.
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        return menuItemClicked(item);
+                    }
+                });
+
+                // Show the PopupMenu.
+                popup.show();
+
+//                img.setTooltipText(urlProduct.getName());
                 return false;
             }
+
+            // When user click on Menu Item.
+            // @return true if event was handled.
+            private boolean menuItemClicked(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menuItem_Name:
+                        Toast.makeText(getContext(), urlProduct.getName(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.menuItem_edit:
+                        Toast.makeText(getContext(), R.string.popup_edit_url, Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.menuItem_drop:
+                        Toast.makeText(getContext(), R.string.popup_delete_url, Toast.LENGTH_SHORT).show();
+                        break;
+                }
+                return true;
+            }
+
         });
         return listItemView;
     }

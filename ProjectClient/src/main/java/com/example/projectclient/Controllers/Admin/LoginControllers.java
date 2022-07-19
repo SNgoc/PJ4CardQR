@@ -18,7 +18,7 @@ import java.io.IOException;
 @SessionAttributes({"token"})
 
 public class LoginControllers {
-   private final LoginService loginService;
+    private final LoginService loginService;
     private final static String BASE_URL = "http://localhost:8080";
     public LoginControllers(LoginService loginService) {
         this.loginService = loginService;
@@ -35,21 +35,21 @@ public class LoginControllers {
 
     @PostMapping("Admin/login")
     public String login(@RequestParam("username") String username,
-                              @RequestParam("password") String password, ModelMap model, HttpSession session,
-                              RedirectAttributes attributes) throws IOException, InterruptedException {
-            var response = loginService.login(username,password);
+                        @RequestParam("password") String password, ModelMap model, HttpSession session,
+                        RedirectAttributes attributes) throws IOException, InterruptedException {
+        var response = loginService.login(username,password);
         JSONObject ob = new JSONObject(response.body());
-            if (response.statusCode() != 200){
-                model.addAttribute("error",ob.getString("message"));
-                return "/Admin/Login";
-            }
+        if (response.statusCode() != 200){
+            model.addAttribute("error",ob.getString("message"));
+            return "/Admin/Login";
+        }
 
         String roles = ob.getJSONArray("roles").toString();
-            if (roles.contains("USER")){
-                model.addAttribute("accessDenied","Forbiden !!!");
+        if (roles.contains("USER")){
+            model.addAttribute("accessDenied","Forbiden !!!");
 
-                return "/Admin/Login";
-            }
+            return "/Admin/Login";
+        }
 
         Long id = ob.getLong("id");
         String usernames = ob.getString("username");
@@ -59,7 +59,7 @@ public class LoginControllers {
         String tokenType = ob.getString("tokenType");
         String token = ob.getString("accessToken");
 
-        session.setAttribute("usernames",usernames);
+        session.setAttribute("usernamesClient",usernames);
         session.setAttribute("linkImage",linkImage);
         session.setAttribute("nameImage",nameImage);
         session.setAttribute("roles",roles);
@@ -73,9 +73,9 @@ public class LoginControllers {
     }
 
     @GetMapping("Admin/logout")
-     public String logout(HttpSession session, SessionStatus sessionStatus){
+    public String logout(HttpSession session, SessionStatus sessionStatus){
         sessionStatus.setComplete();
         session.removeAttribute("token");
         return "redirect:login";
-     }
+    }
 }

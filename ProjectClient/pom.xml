@@ -100,6 +100,12 @@
             <version>4.2.2</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.24.0</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/com.google.api-client/google-api-client -->
         <dependency>
             <groupId>com.google.api-client</groupId>
@@ -135,7 +141,11 @@
             <artifactId>google-http-client</artifactId>
             <version>1.41.7</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.4</version>
+        </dependency>
 
     </dependencies>
 

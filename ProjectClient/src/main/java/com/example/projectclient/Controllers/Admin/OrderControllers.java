@@ -45,10 +45,21 @@ public class OrderControllers {
         var response = orderService.confirm(id,session);
         if (response.statusCode() != 200){
             redirectAttributes.addFlashAttribute("Success",response.body());
-            return "redirect:/Admin/Order";
+            return "redirect:/Admin/OrderDetails-" + id;
         }
         redirectAttributes.addFlashAttribute("Success",response.body());
-        return "redirect:/Admin/Order";
+        return "redirect:/Admin/OrderDetails-" + id;
+    }
+
+    @GetMapping("Admin/Order/cancelOrder/{id}")
+    public String Cancel(@PathVariable int id, HttpSession session,  RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        var response = orderService.cancel(id,session);
+        if (response.statusCode() != 200){
+            redirectAttributes.addFlashAttribute("Success",response.body());
+            return "redirect:/Admin/OrderDetails-" + id;
+        }
+        redirectAttributes.addFlashAttribute("Success",response.body());
+        return "redirect:/Admin/OrderDetails-" + id;
     }
 
     @GetMapping("Admin/OrderDetails-{id}")

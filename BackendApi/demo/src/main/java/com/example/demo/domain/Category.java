@@ -26,14 +26,11 @@ public class Category {
     @NotEmpty
     private String name;
     @Column
-    private String url;
-    @Column
-    private String secretSeri;
-    @Column
     private String frontImage;
-
     @Column
     private String backImage;
+    @Column
+    private int quantity;
     @Column
     private Date create_at;
     @Column
@@ -47,18 +44,11 @@ public class Category {
 //    @OneToMany(mappedBy = "category")
 //    private List<Orders> orders;
 
-    public Category(int price, String name, Date create_at, Date update_at, Date delete_at) {
 
+    public Category(int price, String name, int quantity, String frontImage, String backImage, Date create_at, Date update_at, Date delete_at) {
         this.price = price;
         this.name = name;
-        this.create_at = create_at;
-        this.update_at = update_at;
-        this.delete_at = delete_at;
-    }
-
-    public Category(int price, String name, String frontImage, String backImage, Date create_at, Date update_at, Date delete_at) {
-        this.price = price;
-        this.name = name;
+        this.quantity = quantity;
         this.frontImage = frontImage;
         this.backImage = backImage;
         this.create_at = create_at;

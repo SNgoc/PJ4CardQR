@@ -42,7 +42,8 @@
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-6 hidden-xs hidden-sm">
-                    <div class="alt-services-image align-center"><img src="/images/nfc-bluetooth-reader-500x500.png" alt="Feature Image"></div>
+                    <div class="alt-services-image align-center"><img th:src="${category.getFrontImage()}" alt="Feature Image" style="margin-top: -110px"></div>
+                    <div class="alt-services-image align-center"><img th:src="${category.getBackImage()}" alt="Feature Image"></div>
                 </div>
                 <div class="col-sm-6 col-md-3 col-lg-3">
                     <div class="alt-features-item">

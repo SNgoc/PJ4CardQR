@@ -3,10 +3,13 @@ package com.example.projectclient.Controllers.Client;
 import com.example.projectclient.Config.JSONUtils;
 import com.example.projectclient.Models.Category;
 import com.example.projectclient.Models.CreateOrderRequest;
+import com.example.projectclient.Models.SignUpRequest;
+import com.example.projectclient.Models.changePasswordReset;
 import com.example.projectclient.Service.CategoryService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +27,19 @@ public class indexController {
     private CategoryService categoryService;
 
     @GetMapping("/Client")
-    public String index(HttpSession session, RedirectAttributes attributes){
-
+    public String index(HttpSession session, ModelMap model) throws IOException, InterruptedException {
+        var response = categoryService.ShowAll(session);
+        JSONArray ob = new JSONArray(response.body());
+        Category[] categories = JSONUtils.convertToObject(Category[].class,ob.toString());
+        model.addAttribute("categories", List.of(categories));
         return "Client/index";
     }
 
     @GetMapping("/Login")
-    public String login(HttpSession session, RedirectAttributes attributes){
+    public String login(HttpSession session, RedirectAttributes attributes, Model model)
+    {
+        model.addAttribute("SignUpRequest", new SignUpRequest());
+        model.addAttribute("changePassword",new changePasswordReset());
         return "Client/Login";
     }
 
@@ -61,7 +70,7 @@ public class indexController {
     }
 
     @GetMapping("/Order-{id}")
-    public String getOrderCategory(@PathVariable int id,ModelMap model,HttpSession session) throws IOException, InterruptedException {
+    public String getOrderCategory(@PathVariable Long id,ModelMap model,HttpSession session) throws IOException, InterruptedException {
         if (session.getAttribute("token") == null){
 
             return "redirect:/Login";
@@ -72,16 +81,6 @@ public class indexController {
         return "Client/Order";
     }
 
-    @GetMapping("/category")
-    public String category(HttpSession session, ModelMap model) throws IOException, InterruptedException {
-        var response = categoryService.ShowAll(session);
-        JSONArray ob = new JSONArray(response.body());
-        Category[] categories = JSONUtils.convertToObject(Category[].class,ob.toString());
-        assert categories != null;
-        model.addAttribute("categories", List.of(categories));
-
-        return "Client/Category";
-    }
 
     @GetMapping("/Shopping")
     public String Shopping(HttpSession session, ModelMap model) throws IOException, InterruptedException {
@@ -94,7 +93,7 @@ public class indexController {
     }
 
     @GetMapping("/Details-{id}")
-    public String productDetails(@PathVariable int id, HttpSession session, ModelMap model)throws IOException, InterruptedException{
+    public String productDetails(@PathVariable Long id, HttpSession session, ModelMap model)throws IOException, InterruptedException{
         var response = categoryService.details(id,session);
         if (response == null){
             return "error/404";

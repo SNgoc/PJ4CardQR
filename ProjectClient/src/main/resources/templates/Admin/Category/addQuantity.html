@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Category - Add Quantity</title>
+</head>
+<body>
+<div class="main-content" layout:fragment="content">
+    <section class="section">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-12 col-sm-10 offset-sm-1 col-md-8 offset-md-2 col-lg-8 offset-lg-2 col-xl-8 offset-xl-2">
+                    <div class="login-brand">
+                        <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
+                    </div>
+
+                    <div class="card card-primary">
+                        <div class="card-header"><h4 th:text="'Add ' +${Category.name} + ' quantity'"></h4></div>
+
+                        <div class="card-body">
+                            <form method="POST" th:action="@{/Admin/SaveAddQuantity}" th:object="${Category}" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <label for="quantity" th:text="'Quantity available: ' + ${quantity}"></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-12">
+                                        <input type="hidden" th:field="*{id}">
+                                        <label for="quantity">Enter the amount to add</label>
+                                        <input id="quantity"  type="text" class="form-control" th:field="*{quantity}" required autofocus/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                        Add
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

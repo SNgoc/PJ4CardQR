@@ -39,24 +39,4 @@ public class UserControllers {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
         }
     }
-
-    //get count all users, active and locked(SNgoc)
-    @Autowired
-    private UserService userService;
-
-    @GetMapping("/getCountUsers")
-    public int getCountUsers(){
-        return userService.countAllUsers();
-    }
-
-    @GetMapping("/getCountUsersActive")
-    public int getCountUsersActive(){
-        return userService.countUsersActive();
-    }
-
-    @GetMapping("/getCountUsersLocked")
-    public int getCountUsersLocked(){
-        return userService.countUsersLocked();
-    }
-    /////////////////////SN//////////////////////
 }

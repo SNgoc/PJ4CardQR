@@ -38,14 +38,13 @@
 <!--                        <a class="dropdown-toggle" th:href="@{/Client}" data-toggle="dropdown">Product Details</a>-->
 <!--                    </li>-->
                     <li class="dropdown" th:if="${session.usernamesClient}">
-                        <a class="dropdown-toggle" th:href="@{/login}"  data-toggle="dropdown">Login</a>
+                        <a class="dropdown-toggle" th:href="@{/login}"  data-toggle="dropdown"><img style="border-radius: 5px" width="30px" th:src="${session.linkImage}"></a>
                         <ul class="dropdown-menu">
                             <li><a  th:text="'Hi ' +${session.usernamesClient}"> </a></li>
-                            <li><a th:href="@{/Client}">Forgot Password</a></li>
-                            <li><a th:href="@{/Client}" >Logout</a></li>
+                            <li><a th:href="@{/Profile}">Profile</a></li>
+                            <li><a th:href="@{/logout}" >Logout</a></li>
                         </ul>
                     </li>
-
 
 
                     <li class="dropdown" th:if="${session.usernamesClient} == null">

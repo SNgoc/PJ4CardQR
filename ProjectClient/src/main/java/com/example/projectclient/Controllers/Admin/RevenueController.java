@@ -1,9 +1,6 @@
 package com.example.projectclient.Controllers.Admin;
 
-import com.example.projectclient.Config.JSONUtils;
-import com.example.projectclient.Models.Product;
 import com.example.projectclient.Service.RevenueService;
-import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.List;
 
 @Controller
 @MultipartConfig

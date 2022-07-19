@@ -77,6 +77,26 @@
 <script src="Client/Login/js/popper.js"></script>
 <script src="Client/Login/js/bootstrap.min.js"></script>
 <script src="Client/Login/js/main.js"></script>
+<script>
+    setTimeout(function () {
+        $('.msgAlert1').fadeOut('slow');
+    }, 5000);
+</script>
+
+
+<script>
+    function checkPasswordMatch() {
+        var password = $("#txtNewPassword").val();
+        var confirmPassword = $("#txtConfirmPassword").val();
+        if (password != confirmPassword)
+            $("#CheckPasswordMatch").html("Passwords does not match!");
+        else
+            $("#CheckPasswordMatch").html("Passwords match.");
+    }
+    $(document).ready(function () {
+        $("#txtConfirmPassword").keyup(checkPasswordMatch);
+    });
+</script>
 </body>
 
 </html>

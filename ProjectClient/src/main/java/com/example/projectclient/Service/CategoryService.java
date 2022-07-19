@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -31,7 +32,6 @@ public class CategoryService {
 
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
-
         return response;
     }
 
@@ -46,37 +46,24 @@ public class CategoryService {
 
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
-
         return response;
     }
 
-    public Response add(Category cate, File front, File back, HttpSession session) throws IOException, InterruptedException {
-        Path currentRelativePath = Paths.get("D:/ProjectClient/user-photos");
-        String path = currentRelativePath.toAbsolutePath().toString();
-        OkHttpClient client = new OkHttpClient().newBuilder()
+    public HttpResponse<String> add(String json, HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/api/category/add"))
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
-        RequestBody body = new MultipartBody.Builder().setType(MultipartBody.FORM)
-                .addFormDataPart("name", cate.getName())
-                .addFormDataPart("price", String.valueOf(cate.getPrice()))
-                .addFormDataPart("front", path+"/"+front.getName(),
-                        RequestBody.create(MediaType.parse("application/octet-stream"),
-                                new File(path+"/"+front.getName())))
-                .addFormDataPart("back", path+"/"+back.getName(),
-                        RequestBody.create(MediaType.parse("application/octet-stream"),
-                                new File(path+"/"+back.getName())))
-                .build();
-
-        Request request = new Request.Builder()
-                .url("http://localhost:8080/api/category/add")
-                .method("POST", body)
-                .build();
-        Response response = client.newCall(request).execute();
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
         return response;
     }
 
-
-    public Category details(int id, HttpSession session) throws IOException, InterruptedException {
+    public Category details(Long id, HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:8080/api/category/details/" + id))
@@ -91,5 +78,36 @@ public class CategoryService {
         Category category = JSONUtils.convertToObject(Category.class,ob.toString());
         return category;
     }
+
+    public HttpResponse<String> edit(String json, HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/api/category/edit"))
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
+
+    public HttpResponse<String> AddQuantity(Long id,int number, HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/category/addQuantity/" + id + "/"+ number))
+                .GET()
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
+
+
 
 }

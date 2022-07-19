@@ -17,56 +17,28 @@
                      </div>
                  </div>
                  <hr class="divider-w pt-20">
-                 <div class="row">
-                     <div class="col-sm-12">
-                         <table class="table table-striped table-border checkout-table">
-                             <tbody>
-                             <tr>
-                                 <th class="hidden-xs">Item</th>
-                                 <th>Name</th>
-                                 <th class="hidden-xs">Price</th>
-                             </tr>
-                             <tr>
-                                 <td class="hidden-xs"><a href="#"><img src="assets/images/shop/product-14.jpg" alt="Accessories Pack"/></a></td>
-                                 <td>
-                                     <h5 class="product-title font-alt" th:text="${category.name}"></h5>
-                                 </td>
-                                 <td class="hidden-xs">
-                                     <h5 class="product-title font-alt" th:text="${category.price} + '$'"></h5>
-                                 </td>
-                             </tr>
-                             </tbody>
-                         </table>
-                     </div>
-                 </div>
-                 <div class="row">
-                     <div class="col-sm-6"></div>
-                     <div class="col-sm-3">
-                         <div class="form-group">
-                             <input class="form-control" type="text" id="" name="" placeholder="Coupon code"/>
-                         </div>
-                     </div>
-                     <div class="col-sm-3">
-                         <div class="form-group">
-                             <button class="btn btn-block btn-round btn-d pull-right" type="submit">Apply</button>
-                         </div>
-                     </div>
-                 </div>
-                 <hr class="divider-w">
                  <div class="row mt-70">
                      <div class="col-sm-7">
-                         <h4 class="font-alt">Buyer Information</h4>
+                         <h4 class="font-alt">Order Information</h4>
                          <form class="form" th:action="@{/CheckOut}" method="post" th:object="${CreateOrder}" th:id="theForm">
                              <input type="hidden" th:field="*{category_id}" th:value="${category.getId()}">
                              <div>
                                  <div class="form-group">
+                                     <label>Duration</label>
+                                     <select class="form-control" id="NewTypeId" onChange="NewUpdate()" th:field="*{year}">
+                                         <option th:value="1">1 year - 10$</option>
+                                         <option th:value="3">3 years - 25$</option>
+                                         <option th:value="10">10 years - 80$</option>
+                                     </select>
+                                 </div>
+                                 <div class="form-group">
                                      <input class="form-control  input-lg" th:field="*{fullname}" type="text" placeholder="Full name"/>
                                  </div>
                                  <div class="form-group">
-                                     <input class="form-control  input-lg" th:field="*{email}" type="text" placeholder="Email"/>
+                                     <input class="form-control  input-lg" th:field="*{phone}" type="text" placeholder="Phone"/>
                                  </div>
                                  <div class="form-group">
-                                     <input class="form-control  input-lg" th:field="*{phone}" type="text" placeholder="Phone"/>
+                                     <input class="form-control  input-lg" th:field="*{email}" type="text" placeholder="Email"/>
                                  </div>
                                  <div class="form-group">
                                      <input class="form-control  input-lg" th:field="*{address}" type="text" placeholder="Address"/>
@@ -105,19 +77,27 @@
                      <div class="col-sm-5">
                          <div class="shop-Cart-totalbox">
                              <h4 class="font-alt">Cart Totals</h4>
-                             <table class="table table-striped table-border checkout-table">
+                             <table class="table table-striped table-border checkout-table" style="margin-top: 32px">
                                  <tbody>
                                  <tr>
-                                     <th>Item Price :</th>
-                                     <td>£40.00</td>
+                                     <th>Item:</th>
+                                     <td height="90px"><img th:src="${category.getFrontImage()}" style="height: 110px"/></td>
+                                 </tr>
+                                 <tr>
+                                     <th>Name: </th>
+                                     <td th:text="${category.getName()}"><</td>
+                                 </tr>
+                                 <tr>
+                                     <th>Price :</th>
+                                     <td id="Price"></td>
                                  </tr>
                                  <tr>
                                      <th>Shipping Fee :</th>
-                                     <td>£2.00</td>
+                                     <td>2$</td>
                                  </tr>
                                  <tr class="shop-Cart-totalprice">
                                      <th>Total :</th>
-                                     <td>£42.00</td>
+                                     <td id="Total"></td>
                                  </tr>
                                  </tbody>
                              </table>
@@ -137,3 +117,27 @@
      </div>
 </body>
 </html>
+
+<script>
+    function NewUpdate() {
+        var select = document.getElementById('NewTypeId');
+        var option = select.options[select.selectedIndex];
+        var price = "";
+        var total ="";
+        if(option.value ==1){
+            price = "10$";
+            total = "12$"
+        }
+        if(option.value ==3){
+            price = "25$";
+            total = "27$"
+        }
+        if(option.value ==10){
+            price = "80$";
+            total = "82$"
+        }
+        document.getElementById('Price').innerHTML = price;
+        document.getElementById('Total').innerHTML = total;
+    }
+    NewUpdate();
+</script>

@@ -87,8 +87,6 @@ public class UserService {
                 }
 
         }
-
-
 //        MultipartFile multipartFile = signUpRequest.getImage();
 //        Map<String, String> options = new HashMap<>();
 //        options.put("folder", image);
@@ -96,6 +94,7 @@ public class UserService {
 //        Map result = cloudinaryService.upload(multipartFile, options);
 //        String linkImg = result.get("url").toString();
 //        String nameImg = result.get("public_id").toString();
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
         user.setRoles(roles);
         user.setLinkImage("https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg");
@@ -127,6 +126,7 @@ public class UserService {
     public User saveUser(User user) {
         return userRepository.save(user);
     }
+
     public Role saveRole(Role role) {
         return roleRepository.save(role);
     }
@@ -143,10 +143,7 @@ public class UserService {
         Set<Role> roles01 = new HashSet<>();
         Role roleAdmin01 = roleRepository.findByName(e).get();
         roles01.add(roleAdmin01);
-
-
         user.getRoles().addAll(roles01);
-
     }
 
 
@@ -190,6 +187,7 @@ public class UserService {
         return "Update succesfully";
     }
 
+    //for android
     //count all users(SNgoc)
     public int countAllUsers(){ return userRepository.getCountAllUsers(); }
 

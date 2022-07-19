@@ -63,12 +63,8 @@ public class DemoApplication {
 			calendar.set(Calendar.SECOND,0);
 			calendar.set(Calendar.MILLISECOND,0);
 			User user = new User("John" ,"John@gmail.com",encoder.encode("1234"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","Go Vap","1234","Pham trong nghia","NGHIAPHAM","DEVERLOPER", calendar.getTime(),true,"TPHCM");
-			user.setEnable(true);
-			user.setLocked(true);
 
 			User user1 = new User("Will" ,"will@gmail.com",encoder.encode("1234"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","Go Vap","1234","Pham trong nghia","NGHIAPHAM","DEVERLOPER",calendar.getTime(),true,"TPHCM");
-			user1.setEnable(false);
-			user1.setLocked(false);
 
 			userService.saveUser(user);
 			userService.saveUser(user1);
@@ -80,8 +76,8 @@ public class DemoApplication {
 			userService.addToRoleUser("John", ERole.ROLE_ADMIN);
 			userService.addToRoleUser("Will", ERole.ROLE_USER);
 
-			Category c1 = new Category(70,"CARD",null,null,calendar.getTime(),null,null);
-			Category c2 = new Category(50,"STICKER",null,null,calendar.getTime(),null,null);
+			Category c1 = new Category(70,"CARD",90,"https://res.cloudinary.com/tphcm/image/upload/v1657990810/category/the_vyy5mj.jpg","https://res.cloudinary.com/tphcm/image/upload/v1657989366/category/ko_ten4__3cc6d924f04b4faf965c3c701535d328_1024x1024_o26nei.webp",calendar.getTime(),null,null);
+			Category c2 = new Category(50,"STICKER",10,"https://res.cloudinary.com/tphcm/image/upload/v1657990810/category/post-04_m5lxhs.jpg","https://res.cloudinary.com/tphcm/image/upload/v1657990810/category/post-05_dizlb6.jpg",calendar.getTime(),null,null);
 
 			CategoryRepository.save(c1);
 			CategoryRepository.save(c2);

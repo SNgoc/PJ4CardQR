@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2022 at 08:45 PM
+-- Generation Time: Jul 17, 2022 at 07:02 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -153,7 +153,7 @@ INSERT INTO `link_type` (`id`, `data_url`, `link_image`, `name`, `placeholder`) 
 (5, '', 'https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/twitter_aqkjiy.png', 'Twitter', 'Enter your Twitter Link'),
 (6, '', 'https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/phone_ojgmtj.png', 'Phone', 'Enter your Phone number'),
 (7, '', 'https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/gmail_qbsqox.png', 'Email', 'Enter your Email'),
-(8, '', '', 'Url', 'Enter your Link');
+(8, '', 'https://chungnhaniso.com.vn/wp-content/uploads/icon-web.jpg', 'Url', 'Enter your Link');
 
 -- --------------------------------------------------------
 
@@ -179,10 +179,12 @@ CREATE TABLE `orders` (
 
 INSERT INTO `orders` (`id`, `address`, `fullname`, `phone`, `price`, `category_id`, `process_id`, `product_id`, `user_id`) VALUES
 (1, 'Tay Ninh', 'lazada shoppee', '123', 150, 1, 4, 1, 3),
-(2, 'Tay Ninh', 'lazada shoppee', '123', 250, 1, 3, 2, 3),
+(2, 'Tay Ninh', 'lazada shoppee', '123', 250, 1, 2, 2, 3),
 (3, 'Tay Ninh', 'lazada shoppee', '123', 100, 1, 1, 3, 3),
 (4, 'Tay Ninh', 'lazada shoppee', '123', 50, 1, 2, 4, 3),
-(5, 'Tay Ninh', 'lazada shoppee', '123', 100, 1, 3, 5, 3);
+(5, 'Tay Ninh', 'lazada shoppee', '123', 100, 1, 1, 5, 3),
+(6, 'address user', 'nero saro', '4515181199229', 55, 1, 3, 6, 8),
+(7, 'Tay Ninh', 'sarrow', '123', 99, 1, 3, 7, 9);
 
 -- --------------------------------------------------------
 
@@ -236,7 +238,9 @@ INSERT INTO `product` (`id`, `create_at`, `delete_at`, `description`, `image_url
 (2, NULL, NULL, 'Smart Cards', 'product/wtnrokyaqr9bfnpoti6h', 'Smart Card', 1, '96614fea-5c06-49c3-aea7-1943811bfca1', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657908891/product/wtnrokyaqr9bfnpoti6h.png', 3),
 (3, NULL, NULL, 'Smart Cards', 'product/zqhnqrjkr6zcbquxzh7g', 'Smart Card', 1, 'f01c4d87-ed88-4357-97ed-1b0370b8f787', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657908929/product/zqhnqrjkr6zcbquxzh7g.png', 3),
 (4, NULL, NULL, 'Smart Cards', 'product/hv3e1pjuxikj220kghl7', 'Smart Card', 1, '64326c22-40da-408a-8ca5-f24514ee4248', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657908959/product/hv3e1pjuxikj220kghl7.png', 3),
-(5, NULL, NULL, 'Smart Cards', 'product/kgqa43yat23euq5lgwir', 'Smart Card', 1, '83e94801-3e15-4207-9e50-adeb1f2e2e6b', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657908977/product/kgqa43yat23euq5lgwir.png', 3);
+(5, NULL, NULL, 'Smart Cards', 'product/kgqa43yat23euq5lgwir', 'Smart Card', 1, '83e94801-3e15-4207-9e50-adeb1f2e2e6b', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657908977/product/kgqa43yat23euq5lgwir.png', 3),
+(6, NULL, NULL, 'Smart Cards', 'product/ccaocymwozqvlyqirqhd', 'Smart Card', 1, 'ef25f1fb-d5b6-42f4-a9ee-34e1a5fbd740', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1657947417/product/ccaocymwozqvlyqirqhd.png', 8),
+(7, NULL, NULL, 'Smart Cards', 'product/iu9jrlsmhkdrtmx0o8yk', 'Smart Card', 1, '82f4816e-80db-426e-a389-c2ec57db76b0', NULL, 'http://res.cloudinary.com/tphcm/image/upload/v1658045644/product/iu9jrlsmhkdrtmx0o8yk.png', 9);
 
 -- --------------------------------------------------------
 
@@ -310,6 +314,13 @@ CREATE TABLE `socialweb` (
   `user_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `socialweb`
+--
+
+INSERT INTO `socialweb` (`social_id`, `company1`, `company2`, `facebook`, `instagram`, `tiktok`, `twitter`, `web1`, `web2`, `user_id`) VALUES
+(1, 'company1', 'company2', 'facebook', 'instagram', 'tiktokk', 'twitter', 'web1', 'web2', 8);
+
 -- --------------------------------------------------------
 
 --
@@ -324,6 +335,21 @@ CREATE TABLE `url_product` (
   `product_id` bigint(20) DEFAULT NULL,
   `user_id` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `url_product`
+--
+
+INSERT INTO `url_product` (`id`, `name`, `url`, `type_id`, `product_id`, `user_id`) VALUES
+(1, 'Student1273498', 'facebook.com/devillias', 1, 6, 8),
+(2, 'Gmail', 'nero@gmail.com', 7, 6, 8),
+(3, 'test30', '0123456789', 6, 6, 8),
+(4, 'Twitter', 'twitter.com', 5, 6, 8),
+(6, 'asus', 'telegram.com', 3, 6, 8),
+(7, 'email2', 'nero2@gmail.com', 7, 6, 8),
+(8, 'whatsapp1', 'whatsapp.com', 4, 6, 8),
+(9, 'Vnexpress', 'vnexpress.net', 1, 6, 8),
+(11, 'Twitter', 'twitter.com/nero3103', 5, 7, 9);
 
 -- --------------------------------------------------------
 
@@ -362,7 +388,7 @@ INSERT INTO `users` (`id`, `address`, `date_ofbirth`, `description`, `email`, `e
 (5, '221B, Baker Street', '2000-03-31 07:00:00', 'awsdfs', 'nero2@gmail.com', b'0', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'0', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$BNh7Xl52o5rVVOtUoB37Du/vP987UD5gUVGSkf/75I0nEVI2I7S1a', '0123456789', 'Tay Ninh', 'nero2'),
 (6, '221B, Baker Street', '2000-03-31 07:00:00', 'awsdfs', 'nero3@gmail.com', b'0', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'0', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$XZAWBmTuPjC2z6/XO2me9OCw9CYxPaO6SwJgbyaxRUh9NRTzkitQW', '0123456789', 'Tay Ninh', 'nero3'),
 (7, '221B, Baker Street', '2000-03-31 07:00:00', 'awsdfs', 'nero5@gmail.com', b'0', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'0', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$T3IsySxstpdiUEw.fGpYluI4o3Emc73YzGUkggWjR.qDsLwO3bDqK', '0123456789', 'Tay Ninh', 'nero5'),
-(8, '221B, Baker Street', '2000-03-31 07:00:00', 'awsdfs', 'nero@gmail.com', b'1', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'1', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$W5mr9aU9pkqERLxVzcNpEeYlbN2RvTFTxnPo1iAtSEgwfiAaaPmqe', '0123456789', 'Tay Ninh', 'nero'),
+(8, '221B, Baker Street', '2000-03-31 07:00:00', 'Android Java Developer', 'nero@gmail.com', b'1', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'1', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$W5mr9aU9pkqERLxVzcNpEeYlbN2RvTFTxnPo1iAtSEgwfiAaaPmqe', '0399345342', 'Tay Ninh', 'nero'),
 (9, '221B, Baker Street', '2000-03-31 07:00:00', 'awsdfs', 'saro@gmail.com', b'1', 'lazada shoppee', b'0', 'shoppee', 'https://res.cloudinary.com/tphcm/image/upload/v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', b'1', 'v1651378139/AvatarDefault/Anh-avatar-dep-chat-lam-hinh-dai-dien_bpyymd.jpg', '$2a$10$ONciI71aSaz2hBnOcV/cp.bD3JeIgAtn/s.tRsmq4YAerscX4E.da', '0123456789', 'Tay Ninh', 'saro');
 
 -- --------------------------------------------------------
@@ -521,7 +547,7 @@ ALTER TABLE `link_type`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_process`
@@ -533,7 +559,7 @@ ALTER TABLE `order_process`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `review`
@@ -551,13 +577,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `socialweb`
 --
 ALTER TABLE `socialweb`
-  MODIFY `social_id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `social_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `url_product`
 --
 ALTER TABLE `url_product`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables

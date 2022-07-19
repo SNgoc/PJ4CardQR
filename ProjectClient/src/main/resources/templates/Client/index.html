@@ -50,14 +50,18 @@
           </section>
           <section class="module pt-0 pb-0" id="about">
               <div class="row position-relative m-0">
-                  <div class="col-xs-12 col-md-6 side-image" data-background="assets/images/section-14.jpg"></div>
+                  <div class="col-xs-12 col-md-6 side-image" data-background="assets/images/two_banner_right.gif"></div>
                   <div class="col-xs-12 col-md-6 col-md-offset-6 side-image-text">
                       <div class="row">
                           <div class="col-sm-12">
-                              <h2 class="module-title font-alt align-left">About Us</h2>
-                              <div class="module-subtitle font-serif align-left">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</div>
-                              <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary. The languages only differ in their grammar, their pronunciation and their most common words.</p>
-                              <p>The European languages are members of the same family. Their separate existence is a myth. For science, music, sport, etc, Europe uses the same vocabulary.</p>
+                              <h2 class="module-title font-alt align-left">What is ONETOUCH smart personal card?</h2>
+                              <div class="module-subtitle font-serif align-left">
+                                  ONETOUCH is a smart personal card that provides an integrated platform of all necessary information that users use to Exchange and Connect.</div>
+                              <p>⚡️No support app required.</p>
+                              <p>😄 Easily change and update information</p>
+                              <p>😎 Impress the other person in the first meeting</p>
+                              <p>📱 Compatible with current popular smartphone models</p>
+                              <p>⏤ The ONETOUCH personal smart card does not require the user to provide access rights and passwords of social networking sites</p>
                           </div>
                       </div>
                   </div>
@@ -73,41 +77,68 @@
                   </div>
               </div>
               <div class="container">
-                  <div class="row">
-                      <div class="col-sm-12">
-                          <ul class="filter font-alt" id="filters">
-                              <li><a class="current wow fadeInUp" href="#" data-filter="*">All</a></li>
-                              <li><a class="wow fadeInUp" href="#" data-filter=".illustration" data-wow-delay="0.2s">Smart Card</a></li>
-                              <li><a class="wow fadeInUp" href="#" data-filter=".marketing" data-wow-delay="0.4s">Smart Sticker</a></li>
-                          </ul>
-                      </div>
-                  </div>
-                  <ul class="works-grid works-grid-gut works-grid-3 works-hover-d" id="works-grid">
-                      <li class="work-item illustration"><a href="portfolio_single_featured_image1.html">
-                          <div class="work-image"><img src="assets/images/portfolio/grid-portfolio1.jpg" alt="Portfolio Item"/></div>
+                  <ul th:each="category :  ${categories}" class="works-grid works-grid-gut works-grid-3 works-hover-d" id="works-grid">
+                      <li class="work-item illustration"><a th:href="@{/Details-{id}(id=${category.id})}">
+                          <div class="work-image"><img th:src="${category.getFrontImage()}" alt="Portfolio Item"/></div>
                           <div class="work-caption font-alt">
-                              <h3 class="work-title">Smart Card</h3>
-                              <div class="work-descr">Smart Card</div>
+                              <h3 class="work-title" th:text="${category.getName()}"></h3>
                           </div></a></li>
-                      <li class="work-item illustration"><a href="portfolio_single_featured_image2.html">
-                          <div class="work-image"><img src="assets/images/portfolio/grid-portfolio2.jpg" alt="Portfolio Item"/></div>
+                      <li class="work-item illustration"><a th:href="@{/Details-{id}(id=${category.id})}">
+                          <div class="work-image"><img th:src="${category.getBackImage()}" alt="Portfolio Item"/></div>
                           <div class="work-caption font-alt">
-                              <h3 class="work-title">Smart Card</h3>
-                              <div class="work-descr">Smart Card</div>
-                          </div></a></li>
-                      <li class="work-item marketing"><a href="portfolio_single_featured_slider1.html">
-                          <div class="work-image"><img src="assets/images/portfolio/grid-portfolio3.jpg" alt="Portfolio Item"/></div>
-                          <div class="work-caption font-alt">
-                              <h3 class="work-title">Smart Sticker</h3>
-                              <div class="work-descr">Smart Sticker</div>
-                          </div></a></li>
-                      <li class="work-item marketing"><a href="portfolio_single_featured_slider2.htmll">
-                          <div class="work-image"><img src="assets/images/portfolio/grid-portfolio4.jpg" alt="Portfolio Item"/></div>
-                          <div class="work-caption font-alt">
-                              <h3 class="work-title">Smart Sticker</h3>
-                              <div class="work-descr">Smart Sticker</div>
+                              <h3 class="work-title" th:text="${category.getName()}"></h3>
                           </div></a></li>
                   </ul>
+              </div>
+          </section>
+          <section class="module" id="pricing">
+              <div class="container">
+                  <div class="row">
+                      <div class="col-sm-6 col-sm-offset-3">
+                          <h2 class="module-title font-alt">Our Prices</h2>
+                          <div class="module-subtitle font-serif">A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart.</div>
+                      </div>
+                  </div>
+                  <div class="row multi-columns-row">
+                      <div class="col-sm-6 col-md-4 col-lg-4">
+                          <div class="price-table font-alt">
+                              <h4>1 year</h4>
+                              <div class="borderline"></div>
+                              <p class="price"><span>$</span>10
+                              </p>
+                              <ul class="price-details">
+                                  <li>Free Support</li>
+                                  <li><span>Saving Money</span></li>
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 col-md-4 col-lg-4">
+                          <div class="price-table font-alt">
+                              <h4>3 years</h4>
+                              <div class="borderline"></div>
+                              <p class="price"><span>$</span>25
+                              </p>
+                              <ul class="price-details">
+                                  <li>Free Support</li>
+                                  <li>Save 5$</li>
+
+                              </ul>
+                          </div>
+                      </div>
+                      <div class="col-sm-6 col-md-4 col-lg-4">
+                          <div class="price-table font-alt best">
+                              <h4>10 years</h4>
+                              <p class="small">Best Choice</p>
+                              <div class="borderline"></div>
+                              <p class="price"><span>$</span>80
+                              </p>
+                              <ul class="price-details">
+                                  <li>Free Support</li>
+                                  <li>Save 20$</li>
+                              </ul>
+                          </div>
+                      </div>
+                  </div>
               </div>
           </section>
           <section class="module-small bg-dark">
@@ -115,12 +146,12 @@
                   <div class="row">
                       <div class="col-sm-6 col-md-8 col-lg-6 col-lg-offset-2">
                           <div class="callout-text font-alt">
-                              <h3 class="callout-title">Want to Order?</h3>
+                              <h3 class="callout-title">Want to Buy?</h3>
                               <p>We are always here to help you</p>
                           </div>
                       </div>
                       <div class="col-sm-6 col-md-4 col-lg-2">
-                          <div class="callout-btn-box"><a class="btn btn-w btn-round" href="portfolio_boxed_gutter_col_3.html">Order now!</a></div>
+                          <div class="callout-btn-box"><a class="btn btn-w btn-round" th:href="@{/Shopping}">Shopping now!</a></div>
                       </div>
                   </div>
               </div>
@@ -134,37 +165,43 @@
                           <div class="panel-group" id="accordion">
                               <div class="panel panel-default">
                                   <div class="panel-heading">
-                                      <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion" href="#support1">Support Question 1</a></h4>
+                                      <h4 class="panel-title font-alt"><a data-toggle="collapse" data-parent="#accordion" href="#support1">How does ONETOUCH work?</a></h4>
                                   </div>
                                   <div class="panel-collapse collapse in" id="support1">
-                                      <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                      <div class="panel-body">
+                                          <p> ONETOUCH applies 2 technologies available on current smartphones to share and connect. Your phone will
+                                              receive information from ONETOUCH products through close communication by touch feature or using will
+                                              receive information from ONETOUCH products through close communication by touch feature or using QR Code
+                                              image scanning code.</p>
+
+                                          <p> These are all basic and highly applicable forms of information exchange that are mostly equipped in
+                                              smartphones on the market today. Without requiring any compatible applications, you can always
+                                              confidently use ONETOUCH products to connect with friends and partners quickly and easily.</p>
+
                                       </div>
                                   </div>
                               </div>
                               <div class="panel panel-default">
                                   <div class="panel-heading">
-                                      <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support2">Support Question 2</a></h4>
+                                      <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support2">Compatible models?</a></h4>
                                   </div>
                                   <div class="panel-collapse collapse" id="support2">
-                                      <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support3">Support Question 3</a></h4>
-                                  </div>
-                                  <div class="panel-collapse collapse" id="support3">
-                                      <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                      </div>
-                                  </div>
-                              </div>
-                              <div class="panel panel-default">
-                                  <div class="panel-heading">
-                                      <h4 class="panel-title font-alt"><a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#support4">Support Question 4</a></h4>
-                                  </div>
-                                  <div class="panel-collapse collapse" id="support4">
-                                      <div class="panel-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
+                                      <div class="panel-body">
+                                          <p>Most of the smartphones available on the market can use ONTHECARD products in one of 2 features TOUCH and SCAN.</p>
+
+                                          <p> 📲FOR QR CODE SCAN FEATURES</p>
+
+                                          <p>👉Most smartphones today are compatible with the QR code "Scan" function.</p>
+
+                                          <p>📲FOR TOUCH FEATURES</p>
+
+                                          <p>👉🏻IPHONE: iPhone (XR, XS, XS Max, 11, 11 Pro, 11 Pro Max, SE, 12 mini, 12, 12 Pro, ..) and later Apple models</p>
+
+                                          <p>NOTE: iPhone (X, 8+, 8, 7+, 7) must be updated to iOS 14 to use the TOUCH feature.</p>
+
+                                          <p> 👉🏻ANDROID: SAMSUNG, HUAWEI, XIAOMI, GOOGLE, HTC, LG, .. can also use the TOUCH feature with specific models as follows:</p>
+
+                                          <p><a href="#">EXPLORE MORE</a></p>
                                       </div>
                                   </div>
                               </div>
@@ -173,84 +210,6 @@
                   </div>
               </div>
           </section>
-          <section class="module bg-dark-60 pt-0 pb-0 parallax-bg testimonial" data-background="Client/assets/images/testimonial_bg.jpg">
-          <div class="testimonials-slider pt-140 pb-140">
-              <ul class="slides">
-                  <li>
-                      <div class="container">
-                          <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="module-icon"><span class="icon-quote"></span></div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-8 col-sm-offset-2">
-                                  <blockquote class="testimonial-text font-alt">I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine.</blockquote>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-4 col-sm-offset-4">
-                                  <div class="testimonial-author">
-                                      <div class="testimonial-caption font-alt">
-                                          <div class="testimonial-title">Jack Woods</div>
-                                          <div class="testimonial-descr">SomeCompany INC, CEO</div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="container">
-                          <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="module-icon"><span class="icon-quote"></span></div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-8 col-sm-offset-2">
-                                  <blockquote class="testimonial-text font-alt">I should be incapable of drawing a single stroke at the present moment; and yet I feel that I never was a greater artist than now.</blockquote>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-4 col-sm-offset-4">
-                                  <div class="testimonial-author">
-                                      <div class="testimonial-caption font-alt">
-                                          <div class="testimonial-title">Jim Stone</div>
-                                          <div class="testimonial-descr">SomeCompany INC, CEO</div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </li>
-                  <li>
-                      <div class="container">
-                          <div class="row">
-                              <div class="col-sm-12">
-                                  <div class="module-icon"><span class="icon-quote"></span></div>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-8 col-sm-offset-2">
-                                  <blockquote class="testimonial-text font-alt">I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I neglect my talents.</blockquote>
-                              </div>
-                          </div>
-                          <div class="row">
-                              <div class="col-sm-4 col-sm-offset-4">
-                                  <div class="testimonial-author">
-                                      <div class="testimonial-caption font-alt">
-                                          <div class="testimonial-title">Adele Snow</div>
-                                          <div class="testimonial-descr">SomeCompany INC, CEO</div>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </li>
-              </ul>
-          </div>
-            </section>
       </div>
 
   </div>

@@ -17,4 +17,16 @@
         android:label="@string/menu_social"
         tools:layout="@layout/fragment_social" />
 
+    <fragment
+        android:id="@+id/nav_order_info"
+        android:name="fpt.aptech.projectcard.ui.orderInfo.OrderInfoFragment"
+        android:label="@string/menu_order_information"
+        tools:layout="@layout/fragment_order_info" />
+
+    <fragment
+        android:id="@+id/nav_contactus"
+        android:name="fpt.aptech.projectcard.ui.contactus.ContactUsFragment"
+        android:label="@string/menu_contactus"
+        tools:layout="@layout/fragment_contact_us" />
+
 </navigation>

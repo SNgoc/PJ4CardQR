@@ -1,6 +1,8 @@
 package fpt.aptech.projectcard.domain;
 
 
+import java.util.Date;
+
 public class Orders {
 
     private Long id;
@@ -21,7 +23,31 @@ public class Orders {
 
     private Product product;
 
+    private Date createdAt;
+
+    private Date confirmedAt;
+
+    private Date finishedAt;
+
+    private Date canceledAt;
+
     public Orders() {
+    }
+
+    public Orders(Long id, int price, Category category, User user, String address, String phone, String fullname, Order_Process order_process, Product product, Date createdAt, Date confirmedAt, Date finishedAt, Date canceledAt) {
+        this.id = id;
+        this.price = price;
+        this.category = category;
+        this.user = user;
+        this.address = address;
+        this.phone = phone;
+        this.fullname = fullname;
+        this.order_process = order_process;
+        this.product = product;
+        this.createdAt = createdAt;
+        this.confirmedAt = confirmedAt;
+        this.finishedAt = finishedAt;
+        this.canceledAt = canceledAt;
     }
 
     public Long getId() {
@@ -94,5 +120,37 @@ public class Orders {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Date getConfirmedAt() {
+        return confirmedAt;
+    }
+
+    public void setConfirmedAt(Date confirmedAt) {
+        this.confirmedAt = confirmedAt;
+    }
+
+    public Date getFinishedAt() {
+        return finishedAt;
+    }
+
+    public void setFinishedAt(Date finishedAt) {
+        this.finishedAt = finishedAt;
+    }
+
+    public Date getCanceledAt() {
+        return canceledAt;
+    }
+
+    public void setCanceledAt(Date canceledAt) {
+        this.canceledAt = canceledAt;
     }
 }

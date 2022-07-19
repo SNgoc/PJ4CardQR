@@ -1,6 +1,7 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Payload.Request.AddCategoryRequest;
+import com.example.demo.Payload.Request.ChangeImageUserRequest;
 import com.example.demo.domain.Category;
 import com.example.demo.repo.CategoryRepository;
 import com.example.demo.service.CategoryService;
@@ -37,25 +38,26 @@ public class CategoryController {
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Category not found");
         }
-
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addCategory( AddCategoryRequest category) throws IOException {
+    public ResponseEntity<?> addCategory(@RequestBody Category category) throws IOException {
         String response = categoryService.addNew(category);
-        if(response != null){
-            return ResponseEntity.ok("Success");
-        }else{
-            return ResponseEntity.badRequest().body("Fail");
+        if (response == "OK") {
+            return ResponseEntity.ok("Create successfully!");
         }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Create failed!");
     }
 
-    @PutMapping("/edit")
+    @PostMapping("/edit")
     public ResponseEntity<?> editCategory(@RequestBody Category category) {
         if (cateRepo.existsById(category.getId())) {
             Category categoryUpdate = cateRepo.findById(category.getId()).get();
             categoryUpdate.setName(category.getName());
             categoryUpdate.setPrice(category.getPrice());
+            categoryUpdate.setFrontImage(category.getFrontImage());
+            categoryUpdate.setBackImage(category.getBackImage());
             categoryUpdate.setUpdate_at(new Date());
             cateRepo.save(categoryUpdate);
             return ResponseEntity.ok(categoryUpdate);
@@ -74,5 +76,18 @@ public class CategoryController {
         }
         cateRepo.save(category);
         return new ResponseEntity("Success", HttpStatus.OK);
+    }
+
+    @GetMapping("/addQuantity/{id}/{number}")
+    public ResponseEntity<?> addQuantity(@PathVariable Long id, @PathVariable int number) {
+        Category category = cateRepo.findById(id).get();
+        if (category != null){
+            int quantity = category.getQuantity();
+            quantity = quantity + number;
+            category.setQuantity(quantity);
+            cateRepo.save(category);
+            return new ResponseEntity("Success", HttpStatus.OK);
+        }
+        return  new ResponseEntity("Add Quantity Fail", HttpStatus.BAD_REQUEST);
     }
 }

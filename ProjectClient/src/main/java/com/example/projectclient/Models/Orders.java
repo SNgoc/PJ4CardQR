@@ -1,6 +1,9 @@
 package com.example.projectclient.Models;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 @Data
 @Setter
@@ -13,9 +16,7 @@ public class Orders {
 
     private int price;
 
-
     private Category category;
-
 
     private User user;
 
@@ -25,10 +26,16 @@ public class Orders {
 
     private String fullname;
 
-    private String email;
-
     private Order_Process order_process;
 
-
     private Product product;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date confirmedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date finishedAt;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date canceledAt;
 }

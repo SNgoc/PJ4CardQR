@@ -67,6 +67,7 @@ import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.login.LoginActivity;
 import fpt.aptech.projectcard.ui.profile.ProfileFragment;
+import fpt.aptech.projectcard.ui.social.SocialFragment;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment {
     //behind card
     GridView gridViewUrl;
     List<UrlProduct> urlProductList;
-    ImageView imgAvatar, imgQR;
+    ImageView imgQRInfo, imgQRUrl;
     //click event for layout
     ConstraintLayout layoutCard_front, layoutCard_behind;
     LinearLayout layout_updateProfile;
@@ -154,15 +155,11 @@ public class HomeFragment extends Fragment {
         txtGender = view.findViewById(R.id.txt_Gender);
         //behind card
         gridViewUrl = view.findViewById(R.id.gvUrl);
-        imgAvatar = view.findViewById(R.id.imgAvatar);
-        imgQR = view.findViewById(R.id.imgQRInfo);
+        imgQRInfo = view.findViewById(R.id.imgQRInfo);
+        imgQRUrl = view.findViewById(R.id.imgQRUrl);
         //set click listener
         layoutCard_front = view.findViewById(R.id.layoutCard_front);
         layoutCard_behind = view.findViewById(R.id.layoutCard_behind);
-        layout_updateProfile = view.findViewById(R.id.layout_btnUpdateProfile);
-
-        //button click listener
-        btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
 
         //fix error android.os.NetworkOnMainThreadException for Bitmap image url
         if (android.os.Build.VERSION.SDK_INT > 9) {
@@ -177,7 +174,6 @@ public class HomeFragment extends Fragment {
                 onStart();
                 // Set title bar to Home
                 ((MainActivity) getActivity()).setActionBarTitle("Home");
-                layout_updateProfile.setVisibility(View.GONE);
             }
         });
 
@@ -202,25 +198,30 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
         //if product had been order but order status not completed, dont run this code to improve performance
-        if (ordersListUser == null || ordersListUser.isEmpty()){
-            Toast.makeText(getActivity().getApplicationContext(), "Failed to display! Please order product first", Toast.LENGTH_LONG).show();
+        if (getProduct == null){
+            Toast.makeText(getActivity().getApplicationContext(), "The your product is not purchased yet", Toast.LENGTH_LONG).show();
             startActivity(new Intent(getActivity(), LoginActivity.class));
             //prevent back on click back button
             getActivity().finish();
         }
         else {
             //found order by username, not null, not empty
-            //check order status, can only login when status is success
-            boolean foundSuccess = false;
-            for (Orders o : ordersListUser) {
-                if (o.getOrder_process().getId() == 3){// 1: Waiting, 2:Delivery, 3:Success, 4:Cancel
-                    foundSuccess = true;
-                    break;
-                }
+            //check product status, can only login when have product and status is 1
+            boolean productSuccess = false;
+            if (getProduct != null && getProduct.getStatus() == 1) {
+                productSuccess = true;
             }
-            if (foundSuccess == false){
+//            for (Orders o : ordersListUser) {
+//                if (o.getOrder_process().getId() == 3){// 1: Waiting, 2:Delivery, 3:Success, 4:Cancel
+//                    foundSuccess = true;
+//                    break;
+//                }
+//            }
+            if (productSuccess == false){
+                int i = 0;
                 for (Orders o : ordersListUser) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Now, your order status is " + o.getOrder_process().getName() + "! \nPlease waiting for order status is Success!", Toast.LENGTH_LONG).show();
+                    i++;
+                    Toast.makeText(getActivity().getApplicationContext(), "Now, your order " + i + " status is " + o.getOrder_process().getName() + "! \nPlease waiting for order status is Success!", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                     //prevent back on click back button
                     getActivity().finish();
@@ -324,7 +325,6 @@ public class HomeFragment extends Fragment {
                         super.onAnimationEnd(animation);
                         layoutCard_front.setVisibility(View.GONE);
                         layoutCard_behind.setVisibility(View.VISIBLE);
-                        layout_updateProfile.setVisibility(View.VISIBLE);
                         oa2.start();
                     }
                 });
@@ -353,7 +353,6 @@ public class HomeFragment extends Fragment {
                         super.onAnimationEnd(animation);
                         layoutCard_behind.setVisibility(View.GONE);
                         layoutCard_front.setVisibility(View.VISIBLE);
-                        layout_updateProfile.setVisibility(View.VISIBLE);
                         oa2.start();
                     }
                 });
@@ -363,18 +362,36 @@ public class HomeFragment extends Fragment {
         //================================================================
 
         // to update layout
-        btnUpdateProfile.setOnClickListener(new View.OnClickListener() {
+        layoutCard_front.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity().getApplicationContext(), "Update clicked", Toast.LENGTH_SHORT).show();
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Update profile layout", Toast.LENGTH_SHORT).show();
                 //change to fragment_payment
                 //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
                 fragmentTransaction = getChildFragmentManager().beginTransaction();
                 ProfileFragment profileFragment = new ProfileFragment();
                 fragmentTransaction.replace(R.id.fl_content_home, profileFragment);
                 fragmentTransaction.addToBackStack(null).commit();
+                return false;
             }
         });
+        //to add url layout
+        layoutCard_behind.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(getActivity().getApplicationContext(), "Add URL layout", Toast.LENGTH_SHORT).show();
+                //change to fragment_payment
+                //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
+                fragmentTransaction = getChildFragmentManager().beginTransaction();
+                SocialFragment socialFragment = new SocialFragment();
+                fragmentTransaction.replace(R.id.fl_content_home, socialFragment);
+                fragmentTransaction.addToBackStack(null).commit();
+                return false;
+            }
+        });
+        //show hint text
+        txtFrontHeaderCard.setTooltipText("Touch and hold your touch to go to update layout");
+        txtBehindHeaderCard.setTooltipText("Touch and hold your touch to go to add url layout");
     }
 
     //check order status for login
@@ -383,38 +400,49 @@ public class HomeFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O) //api > 24
     public void showCardInfo(){
         //user info
-        //set display user info get from user model
-         txtName.setText("Fullname: " + SessionManager.getSaveUser().getFullname());
-        txtEmail.setText("Main email: " + SessionManager.getSaveUser().getEmail());
+        String fullname = SessionManager.getSaveUser().getFullname();
+        String email = SessionManager.getSaveUser().getEmail();
+        String phone = SessionManager.getSaveUser().getPhone();
+        String address = SessionManager.getSaveUser().getAddress();
+        String description = SessionManager.getSaveUser().getDescription();
+        String province = SessionManager.getSaveUser().getProvince();
         //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
         String[] birthday = SessionManager.getSaveUser().getDateOfbirth().split("T");
         SessionManager.getSaveUser().setDateOfbirth(birthday[0]);
-        txtBirthday.setText("Birthday: " + SessionManager.getSaveUser().getDateOfbirth());
-        txtAddress.setText("Address: " + SessionManager.getSaveUser().getAddress());
-        txtProvince.setText("Province: " + SessionManager.getSaveUser().getProvince());
-        txtGender.setText("Gender: " + (SessionManager.getSaveUser().getGender()==true?"Male":"Female"));
-        //display avatar img from url
-        try {
-            //avatar
-            Bitmap bitmap1 = BitmapFactory.decodeStream((InputStream)new URL(SessionManager.getSaveUser().getLinkImage()).getContent());
-            imgAvatar.setImageBitmap(bitmap1);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String gender = (SessionManager.getSaveUser().getGender()==true?"Male":"Female");
+        //set display user info get from user model
+         txtName.setText("Fullname: " + fullname);
+        txtEmail.setText("Main email: " + email);
+        txtBirthday.setText("Birthday: " + birthday[0]);
+        txtAddress.setText("Address: " + address);
+        txtProvince.setText("Province: " + province);
+        txtGender.setText("Gender: " + gender);
 
-        //create QR img from user info + Social + web
+        //create 2 QR img from user info + url
         //note: to qr show button type access link must have https:// + name + .com or .net (follow type web link)
-        String dynamicQR = "http://localhost:8088/Display/" + SessionManager.getSaveUsername();
+        String dynamicQRInfo = "BEGIN:VCARD"
+                      +"\nFN:"+ fullname
+                      + "\nTEL:" + phone
+                      + "\nEMAIL;TYPE=INTERNET:" + email
+                      + "\nBDAY:" + birthday[0]
+                      + "\nADR:" + address
+                      + "\nNOTE:" + description
+                      + "\nURL:" + getProduct.getUrl()
+                      + "\nEND:VCARD\n";
+
+        String dynamicQRUrl= getProduct.getUrl();
 
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
-            BitMatrix matrix = writer.encode(dynamicQR, BarcodeFormat.QR_CODE,450,450);
+            BitMatrix matrix = writer.encode(dynamicQRInfo, BarcodeFormat.QR_CODE,450,450);
+            BitMatrix matrix2 = writer.encode(dynamicQRUrl, BarcodeFormat.QR_CODE,450,450);
             BarcodeEncoder encoder = new BarcodeEncoder();
             Bitmap bitmap = encoder.createBitmap(matrix);
-            imgQR.setImageBitmap(bitmap);
-            imgQR.setTooltipText("http://localhost:8088/Display/" + SessionManager.getSaveUsername());
+            Bitmap bitmap2 = encoder.createBitmap(matrix2);
+            imgQRInfo.setImageBitmap(bitmap);
+            imgQRUrl.setImageBitmap(bitmap2);
+            imgQRInfo.setTooltipText("Scan this to add contact");
+            imgQRUrl.setTooltipText("http://localhost:8081/Display/" + SessionManager.getSaveUsername());
         } catch (WriterException e) {
             e.printStackTrace();
         }

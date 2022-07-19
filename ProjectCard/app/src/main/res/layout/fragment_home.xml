@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/lightBlueBackground">
+        android:background="@android:color/darker_gray">
 
         <!--FRONT CARD-->
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +29,7 @@
                 android:layout_width="355dp"
                 android:layout_height="250dp"
                 android:background="@drawable/layout_card_border"
-                android:backgroundTint="@android:color/holo_orange_dark"
+                android:backgroundTint="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/front_header_card"
-                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColor="@android:color/white"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -65,7 +65,7 @@
                     app:layout_constraintVertical_bias="0.6">
 
                     <ImageView
-                        android:id="@+id/imgAvatar"
+                        android:id="@+id/imgQRInfo"
                         android:layout_width="300px"
                         android:layout_height="300px"
                         android:scaleType="fitXY"/>
@@ -86,7 +86,7 @@
 
                         <TextView
                             android:id="@+id/txt_Name"
-                            android:autoLink="web"
+                            android:textColor="@color/whiteTextColor"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/txt_Name" />
@@ -98,6 +98,7 @@
                             android:id="@+id/txt_Gender"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/whiteTextColor"
                             android:text="@string/txt_Gender" />
                     </TableRow>
 
@@ -107,6 +108,7 @@
                             android:id="@+id/txt_Birthday"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/whiteTextColor"
                             android:text="@string/txt_birthday" />
                     </TableRow>
 
@@ -116,6 +118,7 @@
                             android:id="@+id/txt_Email"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/whiteTextColor"
                             android:autoLink="email"
                             android:text="@string/txt_Email" />
                     </TableRow>
@@ -127,6 +130,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:autoLink="map"
+                            android:textColor="@color/whiteTextColor"
                             android:text="@string/txt_Address" />
                     </TableRow>
 
@@ -136,6 +140,7 @@
                             android:id="@+id/txt_Province"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textColor="@color/whiteTextColor"
                             android:text="@string/txt_province" />
                     </TableRow>
                 </TableLayout>
@@ -157,7 +162,7 @@
                 android:layout_width="355dp"
                 android:layout_height="250dp"
                 android:background="@drawable/layout_card_border"
-                android:backgroundTint="@android:color/holo_orange_dark"
+                android:backgroundTint="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,7 +184,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/behind_header_card"
-                        android:textColor="@android:color/holo_blue_dark"
+                        android:textColor="@android:color/holo_blue_bright"
                         android:textSize="20sp" />
                 </LinearLayout>
 
@@ -194,7 +199,7 @@
                     app:layout_constraintHorizontal_bias="0.5">
 
                     <ImageView
-                        android:id="@+id/imgQRInfo"
+                        android:id="@+id/imgQRUrl"
                         android:scaleType="fitXY"
                         android:layout_width="330px"
                         android:layout_height="330px" />
@@ -215,46 +220,9 @@
                     app:layout_constraintVertical_bias="0.5">
                 </GridView>
             </androidx.constraintlayout.widget.ConstraintLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <!--UPDATE PROFILE BUTTON LAYOUT-->
-        <LinearLayout
-            android:id="@+id/layout_btnUpdateProfile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:onClick="onLoginClick"
-            android:visibility="gone"
-            android:weightSum="12"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.72">
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="3"
-                android:background="@color/colorPrimaryDark" />
-
-            <Button
-                android:id="@+id/btnUpdateProfile"
-                style="@style/viewParent.headerText.NoMode"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="6"
-                android:text="@string/btn_updateProfile"
-                android:textAlignment="center"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="3"
-                android:background="@color/colorPrimaryDark" />
-
-        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

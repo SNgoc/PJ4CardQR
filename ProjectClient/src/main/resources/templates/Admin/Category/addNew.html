@@ -4,7 +4,7 @@
       layout:decorate="~{Admin/dashboardLayOut.html}">
 <head>
     <meta charset="UTF-8">
-    <title>Add New Category</title>
+    <title>Category - Add New</title>
 </head>
 <body>
 <div class="main-content" layout:fragment="content">
@@ -20,18 +20,18 @@
                         <div class="card-header"><h4>Add New Category</h4></div>
 
                         <div class="card-body">
-                            <form method="POST" th:action="@{/Category/AddNew}" class="needs-validation" novalidate="" th:object="${Category}" enctype="multipart/form-data">
+                            <form method="POST" th:action="@{/Category/AddNew}" th:object="${CreateCategory}" class="needs-validation" novalidate="" enctype="multipart/form-data">
                                 <div class="row">
                                     <div class="form-group col-6">
                                         <label for="name">Name</label>
-                                        <input id="name" th:field="*{name}" type="text" class="form-control" name="name" required autofocus/>
+                                        <input id="name"  type="text" class="form-control" th:field="*{name}" required autofocus/>
                                         <span class="text-danger" th:if="${errorName}" >
                                             [[${errorName}]]
                                         </span>
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="price">Price</label>
-                                        <input id="price" th:field="*{price}" type="text" class="form-control" name="price" required/>
+                                        <input id="price" type="text" class="form-control" th:field="*{price}" required/>
                                         <span class="text-danger" th:if="${errorPrice}" >
                                             [[${errorPrice}]]
                                         </span>
@@ -41,11 +41,12 @@
                                 <div class="row">
                                     <div class="form-group col-md-6 col-12">
                                         <label>Front Image</label>
-                                        <input  type="file"  class="form-control" name="frontImage"/>
+                                        <input  type="file"  class="form-control" th:field="*{frontImage}"/>
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Back Image</label>
-                                        <input  type="file"  class="form-control" name="backImage"/>
+                                        <input  type="file"  class="form-control"th:field="*{backImage}"/>
+
                                     </div>
                                 </div>
                                 <div class="form-group">

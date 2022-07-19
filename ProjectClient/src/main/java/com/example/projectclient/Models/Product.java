@@ -1,6 +1,7 @@
 package com.example.projectclient.Models;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -18,6 +19,7 @@ public class Product {
     private String description;
 
     private String name;
+    private String avatar;
 
     private String url;
 
@@ -27,21 +29,32 @@ public class Product {
 
     private int status;
 
+    private int year;
+    private int count;
+
     private String token;
 
-    private LocalDateTime create_at;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date createdAt;
 
-    private LocalDateTime update_at;
+    private Date update_at;
 
-    private LocalDateTime delete_at;
+    private Date delete_at;
 
-    public Product(String description, String name, String url, String imageUrlcode, User user, LocalDateTime create_at,int status,String token) {
+    public Product(Long id, String description, String name, String avatar) {
+        this.id = id;
+        this.description = description;
+        this.name = name;
+        this.avatar = avatar;
+    }
+
+    public Product(String description, String name, String url, String imageUrlcode, User user, Date createdAt, int status, String token) {
         this.description = description;
         this.name = name;
         this.url = url;
         this.imageUrlcode = imageUrlcode;
         this.user = user;
-        this.create_at = create_at;
+        this.createdAt = createdAt;
         this.status = status;
         this.token = token;
     }

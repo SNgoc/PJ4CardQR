@@ -21,6 +21,8 @@ public class CreateOrderRequest {
 
     private String address;
 
+    private int year;
+
     public CreateOrderRequest(Long category_id) {
         this.category_id = category_id;
     }

@@ -34,6 +34,7 @@ public interface UserRepo extends JpaRepository<User, Long> {
     @Query("SELECT user FROM User user LEFT JOIN user.roles role WHERE role.id = ?1")
     List<User> findUserByRole(Integer role);
 
+    //for android
     //count all user role user(SNgoc)
     @Query(value = "select count(users.id) from User users left join users.roles role where role.id = 1")
     int getCountAllUsers();

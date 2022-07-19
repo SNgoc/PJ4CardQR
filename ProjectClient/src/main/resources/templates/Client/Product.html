@@ -84,7 +84,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col-sm-6 col-sm-offset-3">
-                        <h2 class="module-title font-alt" th:text="${Product.name}"></h2>
+                        <h2 class="module-title font-alt" th:text="${Product.name} + ' (' + ${Product.count} + ' visits)'"></h2>
                     </div>
                 </div>
                 <div class="row">
@@ -92,9 +92,9 @@
                         <section class="review">
                             <div class="container-fluid bg-1 text-center">
                                 <div class="avatar">
-                                    <img th:src="${Product.user.getLinkImage()}" class="img-circle" alt="@Model.Title" width="98px" height="98px">
+                                    <img th:src="${Product.avatar}" class="img-circle" alt="@Model.Title" style="height: 100px; width: 100px">
                                 </div>
-                                <h3 th:text="${Product.user.fullname}"></h3>
+                                <h3 th:text="${Product.name}"></h3>
                                 <h3 class="desc" th:text="${Product.description}"></h3>
                             </div>
                             <div class="container-fluid bg-2 text-center">
@@ -111,21 +111,21 @@
                     </div>
 
                     <div class="col-sm-6 col-md-6 col-lg-6">
-                        <form class="form" role="form" enctype="multipart/form-data" asp-action="EditCard">
-                            <input type="hidden" value="@Model.Id"  name="CardId">
+                        <form class="form" role="form" th:object="${EditProduct}" enctype="multipart/form-data" th:action="@{/Product/Edit}" method="post">
+                            <input type="hidden" th:field="*{id}">
                             <div class="form-group">
                                 <lable>Avatar</lable>
-                                <input class="form-control" type="file" id="input-image" onchange="delete_oldImage()" name="Image"/>
+                                <input class="form-control" type="file" id="input-image" onchange="delete_oldImage()" th:field="*{avatar}"/>
                                 <div id="preview-image"></div>
-                                <div id="oldImage" height="88px"><img th:src="${Product.user.getLinkImage()}" style="height:88px"/></div>
+                                <div id="oldImage" height="88px"><img th:src="${Product.avatar}" style="height:88px"/></div>
                             </div>
                             <div class="form-group">
                                 <lable>Name</lable>
-                                <input class="form-control" type="text"  th:value="${Product.name}" name="Title"/>
+                                <input class="form-control" type="text" th:field="*{name}"/>
                             </div>
                             <div class="form-group">
                                 <lable>Description</lable>
-                                <input class="form-control" type="text" th:value="${Product.description}" name="Description"/>
+                                <input class="form-control" type="text" th:field="*{description}"/>
                             </div>
                             <div class="form-group">
                                 <button type="submit">Save</button>

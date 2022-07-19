@@ -36,7 +36,7 @@ public class RetrofitService {
         return builder.build();
     }
 
-    //add access bearer token auth for access to get product info
+    //add access bearer token auth for access authorized to get info from db
     public static Retrofit proceedToken() {
         Gson gson = new GsonBuilder()
                 .setLenient()
