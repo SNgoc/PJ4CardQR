@@ -21,10 +21,10 @@ public class JwtUtils {
         String access_token = Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
-
+        System.out.println(new Date().getTime() + jwtExpirationMs);
         return access_token;
 
     }

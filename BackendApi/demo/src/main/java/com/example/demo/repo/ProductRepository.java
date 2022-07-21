@@ -26,6 +26,8 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
             "WHERE c.token = ?1")
     int updateConfirmedAt(String token);
 
+    boolean existsByUser(User user);
+
     //count product(SNgoc)
     @Query(value = "select count (id) from Product")
     int countProduct();

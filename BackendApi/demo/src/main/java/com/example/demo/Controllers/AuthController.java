@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.*;
@@ -89,7 +90,7 @@ public class AuthController  {
 
     @RequestMapping(value = "/signup")
 
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws IOException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws IOException, MessagingException {
 
 
         String token = registerService.register(signUpRequest);
@@ -105,7 +106,7 @@ public class AuthController  {
     }
 
     @PostMapping("/changeEmail")
-    public String changePassword(@RequestBody ResetPasswordRequest passwordRequest)  {
+    public String changePassword(@RequestBody ResetPasswordRequest passwordRequest) throws MessagingException {
         return resetPasswordService.changePassword(passwordRequest);
     }
 

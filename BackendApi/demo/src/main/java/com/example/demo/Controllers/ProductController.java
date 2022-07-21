@@ -47,4 +47,25 @@ public class ProductController {
             return ResponseEntity.badRequest().body("Product is not exist...");
         }
     }
+
+    @GetMapping("/changeStatus/{id}")
+    public ResponseEntity<?> getProduct(@PathVariable Long id) {
+        if(productRepository.existsById(id)){
+            Product product = productRepository.findById(id).get();
+            if(product.getStatus() == 0){
+                product.setStatus(1);
+            }else{
+                product.setStatus(0);
+            }
+            productRepository.save(product);
+            return ResponseEntity.ok(product);
+        }
+       else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fails");
+       }
+    }
+
+    //get count product was bought(SNgoc)
+    @GetMapping("/getCountProduct/")
+    public int countSum(){ return productService.countProductByID(); }
 }

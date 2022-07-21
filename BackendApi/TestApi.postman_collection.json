@@ -349,7 +349,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/auth/profile/updateProfile/3",
+					"raw": "http://localhost:8080/api/android/updateProfile/3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -357,8 +357,7 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"auth",
-						"profile",
+						"android",
 						"updateProfile",
 						"3"
 					]
@@ -385,7 +384,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJvIiwiaWF0IjoxNjU4MDQ1NTI4LCJleHAiOjE2NTgxMzE5Mjh9.GC8PQHfiQbGJSWJNVyEdPsAQ94JOmwMs_Ke84ihpYaVAKs49Ar6eZVEXlHdl4wUmS5xJTM2xTzirtbailT2Jkg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTgxMzM1OTEsImV4cCI6MTY1ODIxOTk5MX0.ZGC3ZwwlGdfmGBVxgyDL_uQNWfd8REdZIM_YgE4eOvC6_SGofClYo7fVxAIv0QDv4Y-RvM5yVBc6mCJtyfg9zQ",
 							"type": "string"
 						}
 					]
@@ -394,7 +393,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\":\"lazada\",\r\n    \"fullname\":\"lazada shoppee\",\r\n    \"phone\":\"123\",\r\n    \"address\":\"Tay Ninh\",\r\n    \"category_id\":1,\r\n    \"email\":\"lazada@gmail.com\"\r\n}\r\n//email phải khớp với thông tin user, ko sẽ bị null user_id\r\n//user_id tự liên kết, ko cần add",
+					"raw": "{\r\n    \"username\":\"nero\",\r\n    \"fullname\":\"nero saro\",\r\n    \"phone\":\"0123456789\",\r\n    \"address\":\"Tay Ninh\",\r\n    \"category_id\":1,\r\n    \"email\":\"nero@gmail.com\"\r\n}\r\n//email phải khớp với thông tin user, ko sẽ bị null user_id\r\n//user_id tự liên kết, ko cần add",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -449,7 +448,7 @@
 			"response": []
 		},
 		{
-			"name": "Get Product by User",
+			"name": "Get Product by User Android",
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -459,7 +458,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTgwNzc3ODksImV4cCI6MTY1ODE2NDE4OX0.iSqRDcrtkMryNyrYur_fFnFMapKAtprrC0shTlTXjAlGnSakt1bSAO2jvVjkFhcizQRYt4k0dkilXesTUrDCzQ",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXJvIiwiaWF0IjoxNjU4MTY2MTk0LCJleHAiOjE2NTgyNTI1OTR9.Ai0USwcNIHhg_n8QCrKUAoDU3IEwlUjxYqOJPW7UXNvgTAtPpNkve1-fqc94B_gLv4OXXRuEyljqkLba4uytlQ",
 							"type": "string"
 						}
 					]
@@ -476,7 +475,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/api/product/getProduct/lazada",
+					"raw": "http://localhost:8080/api/android/getProduct/saro",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -484,9 +483,9 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"product",
+						"android",
 						"getProduct",
-						"lazada"
+						"saro"
 					],
 					"query": [
 						{
@@ -914,7 +913,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4MDAyMjcwLCJleHAiOjE2NTgwODg2NzB9.HEwKJLb29Q20kSLSphsdjjcO1GEzmf9_S1M-7bJviEhldSGVLx2HeLn1GJmS0TF3REh-TySBIXLCB88UPxU9dg",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTgxMzM1OTEsImV4cCI6MTY1ODIxOTk5MX0.ZGC3ZwwlGdfmGBVxgyDL_uQNWfd8REdZIM_YgE4eOvC6_SGofClYo7fVxAIv0QDv4Y-RvM5yVBc6mCJtyfg9zQ",
 							"type": "string"
 						}
 					]
@@ -922,7 +921,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:8080/api/order/listByUsername/nero",
+					"raw": "http://localhost:8080/api/android/orderListByUsername/lazada",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -930,9 +929,9 @@
 					"port": "8080",
 					"path": [
 						"api",
-						"order",
-						"listByUsername",
-						"nero"
+						"android",
+						"orderListByUsername",
+						"lazada"
 					]
 				}
 			},
@@ -940,6 +939,9 @@
 		},
 		{
 			"name": "Android Add Url Product",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -951,11 +953,11 @@
 						}
 					]
 				},
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n        \"name\": \"Twitter\",\r\n        \"url\": \"twitter.com/nero3103\",\r\n        \"type_id\" : 5,\r\n        \"product_id\" : 6\r\n    ,\r\n        \"user_id\" : 8\r\n    }",
+					"raw": "{\r\n    \"name\": \"Twitter\",\r\n    \"url\": \"twitter.com/nero3103\",\r\n    \"type_id\" : 5,\r\n    \"product_id\" : 6,\r\n    \"user_id\" : 8\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -973,6 +975,37 @@
 						"api",
 						"android",
 						"addUrl"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Android Get list link type",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4MDgwMDU4LCJleHAiOjE2NTgxNjY0NTh9.TWE5rxjHyo1yP8m0Fij2CEA5O9g2JEGmHVOlxcSH3Lmrsp4_jHCeaY0obExlfbEqaGmwpUvolKIuTGEqZta-1A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/android/listLinkType",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"android",
+						"listLinkType"
 					]
 				}
 			},

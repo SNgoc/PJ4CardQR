@@ -20,6 +20,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,10 +33,17 @@ import java.util.ArrayList;
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.domain.UrlProduct;
+import fpt.aptech.projectcard.session.SessionManager;
+import fpt.aptech.projectcard.ui.profile.ProfileFragment;
+import fpt.aptech.projectcard.ui.social.SocialFragment;
+import fpt.aptech.projectcard.ui.social.UpdateUrlFragment;
 
 public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
-    public GridViewURLAdapter(@NonNull Context context, ArrayList<UrlProduct> urlProductArrayList) {
+    FragmentManager fragmentManager;
+
+    public GridViewURLAdapter(@NonNull Context context, ArrayList<UrlProduct> urlProductArrayList, FragmentManager fragmentManager) {
         super(context,0, urlProductArrayList);
+        this.fragmentManager = fragmentManager;
     }
 
     @NonNull
@@ -59,8 +69,7 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
-                if (urlProduct.getLinkType().getId() == 1 || urlProduct.getLinkType().getId() == 2 || urlProduct.getLinkType().getId() == 3
-                        || urlProduct.getLinkType().getId() == 4 || urlProduct.getLinkType().getId() == 5 || urlProduct.getLinkType().getId() == 8){
+                if (urlProduct.getLinkType().getId() != 6 && urlProduct.getLinkType().getId() != 7 ){
                     intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + urlProduct.getUrl()));
                 }
                 if (urlProduct.getLinkType().getId() == 6){
@@ -81,7 +90,7 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
 
                 //set title item to url name
                 Menu menuOpts = popup.getMenu();
-                menuOpts.getItem(0).setTitle(urlProduct.getName());
+                menuOpts.getItem(0).setTitle("⭐" + urlProduct.getName());
 
                 // Register Menu Item Click event.
                 popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
@@ -106,7 +115,11 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
                         Toast.makeText(getContext(), urlProduct.getName(), Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.menuItem_edit:
-                        Toast.makeText(getContext(), R.string.popup_edit_url, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Update Url layout", Toast.LENGTH_SHORT).show();
+                        SessionManager.setSaveUrlProduct(urlProduct);
+                        //change to update layout fragment
+                        fragmentManager.beginTransaction().replace(R.id.fl_content_home, new UpdateUrlFragment())
+                                .addToBackStack(null).commit();
                         break;
                     case R.id.menuItem_drop:
                         Toast.makeText(getContext(), R.string.popup_delete_url, Toast.LENGTH_SHORT).show();

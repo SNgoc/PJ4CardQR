@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class RegisterService {
     private  ConfirmationTokenService confirmationTokenService;
 
 
-    public String register(@NotNull SignupRequest request) throws  IOException {
+    public String register(@NotNull SignupRequest request) throws IOException, MessagingException {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 

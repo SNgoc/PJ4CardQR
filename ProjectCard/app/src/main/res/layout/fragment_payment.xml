@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/pay_layout"
+    android:background="@color/colorPrimaryDark"
     android:focusable="true"
     android:clickable="true"
     tools:context=".ui.buycard.PaymentFragment">
@@ -16,7 +16,7 @@
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
         android:layout_gravity="center_horizontal"
-        android:background="@drawable/paypal" />
+        android:background="@drawable/layout_card_border" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

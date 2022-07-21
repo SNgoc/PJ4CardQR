@@ -71,6 +71,9 @@
                     <span class="text-danger msgAlert1" th:if="${Success}" >
                                             [[${Success}]]
                                         </span>
+                    <span class="text-danger msgAlert1" th:if="${Fails}" >
+                                            [[${Fails}]]
+                                        </span>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example" class="table table-striped table-bordered" style="width:100%">
@@ -78,7 +81,9 @@
                                 <tr>
                                     <th>No.</th>
                                     <th>Customer Name</th>
-                                    <th>Category</th>
+                                    <th>Visits</th>
+                                    <th>Created At</th>
+                                    <th>Duration</th>
                                     <th>Status</th>
                                     <th>Actions</th>
                                 </tr>
@@ -86,32 +91,20 @@
                                 <tbody>
                                 <tr th:each="product :  ${products}">
                                     <td><p th:text="${product.id}"></p></td>
-                                    <td><p th:text="${product.name}"></p></td>
-                                    <td><p th:text="${product.getUser().username}"></p></td>
-                                    <td></td>
-                                    <td>
-                                        <a th:href="@{/Admin/Category/delete/{id}(id=${product.id})}" class="deleteModel" id="myBtn ">Delete</a>
-                                    </td>
+                                    <td><p th:text="${product.user.fullname}"></p></td>
+                                    <td><p th:text="${product.count}"></p></td>
 
+                                    <th><p th:text="${#dates.format(product.createdAt,'dd-MM-yyyy')}"></p></th>
+                                    <th><p th:text="${product.year} + ' year'" ></p></th>
+                                    <td><p th:if="${product.status} == 1 ">Active</p><p th:if="${product.status} == 0 ">Deactive</p></td>
+                                    <td>
+                                        <a th:href="@{/Admin/Product/ChangeStatus/{id}(id=${product.id})}" >Change Status</a>
+                                    </td>
                                 </tr>
 
                                 </tbody>
 
                             </table>
-                            <!-- The Modal -->
-                            <div id="myModal" class="modal ">
-
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="modelClose1">&times;</span>
-                                    <p>Do you want delete this category?</p>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" id="modelClose2">Close</button>
-                                        <a class="btn btn-danger" id="delRef" href="">Delete</a>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
 

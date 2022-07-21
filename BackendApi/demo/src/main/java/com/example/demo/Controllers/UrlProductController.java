@@ -2,10 +2,10 @@ package com.example.demo.Controllers;
 
 import com.example.demo.Payload.Request.AddCategoryRequest;
 import com.example.demo.Payload.Request.CreateOrderRequest;
-import com.example.demo.domain.Category;
-import com.example.demo.domain.LinkType;
-import com.example.demo.domain.UrlProduct;
+import com.example.demo.Payload.Request.EditUrl;
+import com.example.demo.domain.*;
 import com.example.demo.repo.LinkTypeRepository;
+import com.example.demo.repo.UrlProductRepository;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.UrlProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,8 @@ public class UrlProductController {
     UrlProductService productService;
     @Autowired
     LinkTypeRepository linkTypeRepository;
+    @Autowired
+    UrlProductRepository urlProductRepository;
     @Autowired
     UserRepo userRepo;
 
@@ -46,6 +48,15 @@ public class UrlProductController {
         }else{
             return ResponseEntity.badRequest().body("Fail");
         }
+    }
+
+    @PostMapping("/edit")
+    public ResponseEntity<?> edit(@RequestBody EditUrl urlEdit) throws IOException {
+        UrlProduct urlProduct = urlProductRepository.findById(urlEdit.getId()).get();
+        urlProduct.setName(urlEdit.getName());
+        urlProduct.setLinkType(linkTypeRepository.findById(urlEdit.getLinkTypeId()).get());
+        urlProduct.setUrl(urlEdit.getUrl());
+        return ResponseEntity.ok(urlProductRepository.save(urlProduct));
     }
 
     @GetMapping("/delete/{id}")

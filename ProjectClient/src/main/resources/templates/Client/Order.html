@@ -55,7 +55,7 @@
                                          return actions.order.create({
                                              purchase_units: [{
                                                  amount: {
-                                                     value: 200
+                                                     value: GetToTal()
                                                  }
                                              }]
                                          });
@@ -140,4 +140,19 @@
         document.getElementById('Total').innerHTML = total;
     }
     NewUpdate();
+    function GetToTal(){
+        var select = document.getElementById('NewTypeId');
+        var option = select.options[select.selectedIndex];
+        var paypal;
+        if(option.value ==1){
+            paypal = 12
+        }
+        if(option.value ==3){
+            paypal = 27
+        }
+        if(option.value ==10){
+            paypal = 82
+        }
+        return paypal;
+    }
 </script>

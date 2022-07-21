@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
 import java.io.IOException;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -46,19 +47,19 @@ public class OrderController {
 
     @PostMapping(value="/add" , consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> add(@RequestBody CreateOrderRequest createOrderRequest) throws IOException, WriterException {
-        createOrderRequest.setEmail( (userRepo.findByUsername(createOrderRequest.getUsername())).get().getEmail() );
-        String response = orderService.create(createOrderRequest);
+    public ResponseEntity<?> add(@RequestBody CreateOrderRequest createOrderRequest) throws IOException, WriterException, MessagingException {
+            String response = orderService.create(createOrderRequest);
             return ResponseEntity.ok(response);
     }
 
-    @GetMapping(path = "/confirmProduct")
-    public RedirectView confirm(@RequestParam("token") String token)  {
-        return orderService.confirmToken(token);
+    @GetMapping(path = "/confirmOrder")
+    public RedirectView confirm(@RequestParam("id") Long id)  {
+
+        return orderService.confirmToken(id);
     }
 
     @GetMapping("/nextProcess/{id}")
-    public ResponseEntity<?> nextProcess(@PathVariable Long id) {
+    public ResponseEntity<?> nextProcess(@PathVariable Long id) throws MessagingException {
         Boolean next = orderService.nextProcess(id);
         if(next == false){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fails");

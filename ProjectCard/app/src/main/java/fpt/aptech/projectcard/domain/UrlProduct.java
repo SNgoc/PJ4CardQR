@@ -3,7 +3,7 @@ package fpt.aptech.projectcard.domain;
 
 public class UrlProduct {
 
-    private int id;
+    private Long id;
 
     private String name;
 
@@ -18,11 +18,11 @@ public class UrlProduct {
     public UrlProduct() {
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

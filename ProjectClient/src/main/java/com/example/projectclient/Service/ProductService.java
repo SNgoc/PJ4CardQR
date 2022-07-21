@@ -1,5 +1,6 @@
 package com.example.projectclient.Service;
 
+import com.cloudinary.Url;
 import com.example.projectclient.Config.JSONUtils;
 import com.example.projectclient.Models.*;
 import okhttp3.*;
@@ -57,13 +58,12 @@ public class ProductService {
         return null;
     }
 
-    public Product Display(HttpSession session) throws IOException, InterruptedException{
+    public Product Display(String username) throws IOException, InterruptedException{
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/display/" + session.getAttribute("usernamesClient")))
+                .uri(URI.create( BASE_URL + "api/display/" + username))
                 .GET()
                 .headers("Content-Type","application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
                 .build();
 
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -75,14 +75,13 @@ public class ProductService {
         return null;
     }
 
-    public List<UrlProduct> ShowAllUrl(HttpSession session) throws IOException, InterruptedException{
+    public List<UrlProduct> ShowAllUrl(String username) throws IOException, InterruptedException{
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create( BASE_URL + "api/urlProduct/list/" + session.getAttribute("usernamesClient")))
+                .uri(URI.create( BASE_URL + "api/urlProduct/list/" +username))
                 .GET()
                 .headers("Content-Type"
                         ,"application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
                 .build();
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
@@ -144,6 +143,57 @@ public class ProductService {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
         return response;
+    }
+
+    public UrlProduct editUrl(String json, HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "api/urlProduct/edit"))
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        JSONObject ob = new JSONObject(response.body());
+        UrlProduct url = JSONUtils.convertToObject(UrlProduct.class,ob.toString());
+        return url;
+    }
+
+    public Boolean deleteUrl(Long id, HttpSession session)throws IOException, InterruptedException{
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create( BASE_URL + "api/urlProduct/delete/"+ id))
+                .GET()
+                .headers("Content-Type"
+                        ,"application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        if(response.statusCode()==200){
+            return  true;
+        }
+        return  false;
+    }
+
+    public Boolean ChangeStatus(Long id, HttpSession session)throws IOException, InterruptedException{
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create( BASE_URL + "api/product/changeStatus/" + id))
+                .GET()
+                .headers("Content-Type"
+                        ,"application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        if(response.statusCode() ==200){
+            return true;
+        }
+        return false;
     }
 
 }

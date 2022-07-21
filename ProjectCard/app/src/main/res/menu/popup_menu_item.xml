@@ -2,15 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menuItem_Name"
-        android:icon="@drawable/ic_bookmark"
-        android:title="Icon name">
-        <menu>
-            <item
-                android:id="@+id/menuItem_edit"
-                android:title="@string/popup_edit_url" />
-            <item
-                android:id="@+id/menuItem_drop"
-                android:title="@string/popup_delete_url" />
-        </menu>
-    </item>
+        android:title="Icon name" />
+    <item
+        android:id="@+id/menuItem_edit"
+        android:title="@string/popup_edit_url" />
+    <item
+        android:id="@+id/menuItem_drop"
+        android:title="@string/popup_delete_url" />
 </menu>

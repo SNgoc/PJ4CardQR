@@ -37,6 +37,8 @@
     <string name="txt_cvv">CVV</string>
     <string name="btn_pay">Pay it</string>
     <!-- Account Info -->
+    <string name="btn_flip_on">Flip Card: On</string>
+    <string name="btn_flip_off">Flip Card: Off</string>
     <!--  FRONT CARD  -->
     <string name="front_header_card">BASIC INFORMATION</string>
     <string name="txt_Name">Name: N/A</string>
@@ -48,8 +50,8 @@
     <string name="txt_province">Province: N/A</string>
     <!--  BEHIND CARD  -->
     <string name="behind_header_card">ONE TOUCH CONNECT</string>
-    <string name="popup_edit_url">Edit</string>
-    <string name="popup_delete_url">Drop</string>
+    <string name="popup_edit_url">🛠 edit</string>
+    <string name="popup_delete_url">❌ drop</string>
     <string name="txt_facebook">Facebook: N/A</string>
     <string name="txt_twitter">Twitter: N/A</string>
     <string name="txt_instagram">Instagram: N/A</string>

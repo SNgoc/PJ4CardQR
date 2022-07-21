@@ -8,8 +8,6 @@ public class LinkType {
 
     private String name;
 
-    private String placeholder;
-
     private String dataUrl;
 
     private String linkImage;
@@ -31,14 +29,6 @@ public class LinkType {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPlaceholder() {
-        return placeholder;
-    }
-
-    public void setPlaceholder(String placeholder) {
-        this.placeholder = placeholder;
     }
 
     public String getDataUrl() {

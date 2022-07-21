@@ -57,6 +57,7 @@ import java.util.List;
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
+import fpt.aptech.projectcard.callApiService.ApiConstant;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.Orders;
 import fpt.aptech.projectcard.domain.Product;
@@ -97,7 +98,7 @@ public class HomeFragment extends Fragment {
     ConstraintLayout layoutCard_front, layoutCard_behind;
     LinearLayout layout_updateProfile;
     //Button
-    Button btnUpdateProfile;
+    Button btnPause;
     private String username,password;
     //change fragment
     private FragmentTransaction fragmentTransaction;
@@ -151,13 +152,13 @@ public class HomeFragment extends Fragment {
         txtEmail = view.findViewById(R.id.txt_Email);
         txtBirthday = view.findViewById(R.id.txt_Birthday);
         txtAddress = view.findViewById(R.id.txt_Address);
-        txtProvince = view.findViewById(R.id.txt_Province);
         txtGender = view.findViewById(R.id.txt_Gender);
         //behind card
         gridViewUrl = view.findViewById(R.id.gvUrl);
         imgQRInfo = view.findViewById(R.id.imgQRInfo);
         imgQRUrl = view.findViewById(R.id.imgQRUrl);
         //set click listener
+        btnPause = view.findViewById(R.id.btnControlFlip);
         layoutCard_front = view.findViewById(R.id.layoutCard_front);
         layoutCard_behind = view.findViewById(R.id.layoutCard_behind);
 
@@ -166,7 +167,6 @@ public class HomeFragment extends Fragment {
             StrictMode.ThreadPolicy gfgPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(gfgPolicy);
         }
-
         //hide layout_UpdateProfile and btnUpdateProfile
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +193,10 @@ public class HomeFragment extends Fragment {
             ordersListUser = apiService.getOrdersByUsername(SessionManager.getSaveUsername()).execute().body();
             getProduct = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
             SessionManager.setSaveProduct(getProduct);
+            //get url social link by user
+            //save data user and social, url product to static session
             SessionManager.setSaveUser(apiService.getProfile(SessionManager.getSaveUsername()).execute().body());
+            urlProductList = apiService.getUrlProduct(SessionManager.getSaveUsername()).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -207,9 +210,12 @@ public class HomeFragment extends Fragment {
         else {
             //found order by username, not null, not empty
             //check product status, can only login when have product and status is 1
-            boolean productSuccess = false;
-            if (getProduct != null && getProduct.getStatus() == 1) {
-                productSuccess = true;
+//            boolean productSuccess = false;
+            if (getProduct != null && getProduct.getStatus() == 0) {
+                Toast.makeText(getActivity().getApplicationContext(), "The your product has not still active yet", Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                //prevent back on click back button
+                getActivity().finish();
             }
 //            for (Orders o : ordersListUser) {
 //                if (o.getOrder_process().getId() == 3){// 1: Waiting, 2:Delivery, 3:Success, 4:Cancel
@@ -217,74 +223,17 @@ public class HomeFragment extends Fragment {
 //                    break;
 //                }
 //            }
-            if (productSuccess == false){
-                int i = 0;
-                for (Orders o : ordersListUser) {
-                    i++;
-                    Toast.makeText(getActivity().getApplicationContext(), "Now, your order " + i + " status is " + o.getOrder_process().getName() + "! \nPlease waiting for order status is Success!", Toast.LENGTH_LONG).show();
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
-                    //prevent back on click back button
-                    getActivity().finish();
-                }
-            }
+//            if (productSuccess == false){
+//                int i = 0;
+//                for (Orders o : ordersListUser) {
+//                    i++;
+//                    Toast.makeText(getActivity().getApplicationContext(), "Now, your order " + i + " status is " + o.getOrder_process().getName() + "! \nPlease waiting for order status is Success!", Toast.LENGTH_LONG).show();
+//                    startActivity(new Intent(getActivity(), LoginActivity.class));
+//                    //prevent back on click back button
+//                    getActivity().finish();
+//                }
+//            }
             ///////////////////////////////////////////////////////////////
-
-            //call api to get user info
-            apiService.getProfile(SessionManager.getSaveUsername()).enqueue(new Callback<User>() {
-                @Override
-                public void onResponse(Call<User> call, Response<User> response) {
-                    if (response.isSuccessful()) {
-                        if (response.isSuccessful()) {
-                            if (response.body() != null) {
-                                //can't save session value in onResponse, because it will null after finish run this function
-//                                Toast.makeText(getActivity().getApplicationContext(), "Success " + SessionManager.getSaveUser().getDescription(), Toast.LENGTH_SHORT).show();
-                            }
-                            if (response.body() == null){
-                                Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                            }
-                            if (response.code() == 401){
-                                Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<User> call, Throwable t) {
-                    Toast.makeText(getActivity().getApplicationContext(), "Failed display profile", Toast.LENGTH_SHORT).show();
-                }
-            });
-            ///////////////////////////////////////////////////////////////////////////////////////////
-
-            //get url social link by user
-            apiService.getUrlProduct(SessionManager.getSaveUsername()).enqueue(new Callback<List<UrlProduct>>() {
-                @Override
-                public void onResponse(Call<List<UrlProduct>> call, Response<List<UrlProduct>> response) {
-                    if (response.isSuccessful()){
-                        //save social to Session to use outside this function for create qr code
-//                        SessionManager.setSaveUrlProduct(response.body());
-                    }
-
-                    if (response.body() == null){
-                        Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                    }
-                    if (response.code() == 401){
-                        Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<List<UrlProduct>> call, Throwable t) {
-                    Toast.makeText(getActivity().getApplicationContext(),"Get url product failed: " + t.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-            });
-            //save data user and social, url product to static session
-            try {
-                SessionManager.setSaveUser(apiService.getProfile(SessionManager.getSaveUsername()).execute().body());
-                urlProductList = apiService.getUrlProduct(SessionManager.getSaveUsername()).execute().body();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
 
             //display smart card info, url link product and qr cde
 //            Toast.makeText(getActivity().getApplicationContext(),"Session: " + SessionManager.getSaveUser().getFullname(),Toast.LENGTH_LONG).show();
@@ -296,22 +245,26 @@ public class HomeFragment extends Fragment {
 
         //================================================================
         //animation flip card
+        String animated = btnPause.getText().toString();
+        btnPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (animated.equals("Flip Card: On")){
+                    btnPause.setText(R.string.btn_flip_off);
+                } else {
+                    btnPause.setText(R.string.btn_flip_on);
+                }
+                onStart();
+            }
+        });
         //front
         layoutCard_front.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "Click success", Toast.LENGTH_SHORT).show();
+                btnPause.getText();
 
                 //set change header card
                 txtBehindHeaderCard.setText(R.string.behind_header_card);
-//                try {
-//                    Bitmap bitmap = BitmapFactory.decodeStream((InputStream)new URL(qrImg[0]).getContent());
-//                    imgQR.setImageBitmap(bitmap);
-//                } catch (MalformedURLException e) {
-//                    e.printStackTrace();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
                 final ObjectAnimator oa1 = ObjectAnimator.ofFloat(layoutCard_front, "scaleX", 1f, 0f);
                 final ObjectAnimator oa2 = ObjectAnimator.ofFloat(layoutCard_front, "scaleX", 0f, 1f);
                 oa1.setInterpolator(new DecelerateInterpolator());
@@ -328,7 +281,13 @@ public class HomeFragment extends Fragment {
                         oa2.start();
                     }
                 });
-                oa1.start();
+                if (btnPause.getText().toString().equals("Flip Card: On")){
+                    Toast.makeText(getActivity().getApplicationContext(), "to Behind", Toast.LENGTH_SHORT).show();
+                    oa1.resume();
+                    oa1.start();
+                } else {
+                    oa1.pause();
+                }
             }
         });
 
@@ -336,7 +295,7 @@ public class HomeFragment extends Fragment {
         layoutCard_behind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity().getApplicationContext(), "Click success", Toast.LENGTH_SHORT).show();
+                btnPause.getText();
 
                 //set change header card
                 txtFrontHeaderCard.setText(R.string.front_header_card);
@@ -356,7 +315,13 @@ public class HomeFragment extends Fragment {
                         oa2.start();
                     }
                 });
-                oa1.start();
+                if (btnPause.getText().toString().equals("Flip Card: On")){
+                    Toast.makeText(getActivity().getApplicationContext(), "to Front", Toast.LENGTH_SHORT).show();
+                    oa1.resume();
+                    oa1.start();
+                } else {
+                    oa1.pause();
+                }
             }
         });
         //================================================================
@@ -415,7 +380,6 @@ public class HomeFragment extends Fragment {
         txtEmail.setText("Main email: " + email);
         txtBirthday.setText("Birthday: " + birthday[0]);
         txtAddress.setText("Address: " + address);
-        txtProvince.setText("Province: " + province);
         txtGender.setText("Gender: " + gender);
 
         //create 2 QR img from user info + url
@@ -427,10 +391,10 @@ public class HomeFragment extends Fragment {
                       + "\nBDAY:" + birthday[0]
                       + "\nADR:" + address
                       + "\nNOTE:" + description
-                      + "\nURL:" + getProduct.getUrl()
+                      + "\nURL:" + ApiConstant.BASE_URL_CLIENT + "/Display/" + SessionManager.getSaveUsername()
                       + "\nEND:VCARD\n";
 
-        String dynamicQRUrl= getProduct.getUrl();
+        String dynamicQRUrl= ApiConstant.BASE_URL_CLIENT + "/Display/" + SessionManager.getSaveUsername();
 
         MultiFormatWriter writer = new MultiFormatWriter();
         try {
@@ -442,7 +406,7 @@ public class HomeFragment extends Fragment {
             imgQRInfo.setImageBitmap(bitmap);
             imgQRUrl.setImageBitmap(bitmap2);
             imgQRInfo.setTooltipText("Scan this to add contact");
-            imgQRUrl.setTooltipText("http://localhost:8081/Display/" + SessionManager.getSaveUsername());
+            imgQRUrl.setTooltipText(ApiConstant.BASE_URL_CLIENT + "/Display/" + SessionManager.getSaveUsername());
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -462,7 +426,8 @@ public class HomeFragment extends Fragment {
         // or using it with grid view to fix error duplicate
         //display avatar img from url
         ArrayList<UrlProduct> urlProductArrayList = new ArrayList<>(urlProductList);
-        GridViewURLAdapter adapter = new GridViewURLAdapter(getContext(),urlProductArrayList);
+        //use getActivity() not getContext() to change fragment on menu item click
+        GridViewURLAdapter adapter = new GridViewURLAdapter(getActivity(),urlProductArrayList,getChildFragmentManager());
         adapter.notifyDataSetChanged();
         gridViewUrl.setAdapter(adapter);
     }

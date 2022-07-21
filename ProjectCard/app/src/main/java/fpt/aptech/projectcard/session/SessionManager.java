@@ -3,7 +3,9 @@ package fpt.aptech.projectcard.session;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.Product;
@@ -24,6 +26,12 @@ public class SessionManager {
     private static List<LinkType> saveLinkTypeList;
     private static List<UrlProduct> saveUrlProductList;
     private static SocialNweb saveSocialNweb;
+
+    //calculator date 1 - date 2 = years from milliseconds
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies,TimeUnit.MILLISECONDS);
+    }
 
     public SessionManager() {
     }

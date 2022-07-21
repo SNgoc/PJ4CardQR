@@ -49,6 +49,9 @@ public interface ApiService {
     @POST(ApiConstant.URL_ADD_NEW_URL)
     Call<UrlRequest> addNewUrl(@Body UrlRequest urlRequest);
 
+    @POST(ApiConstant.URL_UPDATE_URL)
+    Call<UrlRequest> updateUrl(@Path("url_id") Long url_id,@Body UrlRequest urlRequest);
+
     // post raw json
 //    @Headers("Content-Type: application/json")
 //    @POST(ApiConstant.URL_UPDATE_PROFILE)

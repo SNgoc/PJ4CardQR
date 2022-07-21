@@ -4,6 +4,7 @@ import com.example.projectclient.Config.JSONUtils;
 import com.example.projectclient.Models.Category;
 import com.example.projectclient.Models.Orders;
 import com.example.projectclient.Service.OrderService;
+import com.example.projectclient.Service.PdfService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,8 @@ import java.util.List;
 public class OrderControllers {
     @Autowired
     OrderService orderService;
+    @Autowired
+    PdfService pdfService;
 
     public OrderControllers(OrderService orderService) {
         this.orderService = orderService;
@@ -37,6 +40,7 @@ public class OrderControllers {
         Orders[] orders = JSONUtils.convertToObject(Orders[].class,ob.toString());
         assert orders != null;
         model.addAttribute("orders", List.of(orders));
+        model.addAttribute("pdf", pdfService.Create());
         return "Admin/Orders/index";
     }
 

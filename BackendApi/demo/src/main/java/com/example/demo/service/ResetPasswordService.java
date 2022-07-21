@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -32,7 +33,7 @@ public class ResetPasswordService {
 
     @Autowired
     ResetPasswordRepo resetPasswordRepo;
-    public String changePassword(ResetPasswordRequest request)  {
+    public String changePassword(ResetPasswordRequest request) throws MessagingException {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 

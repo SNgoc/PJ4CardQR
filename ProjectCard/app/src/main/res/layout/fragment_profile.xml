@@ -76,23 +76,6 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/textInputLastnameProfile"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="@string/lastname"/>
-
-                        <EditText
-                            android:id="@+id/editLastnameProfile"
-                            style="@style/modifiedEditText"
-                            android:hint="@string/lastname"
-                            android:inputType="textPersonName"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
                         android:id="@+id/textInputEmailProfile"
                         style="@style/parent"
                         android:orientation="vertical"
@@ -192,24 +175,6 @@
                             android:id="@+id/editAddressProfile"
                             style="@style/modifiedEditText"
                             android:hint="Address"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/textInputProvinceProfile"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="@string/province"/>
-
-                        <EditText
-                            android:id="@+id/editProvinceProfile"
-                            style="@style/modifiedEditText"
-                            android:hint="Province"
                             android:inputType="text"
                             android:maxLines="1" />
                     </LinearLayout>

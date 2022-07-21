@@ -42,20 +42,21 @@ public class ProductController {
             EditProduct editProduct = new EditProduct(product.getId(), product.getDescription(), product.getName());
             model.addAttribute("EditProduct", editProduct);
             model.addAttribute("Product",  product);
-            model.addAttribute("listUrl", productService.ShowAllUrl(session));
+            model.addAttribute("listUrl", productService.ShowAllUrl((String) session.getAttribute("usernamesClient")));
             model.addAttribute("listLinkType", productService.ShowAllLinkType(session));
             model.addAttribute("UrlProduct", new UrlProduct());
+            model.addAttribute("EditUrl", new EditUrl());
             return "CLient/Product";
         }
-       return "error/404";
+        return "error/404";
     }
 
     @GetMapping("/Display/{username}")
     public String DisplayProduct(@PathVariable String username, HttpSession session, ModelMap model) throws IOException, InterruptedException {
         if(userService.checkUsername(username, session)){
-            var myProduct = productService.Display(session);
+            var myProduct = productService.Display(username);
             model.addAttribute("Product", myProduct);
-            model.addAttribute("listUrl", productService.ShowAllUrl(session));
+            model.addAttribute("listUrl", productService.ShowAllUrl(username));
             return "CLient/DisplayProduct";
         }
         return "Client/error";
@@ -73,20 +74,12 @@ public class ProductController {
     }
 
     @PostMapping("/Product/EditUrl")
-    public String AddNewUrl(@PathVariable("urlId") Long urlId,@PathVariable("name") String name,
-                            @PathVariable("type") Long linkTypeId,@PathVariable("url") String url,
-                            HttpSession session) throws IOException, InterruptedException {
-        UrlProduct urlProduct = new UrlProduct();
-        urlProduct.setId(urlId);
-        urlProduct.setName(name);
-        urlProduct.setUrl(url);
-        urlProduct.setProduct(productService.GetProduct(session));
-        urlProduct.setUser(productService.GetProduct(session).getUser());
-        var response = productService.addUrl(urlProduct,linkTypeId, session);
-        if(response.statusCode() == 200){
-            return "redirect:/Product";
-        }
-        return "Client/error";
+    public String EditUrl(@ModelAttribute("EditUrl") EditUrl urlEdit, HttpSession session) throws IOException, InterruptedException {
+        urlEdit.setUsername((String) session.getAttribute("usernamesClient"));
+        String json = JSONUtils.convertToJSON(urlEdit);
+        var response = productService.editUrl(json, session);
+        return "redirect:/Product";
+
     }
 
     @PostMapping("/Product/Edit")
@@ -110,5 +103,11 @@ public class ProductController {
             return "redirect:/Product";
         }
         return "Client/error";
+    }
+
+    @GetMapping("/Product/DeleteUrl/{id}")
+    public String DeleteUrl(@PathVariable Long id, HttpSession session) throws IOException, InterruptedException {
+        productService.deleteUrl(id,session);
+        return "redirect:/Product";
     }
 }

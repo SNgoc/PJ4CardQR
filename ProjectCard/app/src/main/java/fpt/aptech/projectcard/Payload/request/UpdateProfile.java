@@ -9,18 +9,14 @@ import java.util.Date;
 
 public class UpdateProfile implements Serializable {
 
-    //model to get user info from data json
-    @SerializedName("lastname") // key name of key:value when retrieve data from json type
-    @Expose
-    private String lastname;
-
-    @SerializedName("description")
-    @Expose
-    private String description;
-
+    //model to update user info from data json
     @SerializedName("fullname")
     @Expose
     private String fullname;
+
+    @SerializedName("email")
+    @Expose
+    private String email;
 
     @SerializedName("phone")
     @Expose
@@ -30,10 +26,6 @@ public class UpdateProfile implements Serializable {
     @Expose
     private String address;
 
-    @SerializedName("email")
-    @Expose
-    private String email;
-
     @SerializedName("dateOfbirth")
     @Expose
     private String dateOfbirth;
@@ -42,23 +34,36 @@ public class UpdateProfile implements Serializable {
     @Expose
     private Boolean gender;
 
-    @SerializedName("province")
+    @SerializedName("description")
     @Expose
-    private String province;
+    private String description;
+
+    @SerializedName("lastname") // key name of key:value when retrieve data from json type
+    @Expose
+    private String lastname;
 
     public UpdateProfile() {
     }
 
-    public UpdateProfile(String lastname, String description, String fullname, String phone, String address, String email, String dateOfbirth, Boolean gender, String province) {
-        this.lastname = lastname;
-        this.description = description;
+    public UpdateProfile(String fullname, String email, String phone, String address, String dateOfbirth, Boolean gender, String description) {
         this.fullname = fullname;
+        this.email = email;
         this.phone = phone;
         this.address = address;
-        this.email = email;
         this.dateOfbirth = dateOfbirth;
         this.gender = gender;
-        this.province = province;
+        this.description = description;
+    }
+
+    public UpdateProfile(String fullname, String email, String phone, String address, String dateOfbirth, Boolean gender, String description, String lastname) {
+        this.fullname = fullname;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.dateOfbirth = dateOfbirth;
+        this.gender = gender;
+        this.description = description;
+        this.lastname = lastname;
     }
 
     public String getLastname() {
@@ -123,14 +128,6 @@ public class UpdateProfile implements Serializable {
 
     public void setGender(Boolean gender) {
         this.gender = gender;
-    }
-
-    public String getProvince() {
-        return province;
-    }
-
-    public void setProvince(String province) {
-        this.province = province;
     }
 
     // post raw json manual

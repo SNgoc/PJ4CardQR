@@ -3,12 +3,14 @@ package fpt.aptech.projectcard.ui.profile;
 import android.app.DatePickerDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.StrictMode;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +33,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.ProductRequest;
@@ -60,7 +65,7 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private EditText edEmail,edPhone,edFullname,edLastname,edAddress,edProvince,edDescription;
+    private EditText edEmail,edPhone,edFullname,edAddress,edDescription;
     private TextView edbirth;
     ImageView imgAvatarProfile, imgBackHomeClick;
     RadioGroup rgGender;
@@ -112,11 +117,9 @@ public class ProfileFragment extends Fragment {
 
         //initialize your view here for use view.findViewById("your view id")
         edFullname = view.findViewById(R.id.editFullnameProfile);
-        edLastname = view.findViewById(R.id.editLastnameProfile);
         edEmail = view.findViewById(R.id.editEmailProfile);
         edPhone = view.findViewById(R.id.editPhoneProfile);
         edAddress = view.findViewById(R.id.editAddressProfile);
-        edProvince = view.findViewById(R.id.editProvinceProfile);
         edDescription = view.findViewById(R.id.editDescriptionProfile);
         edbirth = view.findViewById(R.id.txtEdBirthProfile);
         rgGender = view.findViewById(R.id.rgGenderProfile);
@@ -157,10 +160,8 @@ public class ProfileFragment extends Fragment {
                     }
 
                     edFullname.setText(response.body().getFullname());
-                    edLastname.setText(response.body().getLastname());
                     edEmail.setText(response.body().getEmail());
                     edAddress.setText(response.body().getAddress());
-                    edProvince.setText(response.body().getProvince());
                     edPhone.setText(response.body().getPhone());
                     edDescription.setText(response.body().getDescription());
                     //dung split de tach ngay ra khoi time 2000-03-31T00:00:00.000+00:00
@@ -192,11 +193,9 @@ public class ProfileFragment extends Fragment {
             public void onClick(View v) {
                 String email = edEmail.getText().toString().trim();
                 String fullname = edFullname.getText().toString().trim();
-                String lastname = edLastname.getText().toString().trim();
                 String phone = edPhone.getText().toString().trim();
                 String address = edAddress.getText().toString().trim();
                 String description = edDescription.getText().toString().trim();
-                String province = edProvince.getText().toString().trim();
                 String birthday = edbirth.getText().toString().trim();
                 boolean gender;
                 //gender
@@ -206,28 +205,29 @@ public class ProfileFragment extends Fragment {
                 } else {
                     gender = false;
                 }
-
-                //call api to get user info from getProduct
-                UpdateProfile updateProfile = new UpdateProfile(lastname, description, fullname, phone, address, email, birthday, gender, province);
-                //call getProduct api
-                ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
-                apiService.updateProfile(SessionManager.getSaveUserID(), updateProfile).enqueue(new Callback<UpdateProfile>() {
-                    @Override
-                    public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
-                        if (response.isSuccessful()) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Updated success", Toast.LENGTH_SHORT).show();
+                if (validateRegister(fullname,email,phone,address,birthday,description)){
+                    //call api to get user info from getProduct
+                    UpdateProfile updateProfile = new UpdateProfile(fullname,email,phone,address,birthday,gender,description, SessionManager.getSaveUser().getLastname());
+                    //call getProduct api
+                    ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+                    apiService.updateProfile(SessionManager.getSaveUserID(), updateProfile).enqueue(new Callback<UpdateProfile>() {
+                        @Override
+                        public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
+                            if (response.isSuccessful()) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Updated success", Toast.LENGTH_SHORT).show();
+                            }
+                            //error validate
+                            if (response.code() == 400) {
+                                Toast.makeText(getActivity().getApplicationContext(), "Updated failed, error field", Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        //error validate
-                        if (response.code() == 400) {
-                            Toast.makeText(getActivity().getApplicationContext(), "Updated failed, error field", Toast.LENGTH_SHORT).show();
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<UpdateProfile> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(),"Failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<UpdateProfile> call, Throwable t) {
+                            Toast.makeText(getActivity().getApplicationContext(),"Failed: " + t.getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
             }
         });
 
@@ -297,5 +297,68 @@ public class ProfileFragment extends Fragment {
             }
         });
         //=====================end date picker================================
+    }
+
+    //validate
+    private boolean validateRegister(String email,String fullname,String phone,
+                                     String address,String description,String birthday) {
+        //Date type
+        //compare date, check age between beginDate and nowDate
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date start =sdf.parse(birthday);
+            Date today = new Date();//new Date to get current date
+            Calendar t = Calendar.getInstance();
+            Calendar c = Calendar.getInstance();
+            t.setTime(today);
+            c.setTime(start);
+            c.add(Calendar.DATE,1);// cộng 1 ngày so với ngày hiện tại đề dùng hàm after add đc ngày hiên tại
+            start = c.getTime();
+            int age = t.get(Calendar.YEAR) - c.get(Calendar.YEAR);
+            if (age < 18) { //check age
+                edbirth.setError("Age must greater than or equal 18");
+                edbirth.setText("Age must greater than or equal 18");
+                edbirth.setTextColor(Color.RED);
+                edbirth.requestFocus();
+                return false;
+            } else {
+                edbirth.setTextColor(Color.GREEN);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (TextUtils.isEmpty(email)) {
+            edEmail.setError("Email cannot be empty");
+            edEmail.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(fullname)) {
+            edFullname.setError("Fullname cannot be empty");
+            edFullname.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(phone)) {
+            edPhone.setError("Phone cannot be empty");
+            edPhone.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(birthday)) {
+            edbirth.setError("Birthday cannot be empty");
+            edbirth.setText("Birthday cannot be empty");
+            edbirth.setTextColor(Color.RED);
+            edbirth.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(address)) {
+            edAddress.setError("Address cannot be empty");
+            edAddress.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(description)) {
+            edDescription.setError("Description cannot be empty");
+            edDescription.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

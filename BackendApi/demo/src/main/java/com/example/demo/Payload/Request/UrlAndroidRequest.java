@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor//constructor with all parameter
 @NoArgsConstructor
 public class UrlAndroidRequest {
-//    json for postman test
+    //    json for postman test
 //    "name": "Twitter",
 //    "url": "twitter.com/nero3103",
 //    "type_id" : 1,

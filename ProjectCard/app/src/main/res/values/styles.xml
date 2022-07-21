@@ -54,4 +54,9 @@
         <item name="android:paddingLeft">5dp</item>
     </style>
 
+    <style name="popupMenuStyle" parent="@android:style/Widget.PopupMenu">
+        <item name="android:itemPadding">15dp</item>
+        <item name="android:listPreferredItemHeightSmall">70dp</item>
+    </style>
+
 </resources>
