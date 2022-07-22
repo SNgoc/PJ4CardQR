@@ -66,19 +66,18 @@
                         <TextView
                             style="@style/viewParent"
                             android:layout_marginBottom="5dp"
-                            android:text="To:"/>
+                            android:text="@string/txt_to_mail"/>
 
                         <EditText
                             android:id="@+id/editEmailReceiver"
                             style="@style/modifiedEditText"
-                            android:text="ngocnsts2008030@ftp.edu.vn"
+                            android:text="@string/non_ed_mail_to"
                             android:inputType="none"
                             android:focusable="false"
                             android:maxLines="1"
                             tools:ignore="TextFields" />
                     </LinearLayout>
 
-                    <!-- URL name -->
                     <LinearLayout
                         android:id="@+id/textInputUrlName"
                         style="@style/parent"
@@ -87,12 +86,12 @@
 
                         <TextView
                             style="@style/viewParent"
-                            android:text="Title"/>
+                            android:text="@string/ed_title_mail"/>
 
                         <EditText
-                            android:id="@+id/editUrlName"
+                            android:id="@+id/editTitleMail"
                             style="@style/modifiedEditText"
-                            android:hint="Title"
+                            android:hint="@string/ed_title_mail"
                             android:inputType="text"
                             android:maxLines="1" />
                     </LinearLayout>
@@ -106,38 +105,27 @@
 
                         <TextView
                             style="@style/viewParent"
-                            android:text="Content"/>
+                            android:text="@string/txt_content_mail"/>
 
                         <EditText
-                            android:id="@+id/editUrlLink"
-                            android:layout_height="150dp"
+                            android:id="@+id/editContentMail"
+                            android:layout_height="fill_parent"
                             style="@style/modifiedEditText"
                             android:gravity="top"
-                            android:hint="Write your opinion......."
-                            android:maxLines="1" />
+                            android:hint="@string/ed_content_mail"
+                            android:maxLines="10" />
                     </LinearLayout>
 
                     <Button
-                        android:id="@+id/btnSave_UpdateURL"
+                        android:id="@+id/btnSendMail"
                         style="@style/updateButton"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="@dimen/loginViewsMargin"
                         android:layout_marginBottom="@dimen/loginViewsMargin"
-                        android:text="Send" />
+                        android:text="@string/btn_send_mail" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
         </LinearLayout>
     </ScrollView>
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="200dp"
-        android:adjustViewBounds="false"
-        android:id="@+id/backHomeClick"
-        android:src="@drawable/ic_back_img" />
 
 </RelativeLayout>

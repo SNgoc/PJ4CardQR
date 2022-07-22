@@ -881,7 +881,7 @@
 					"bearer": [
 						{
 							"key": "token",
-							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU3OTYwMjM1LCJleHAiOjE2NTgwNDY2MzV9.z_lEmcWyVPULLagFZUF4YdnBx7PusVSteACAAI3_iW6_HnHfGAkJYtNiH7QP1YWdkpNysvuBNFBFMJXk1dMylA",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJsYXphZGEiLCJpYXQiOjE2NTgxMzM1OTEsImV4cCI6MTY1ODIxOTk5MX0.ZGC3ZwwlGdfmGBVxgyDL_uQNWfd8REdZIM_YgE4eOvC6_SGofClYo7fVxAIv0QDv4Y-RvM5yVBc6mCJtyfg9zQ",
 							"type": "string"
 						}
 					]
@@ -939,9 +939,6 @@
 		},
 		{
 			"name": "Android Add Url Product",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"auth": {
 					"type": "bearer",
@@ -953,7 +950,7 @@
 						}
 					]
 				},
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
@@ -1006,6 +1003,79 @@
 						"api",
 						"android",
 						"listLinkType"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AndroidUpdateURL",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4Mzc3OTEyLCJleHAiOjE2NTg0NjQzMTJ9.yG4f6ImNJBpRFmIb7S7Hc3kQXAsfPDoE0XKfX3Hyf6DXKlS3kW9nWRbBbnj18OxGxneBRpuGJWzcML6OiCSFmQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Twitter\",\r\n    \"url\": \"twitter.com/nero3103\",\r\n    \"type_id\" : 5,\r\n    \"product_id\" : 1,\r\n    \"user_id\" : 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/android/updateUrl/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"android",
+						"updateUrl",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AndroidDeleteUrlByID",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJuZXJvIiwiaWF0IjoxNjU4NDg3NzU1LCJleHAiOjE2NTg1NzQxNTV9.uVj1pS0jNwqRIvv8gFOiVHtiehLP555elmUuvtsBsjPKPBcyMSIzAQRlM9_LYAOVuBh98m7hVFg940esUF9FVQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/android/deleteUrl/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"android",
+						"deleteUrl",
+						"5"
 					]
 				}
 			},

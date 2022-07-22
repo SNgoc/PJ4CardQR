@@ -19,4 +19,5 @@ public class ApiConstant {
     public static final String URL_GET_LIST_LINK_TYPE_URL = "/api/android/listLinkType";
     public static final String URL_ADD_NEW_URL = "/api/android/addUrl";
     public static final String URL_UPDATE_URL = "/api/android/updateUrl/{url_id}";
+    public static final String URL_DELETE_URL = "/api/android/deleteUrl/{url_id}";
 }

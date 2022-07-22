@@ -52,6 +52,13 @@ public interface ApiService {
     @POST(ApiConstant.URL_UPDATE_URL)
     Call<UrlRequest> updateUrl(@Path("url_id") Long url_id,@Body UrlRequest urlRequest);
 
+    @GET(ApiConstant.URL_DELETE_URL)
+    Call<String> deleteUrlById(@Path("url_id") Long url_id);
+
+
+
+
+
     // post raw json
 //    @Headers("Content-Type: application/json")
 //    @POST(ApiConstant.URL_UPDATE_PROFILE)

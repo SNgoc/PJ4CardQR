@@ -26,6 +26,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.UrlRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
@@ -33,6 +34,7 @@ import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.Product;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
+import fpt.aptech.projectcard.ui.home.HomeFragment;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -194,6 +196,19 @@ public class UpdateUrlFragment extends Fragment {
                         }
                     });
                 }
+            }
+        });
+
+        //back home click
+        imgBackHome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //change to fragment_payment
+                //getChildFragmentManager() using for nested fragment back to previous fragment when click back device
+                fragmentTransaction = getChildFragmentManager().beginTransaction();
+                HomeFragment homeFragment = new HomeFragment();
+                fragmentTransaction.replace(R.id.frmUpdateUrl, homeFragment);
+                fragmentTransaction.addToBackStack(null).commit();
             }
         });
     }

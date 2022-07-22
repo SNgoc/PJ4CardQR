@@ -89,6 +89,13 @@
     <string name="txt_url_link">URL LINK</string>
     <string name="ed_hint_url_name">Set name for your URL</string>
     <string name="ed_hint_url_link">example.com</string>
+    <!--CONTACT US-->
+    <string name="btn_send_mail">Send</string>
+    <string name="txt_to_mail">To:</string>
+    <string name="txt_content_mail">Content</string>
+    <string name="non_ed_mail_to">ngocnsn1994@gmail.com</string>
+    <string name="ed_title_mail">Title</string>
+    <string name="ed_content_mail">Write your opinion at here........</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

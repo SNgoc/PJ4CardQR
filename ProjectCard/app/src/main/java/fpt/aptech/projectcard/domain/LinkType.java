@@ -12,6 +12,8 @@ public class LinkType {
 
     private String linkImage;
 
+    private String href;
+
     public LinkType() {
     }
 
@@ -45,6 +47,14 @@ public class LinkType {
 
     public void setLinkImage(String linkImage) {
         this.linkImage = linkImage;
+    }
+
+    public String getHref() {
+        return href;
+    }
+
+    public void setHref(String href) {
+        this.href = href;
     }
 
     /**

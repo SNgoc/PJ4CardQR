@@ -70,9 +70,10 @@
 
             <TextView
                 style="@style/viewParent"
+                android:id="@+id/forgotPass"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="Forgot Password?"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="@dimen/newsMoreTextSize" />
@@ -87,8 +88,9 @@
             <TextView
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:text="New user? Register Now"
+                android:onClick="onLoginClick"
                 android:textAlignment="center"
                 android:textColor="@color/themeColor"
                 android:textSize="17sp"
@@ -141,6 +143,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
+        android:onClick="onLoginClick"
         android:layout_marginRight="11dp"
         android:layout_marginBottom="30dp"
         android:src="@drawable/ic_add_img" />

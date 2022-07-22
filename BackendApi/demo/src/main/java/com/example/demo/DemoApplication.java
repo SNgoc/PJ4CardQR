@@ -94,14 +94,14 @@ public class DemoApplication {
 			orderProceesRepository.save(o4);
 
 
-			LinkType l1 = new LinkType(1L, "Facebook", "Enter your Facebook Link", "", "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/facebook_fn3mvs.png");
-			LinkType l2 = new LinkType(2L, "Instagram", "Enter your Instagram Link", "", "https://res.cloudinary.com/tphcm/image/upload/v1657613873/linktype/instagram_vfmvaa.png");
-			LinkType l3 = new LinkType(3L, "Telegram", "Enter your Telegram Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/telegram_nr2uxs.png");
-			LinkType l4 = new LinkType(4L, "WhatsApp", "Enter your WhatsApp Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/whatsApp_cpfcbl.png");
-			LinkType l5 = new LinkType(5L, "Twitter", "Enter your Twitter Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/twitter_aqkjiy.png");
-			LinkType l6 = new LinkType(6L, "Phone", "Enter your Phone number", "", "https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/phone_ojgmtj.png");
-			LinkType l7 = new LinkType(7L, "Email", "Enter your Email", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/gmail_qbsqox.png");
-			LinkType l8 = new LinkType(8L, "Url", "Enter your Link", "",  "");
+			LinkType l1 = new LinkType(1L, "Facebook", "Enter your Facebook Link", "", "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/facebook_fn3mvs.png","https://www.facebook.com/");
+			LinkType l2 = new LinkType(2L, "Instagram", "Enter your Instagram Link", "", "https://res.cloudinary.com/tphcm/image/upload/v1657613873/linktype/instagram_vfmvaa.png", "https://www.instagram.com/");
+			LinkType l3 = new LinkType(3L, "Telegram", "Enter your Telegram Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/telegram_nr2uxs.png","https://t.me/");
+			LinkType l4 = new LinkType(4L, "WhatsApp", "Enter your WhatsApp Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613872/linktype/whatsApp_cpfcbl.png","https://wa.me/");
+			LinkType l5 = new LinkType(5L, "Twitter", "Enter your Twitter Link", "",  "https://res.cloudinary.com/tphcm/image/upload/v1657613871/linktype/twitter_aqkjiy.png", "https://twitter.com/");
+			LinkType l6 = new LinkType(6L, "Phone", "Enter your Phone number", "", "https://res.cloudinary.com/tphcm/image/upload/v1658477403/linktype/contact-page-for-flatsome-wordpress-theme-pointed-icon-phone_isnjtw.png","tel://");
+			LinkType l7 = new LinkType(7L, "Email", "Enter your Email", "",  "https://res.cloudinary.com/tphcm/image/upload/v1658478217/linktype/images_u3t6df.png","mailto:");
+			LinkType l8 = new LinkType(8L, "Url", "Enter your Link","", "https://res.cloudinary.com/tphcm/image/upload/v1658477950/linktype/download_yomp4q.png",  "https://");
 
 			linkTypeRepository.save(l1);
 			linkTypeRepository.save(l2);

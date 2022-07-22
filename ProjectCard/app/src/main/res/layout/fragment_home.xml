@@ -141,7 +141,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCard_behind"
             android:layout_width="370dp"
-            android:layout_height="250dp"
+            android:layout_height="wrap_content"
+            android:minHeight="250dp"
             android:visibility="gone"
             android:background="@drawable/layout_card_border"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -150,7 +151,8 @@
             app:layout_constraintTop_toTopOf="parent">
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="355dp"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
+                android:minHeight="250dp"
                 android:background="@drawable/layout_card_border"
                 android:backgroundTint="@android:color/background_dark"
                 app:layout_constraintBottom_toBottomOf="parent"

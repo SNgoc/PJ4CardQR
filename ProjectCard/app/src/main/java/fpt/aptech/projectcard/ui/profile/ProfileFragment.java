@@ -191,7 +191,7 @@ public class ProfileFragment extends Fragment {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = edEmail.getText().toString().trim();
+                String email = SessionManager.getSaveUser().getEmail();
                 String fullname = edFullname.getText().toString().trim();
                 String phone = edPhone.getText().toString().trim();
                 String address = edAddress.getText().toString().trim();
@@ -205,7 +205,7 @@ public class ProfileFragment extends Fragment {
                 } else {
                     gender = false;
                 }
-                if (validateRegister(fullname,email,phone,address,birthday,description)){
+                if (validateRegister(fullname,phone,address,birthday,description)){
                     //call api to get user info from getProduct
                     UpdateProfile updateProfile = new UpdateProfile(fullname,email,phone,address,birthday,gender,description, SessionManager.getSaveUser().getLastname());
                     //call getProduct api
@@ -300,7 +300,7 @@ public class ProfileFragment extends Fragment {
     }
 
     //validate
-    private boolean validateRegister(String email,String fullname,String phone,
+    private boolean validateRegister(String fullname,String phone,
                                      String address,String description,String birthday) {
         //Date type
         //compare date, check age between beginDate and nowDate
@@ -326,11 +326,6 @@ public class ProfileFragment extends Fragment {
             }
         } catch (ParseException e) {
             e.printStackTrace();
-        }
-        if (TextUtils.isEmpty(email)) {
-            edEmail.setError("Email cannot be empty");
-            edEmail.requestFocus();
-            return false;
         }
         if (TextUtils.isEmpty(fullname)) {
             edFullname.setError("Fullname cannot be empty");

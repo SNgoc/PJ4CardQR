@@ -78,6 +78,7 @@
                     <LinearLayout
                         android:id="@+id/textInputEmailProfile"
                         style="@style/parent"
+                        android:visibility="gone"
                         android:orientation="vertical"
                         android:layout_marginTop="@dimen/loginViewsMargin">
 

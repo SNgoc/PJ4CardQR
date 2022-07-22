@@ -25,4 +25,6 @@ public class LinkType {
 
     private String linkImage;
 
+    private String href;
+
 }

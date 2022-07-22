@@ -67,6 +67,7 @@ import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.login.LoginActivity;
+import fpt.aptech.projectcard.ui.order.OrderActivity;
 import fpt.aptech.projectcard.ui.profile.ProfileFragment;
 import fpt.aptech.projectcard.ui.social.SocialFragment;
 import okhttp3.Interceptor;
@@ -203,7 +204,7 @@ public class HomeFragment extends Fragment {
         //if product had been order but order status not completed, dont run this code to improve performance
         if (getProduct == null){
             Toast.makeText(getActivity().getApplicationContext(), "The your product is not purchased yet", Toast.LENGTH_LONG).show();
-            startActivity(new Intent(getActivity(), LoginActivity.class));
+            startActivity(new Intent(getActivity(), OrderActivity.class));
             //prevent back on click back button
             getActivity().finish();
         }
@@ -212,7 +213,7 @@ public class HomeFragment extends Fragment {
             //check product status, can only login when have product and status is 1
 //            boolean productSuccess = false;
             if (getProduct != null && getProduct.getStatus() == 0) {
-                Toast.makeText(getActivity().getApplicationContext(), "The your product has not still active yet", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "The your product has not still active yet, please wait!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 //prevent back on click back button
                 getActivity().finish();
@@ -355,8 +356,8 @@ public class HomeFragment extends Fragment {
             }
         });
         //show hint text
-        txtFrontHeaderCard.setTooltipText("Touch and hold your touch to go to update layout");
-        txtBehindHeaderCard.setTooltipText("Touch and hold your touch to go to add url layout");
+        txtFrontHeaderCard.setTooltipText("Touch and hold your touch on card to go to update profile layout");
+        txtBehindHeaderCard.setTooltipText("Touch and hold your touch at corner card to go to add url layout");
     }
 
     //check order status for login

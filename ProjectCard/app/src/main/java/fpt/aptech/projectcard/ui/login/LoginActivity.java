@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -24,6 +25,7 @@ import java.net.URL;
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.R;
+import fpt.aptech.projectcard.callApiService.ApiConstant;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
@@ -33,7 +35,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     //login
-    private TextView txtError;
+    private TextView txtError, txtForgotPass;
     private EditText editUsername,editPassword;
     private Button btnLogin;
 
@@ -49,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        txtForgotPass = findViewById(R.id.forgotPass);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +101,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        txtForgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiConstant.BASE_URL_CLIENT + "/Login"));
+                startActivity(intent);
             }
         });
     }

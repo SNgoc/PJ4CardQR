@@ -32,7 +32,9 @@ import java.util.ArrayList;
 
 import fpt.aptech.projectcard.MainActivity;
 import fpt.aptech.projectcard.R;
+import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.UrlProduct;
+import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.profile.ProfileFragment;
 import fpt.aptech.projectcard.ui.social.SocialFragment;
@@ -109,6 +111,7 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
 
             // When user click on Menu Item.
             // @return true if event was handled.
+            @RequiresApi(api = Build.VERSION_CODES.O)
             private boolean menuItemClicked(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menuItem_Name:
@@ -122,7 +125,13 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
                                 .addToBackStack(null).commit();
                         break;
                     case R.id.menuItem_drop:
-                        Toast.makeText(getContext(), R.string.popup_delete_url, Toast.LENGTH_SHORT).show();
+                        ApiService apiService = RetrofitService.proceedToken().create(ApiService.class);
+                        try {
+                            apiService.deleteUrlById(urlProduct.getId()).execute().body();
+                            Toast.makeText(getContext(), "dropped url", Toast.LENGTH_SHORT).show();
+                        } catch (IOException e){
+                            e.printStackTrace();
+                        }
                         break;
                 }
                 return true;
