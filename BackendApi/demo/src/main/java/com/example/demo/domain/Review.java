@@ -4,6 +4,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @Entity
@@ -18,27 +19,20 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String fullname;
+
 
     @ManyToOne
-    @JoinColumn(name="product_id")
-    private Product product;
+    @JoinColumn(name="category_id")
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name="user_id")
     private User user;
 
-    private int star;
-
     private String review;
 
+    private Date create_at;
 
-
-    private LocalDateTime create_at;
-
-    private LocalDateTime delete_at;
-
-    private LocalDateTime update_at;
 
 
 }

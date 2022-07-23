@@ -77,32 +77,6 @@ public class OrderService {
         return  orderRepository.findById(id).get();
     }
 
-    //api for revenue web and android app///////////////////
-    //get order list by user
-    public List<Orders> getOrdersByUsername(String username){
-        return orderRepository.findOrdersByUser(userRepository.findByUsername(username).get());
-    }
-    //doanh thu(SNgoc)
-    public double getRevenueOrder(){
-        List<Double> orderPriceList = orderRepository.revenueOrder();
-        double sumRevenue = 0;
-        for (double p: orderPriceList) {
-            sumRevenue += p;
-        }
-        return sumRevenue;
-    }
-
-    //count order status
-    public List<Integer> getSumOrderStatus(){
-        List<Integer> orderList = new ArrayList<>();
-        orderList.add(orderRepository.orderWaiting());
-        orderList.add(orderRepository.orderDelivery());
-        orderList.add(orderRepository.orderSuccess());
-        orderList.add(orderRepository.orderCancel());
-        return orderList;
-    }
-    /////////////////////////////ANDROID//////////////////
-
     public String create(CreateOrderRequest createOrderRequest) throws IOException, WriterException, MessagingException {
         Orders newOrder = new Orders();
         String token = UUID.randomUUID().toString();
@@ -124,9 +98,9 @@ public class OrderService {
             Map hintMap = new HashMap();
             BitMatrix bitMatrix = new MultiFormatWriter().encode("http://localhost:8081/Display/"+user.getUsername(), BarcodeFormat.QR_CODE, 500, 500, hintMap);
             options.put("folder", image);
-            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/demo/Qrcode/qrcode.png").toPath());
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
 
-            File file = new File("N:/demo/Qrcode/qrcode.png");
+            File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "image/png", IOUtils.toByteArray(input));
@@ -210,14 +184,13 @@ public class OrderService {
         Orders orders = orderRepository.getById(id);
         orders.setFinishedAt(new Date());
         Product product = orders.getProduct();
-        orders.setOrder_process(orderProceesRepository.findById(3L).get());
         product.setStatus(1);
         productRepository.save(product);
 
 
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:8081/Product");
+        redirectView.setUrl("http://localhost:8081/Reviews-"+orders.getCategory().getId());
         return redirectView;
     }
     private int setConfirmedAt(String token) {

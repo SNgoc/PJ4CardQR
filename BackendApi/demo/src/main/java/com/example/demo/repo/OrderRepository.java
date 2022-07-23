@@ -1,39 +1,26 @@
 package com.example.demo.repo;
 
 
+import com.example.demo.Payload.Request.Chart;
 import com.example.demo.domain.Orders;
-import com.example.demo.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EnableJpaRepositories
 @Repository
 public interface OrderRepository extends JpaRepository<Orders,Long> {
 
-    //for android
-    //get Orders List by user
-    List<Orders> findOrdersByUser(User user);
 
-    //tính doanh thu(SNgoc)
-    @Query(value = "select price from Orders where order_process.id = 3")
-    List<Double> revenueOrder();
+    @Query("SELECT   month(createdAt), sum(price) from  Orders   group by MONTH(createdAt)  ")
+    List<List<Integer>> getPriceByOrder();
 
-    //count order status(SNgoc)
-    //waiting
-    @Query(value = "select count(id) from Orders where order_process.id = 1")
-    int orderWaiting();
-    //delivery
-    @Query(value = "select count(id) from Orders where order_process.id = 2")
-    int orderDelivery();
-    //success
-    @Query(value = "select count(id) from Orders where order_process.id = 3")
-    int orderSuccess();
-    //cancel
-    @Query(value = "select count(id) from Orders where order_process.id = 4")
-    int orderCancel();
+
+    @Query("SELECT   month(createdAt), sum(price) from  Orders where category.id=?1 group by MONTH(createdAt)  ")
+    List<List<Integer>> getPriceByOrderCategory(Long id);
 }

@@ -184,19 +184,19 @@ public class RegisterActivity extends AppCompatActivity {
                                 Toast.makeText(RegisterActivity.this, "Sign up successful, please check mail to active", Toast.LENGTH_SHORT).show();
                             }
                             else{
-                                // parse the response body …
-                                APIError error = ErrorUtils.parseError(response);
-                                // … and use it to show error information
-                                Toast.makeText(RegisterActivity.this, error.message(), Toast.LENGTH_SHORT).show();
-                                //check validate field input
-                                if (error.message().contains("Username")){
-                                    edUsername.setError(error.message());
-                                    edUsername.requestFocus();
-                                }
-                                else if (error.message().contains("Email")){
-                                    edEmail.setError(error.message());
-                                    edEmail.requestFocus();
-                                }
+//                                // parse the response body …
+//                                APIError error = ErrorUtils.parseError(response);
+//                                // … and use it to show error information
+//                                Toast.makeText(RegisterActivity.this, error.message(), Toast.LENGTH_SHORT).show();
+//                                //check validate field input
+//                                if (error.message().contains("Username")){
+//                                    edUsername.setError(error.message());
+//                                    edUsername.requestFocus();
+//                                }
+//                                else if (error.message().contains("Email")){
+//                                    edEmail.setError(error.message());
+//                                    edEmail.requestFocus();
+//                                }
                             }
                         }
 

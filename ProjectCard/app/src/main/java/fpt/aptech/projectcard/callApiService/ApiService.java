@@ -4,13 +4,11 @@ import java.util.List;
 
 import fpt.aptech.projectcard.Payload.request.LoginRequest;
 import fpt.aptech.projectcard.Payload.request.SignupRequest;
-import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UpdateProfile;
 import fpt.aptech.projectcard.Payload.request.UrlRequest;
 import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.Orders;
 import fpt.aptech.projectcard.domain.Product;
-import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.domain.User;
 import retrofit2.Call;

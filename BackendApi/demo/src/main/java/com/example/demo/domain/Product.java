@@ -59,4 +59,17 @@ public class Product {
         this.year = year;
         this.token = token;
     }
+
+    public Product(String description, String name, String avatar, String url, String imageUrlcode, User user, int status, int year, int count, Date createdAt) {
+        this.description = description;
+        this.name = name;
+        this.avatar = avatar;
+        this.url = url;
+        this.imageUrlcode = imageUrlcode;
+        this.user = user;
+        this.status = status;
+        this.year = year;
+        this.count = count;
+        this.createdAt = createdAt;
+    }
 }

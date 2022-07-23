@@ -1,8 +1,10 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.Payload.Request.AddCategoryRequest;
+import com.example.demo.Payload.Request.Chart;
 import com.example.demo.Payload.Request.CreateOrderRequest;
 import com.example.demo.domain.Orders;
+import com.example.demo.repo.OrderRepository;
 import com.example.demo.repo.UserRepo;
 import com.example.demo.service.OrderService;
 import com.example.demo.service.UserService;
@@ -16,6 +18,8 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -27,12 +31,82 @@ public class OrderController {
     @Autowired
     private UserRepo userRepo;
 
+    @Autowired
+    private OrderRepository orderRepository;
 
     @GetMapping("/list")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(orderService.showAll());
     }
+    @GetMapping("/getCharts")
+    public ResponseEntity<?> getCharts() {
 
+        List<List<Integer>> value = orderRepository.getPriceByOrder();
+        List<Chart> c = new ArrayList<>();
+        for (int i = 0 ; i < value.size() ; i++){
+            Chart chart = new Chart();
+            for (int j = 0 ; j < value.get(i).size() ; j++){
+                if (j == 0){
+
+                    chart.setMonth((int) value.get(i).get(j));
+                }
+                if (j == 1){
+                    chart.setPrice((int) value.get(i).get(j));
+                }
+            }
+            c.add(chart);
+        }
+        return ResponseEntity.ok(c);
+
+    }
+
+    @GetMapping("/getCharts/{categoryId}")
+    public ResponseEntity<?> getChartsCategory(@PathVariable Long categoryId) {
+
+        if (categoryId == 0){
+            List<List<Integer>> values = orderRepository.getPriceByOrder();
+            List<Chart> c = new ArrayList<>();
+
+            for (int i = 0 ; i < values.size() ; i++){
+                Chart chart = new Chart();
+                for (int j = 0 ; j < values.get(i).size() ; j++){
+                    if (j == 0){
+
+                        chart.setMonth((int) values.get(i).get(j));
+                    }
+                    if (j == 1){
+                        chart.setPrice((int) values.get(i).get(j));
+                    }
+                }
+                c.add(chart);
+            }
+
+
+            return ResponseEntity.ok(c);
+        }else{
+            List<List<Integer>> value = orderRepository.getPriceByOrderCategory(categoryId);
+            List<Chart> c = new ArrayList<>();
+
+
+
+            for (int i = 0 ; i < value.size() ; i++){
+                Chart chart = new Chart();
+                for (int j = 0 ; j < value.get(i).size() ; j++){
+                    if (j == 0){
+
+                        chart.setMonth((int) value.get(i).get(j));
+                    }
+                    if (j == 1){
+                        chart.setPrice((int) value.get(i).get(j));
+                    }
+                }
+                c.add(chart);
+            }
+            return ResponseEntity.ok(c);
+        }
+
+
+    }
 
     @GetMapping("/details/{id}")
     public ResponseEntity<?> getDetails(@PathVariable Long id) {
@@ -48,8 +122,9 @@ public class OrderController {
     @PostMapping(value="/add" , consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> add(@RequestBody CreateOrderRequest createOrderRequest) throws IOException, WriterException, MessagingException {
-            String response = orderService.create(createOrderRequest);
-            return ResponseEntity.ok(response);
+        createOrderRequest.setEmail( (userRepo.findByUsername(createOrderRequest.getUsername())).get().getEmail() );
+        String response = orderService.create(createOrderRequest);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping(path = "/confirmOrder")
@@ -79,11 +154,4 @@ public class OrderController {
             return ResponseEntity.ok("success");
         }
     }
-
-    //doanh thu(SNgoc)
-    @GetMapping("/getRevenue")
-    public double getRevenueOrder(){
-        return orderService.getRevenueOrder();
-    }
-
 }

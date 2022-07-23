@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -45,6 +46,8 @@ import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
+import fpt.aptech.projectcard.retrofit.catchError.APIError;
+import fpt.aptech.projectcard.retrofit.catchError.ErrorUtils;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.home.HomeFragment;
 import fpt.aptech.projectcard.ui.login.RegisterActivity;
@@ -205,7 +208,7 @@ public class ProfileFragment extends Fragment {
                 } else {
                     gender = false;
                 }
-                if (validateRegister(fullname,phone,address,birthday,description)){
+                if (validateUpdateProfile(fullname,phone,address,description,birthday)){
                     //call api to get user info from getProduct
                     UpdateProfile updateProfile = new UpdateProfile(fullname,email,phone,address,birthday,gender,description, SessionManager.getSaveUser().getLastname());
                     //call getProduct api
@@ -215,10 +218,14 @@ public class ProfileFragment extends Fragment {
                         public void onResponse(Call<UpdateProfile> call, Response<UpdateProfile> response) {
                             if (response.isSuccessful()) {
                                 Toast.makeText(getActivity().getApplicationContext(), "Updated success", Toast.LENGTH_SHORT).show();
+                                edFullname.setError(null);
+                                edPhone.setError(null);
+                                edAddress.setError(null);
+                                edDescription.setError(null);
+                                edbirth.setError(null);
                             }
-                            //error validate
-                            if (response.code() == 400) {
-                                Toast.makeText(getActivity().getApplicationContext(), "Updated failed, error field", Toast.LENGTH_SHORT).show();
+                            if (response.code() == 400){
+                                Toast.makeText(getActivity().getApplicationContext(), "Error field input", Toast.LENGTH_SHORT).show();
                             }
                         }
 
@@ -300,7 +307,7 @@ public class ProfileFragment extends Fragment {
     }
 
     //validate
-    private boolean validateRegister(String fullname,String phone,
+    private boolean validateUpdateProfile(String fullname,String phone,
                                      String address,String description,String birthday) {
         //Date type
         //compare date, check age between beginDate and nowDate
@@ -315,9 +322,9 @@ public class ProfileFragment extends Fragment {
             c.add(Calendar.DATE,1);// cộng 1 ngày so với ngày hiện tại đề dùng hàm after add đc ngày hiên tại
             start = c.getTime();
             int age = t.get(Calendar.YEAR) - c.get(Calendar.YEAR);
-            if (age < 18) { //check age
-                edbirth.setError("Age must greater than or equal 18");
-                edbirth.setText("Age must greater than or equal 18");
+            if (age < 16) { //check age
+                edbirth.setError("Age must greater than or equal 16");
+                edbirth.setText("Age must greater than or equal 16");
                 edbirth.setTextColor(Color.RED);
                 edbirth.requestFocus();
                 return false;
@@ -327,8 +334,14 @@ public class ProfileFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
         if (TextUtils.isEmpty(fullname)) {
             edFullname.setError("Fullname cannot be empty");
+            edFullname.requestFocus();
+            return false;
+        }
+        if (fullname.length()<5 || fullname.length()>100) {
+            edFullname.setError("Fullname is min 5 character and max 100 character");
             edFullname.requestFocus();
             return false;
         }
@@ -351,6 +364,11 @@ public class ProfileFragment extends Fragment {
         }
         if (TextUtils.isEmpty(description)) {
             edDescription.setError("Description cannot be empty");
+            edDescription.requestFocus();
+            return false;
+        }
+        if (description.length()<5 || description.length()>200) {
+            edDescription.setError("Description is min 5 character and max 200 character");
             edDescription.requestFocus();
             return false;
         }

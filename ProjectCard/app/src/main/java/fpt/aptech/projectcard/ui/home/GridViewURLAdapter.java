@@ -74,6 +74,21 @@ public class GridViewURLAdapter extends ArrayAdapter<UrlProduct> {
                 if (urlProduct.getLinkType().getId() != 6 && urlProduct.getLinkType().getId() != 7 ){
                     intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://" + urlProduct.getUrl()));
                 }
+                if (urlProduct.getLinkType().getId() == 1){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com/" + urlProduct.getUrl()));
+                }
+                if (urlProduct.getLinkType().getId() == 2){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://instagram.com/" + urlProduct.getUrl()));
+                }
+                if (urlProduct.getLinkType().getId() == 3){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://t.me/" + urlProduct.getUrl()));
+                }
+                if (urlProduct.getLinkType().getId() == 4){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://wa.me/" + urlProduct.getUrl()));
+                }
+                if (urlProduct.getLinkType().getId() == 5){
+                    intent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + urlProduct.getUrl()));
+                }
                 if (urlProduct.getLinkType().getId() == 6){
                     intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + urlProduct.getUrl()));
                 }

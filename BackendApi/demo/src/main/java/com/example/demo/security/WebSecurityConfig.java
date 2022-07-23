@@ -56,12 +56,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/api/test/all","/api/category/list",
                         "/api/order/add",
                         "/api/order/confirmOrder",
-                        "/api/display/**",
-                        "/api/User/checkUsername/**",
-                        "/api/urlProduct/list/**",
-                        "/api/order/list").permitAll()
-
-                .antMatchers("/api/test/admin").hasAnyAuthority("ROLE_ADMIN")
+                         "/api/display/**",
+                         "/api/User/checkUsername/**",
+                         "/api/urlProduct/list/**",
+                         "/api/order/list",
+                        "/api/auth/signup",
+                        "/api/order/getCharts").permitAll()
+                .antMatchers("/api/forbiddenword/add","/api/forbiddenword/delete","/api/forbiddenword/getAll").hasAnyAuthority("ROLE_MODERATOR","ROLE_ADMIN")
+                .antMatchers("/api/test/admin","/api/User/findUserBand","/api/User/delete/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/api/test/user").hasAnyAuthority("ROLE_USER")
                 .antMatchers("/api/User/findAllUserAdmin/**").hasAnyAuthority("ROLE_ADMIN")
                 .antMatchers("/api/User/delete/**").hasAnyAuthority("ROLE_ADMIN")

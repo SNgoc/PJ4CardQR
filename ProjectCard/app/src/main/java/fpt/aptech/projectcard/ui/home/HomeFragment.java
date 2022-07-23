@@ -3,11 +3,8 @@ package fpt.aptech.projectcard.ui.home;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.ObjectAnimator;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -17,20 +14,15 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.StrictMode;
-import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,42 +32,24 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import fpt.aptech.projectcard.MainActivity;
-import fpt.aptech.projectcard.Payload.request.ProductRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiConstant;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.Orders;
 import fpt.aptech.projectcard.domain.Product;
-import fpt.aptech.projectcard.domain.SocialNweb;
 import fpt.aptech.projectcard.domain.UrlProduct;
-import fpt.aptech.projectcard.domain.User;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.login.LoginActivity;
 import fpt.aptech.projectcard.ui.order.OrderActivity;
 import fpt.aptech.projectcard.ui.profile.ProfileFragment;
 import fpt.aptech.projectcard.ui.social.SocialFragment;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -213,7 +187,7 @@ public class HomeFragment extends Fragment {
             //check product status, can only login when have product and status is 1
 //            boolean productSuccess = false;
             if (getProduct != null && getProduct.getStatus() == 0) {
-                Toast.makeText(getActivity().getApplicationContext(), "The your product has not still active yet, please wait!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity().getApplicationContext(), "The your product has not still active yet, please wait admin confirm your payment!", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(getActivity(), LoginActivity.class));
                 //prevent back on click back button
                 getActivity().finish();

@@ -20,17 +20,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import fpt.aptech.projectcard.MainActivity;
-import fpt.aptech.projectcard.Payload.request.SocialNWebRequest;
 import fpt.aptech.projectcard.Payload.request.UrlRequest;
 import fpt.aptech.projectcard.R;
 import fpt.aptech.projectcard.callApiService.ApiService;
 import fpt.aptech.projectcard.domain.LinkType;
 import fpt.aptech.projectcard.domain.Product;
-import fpt.aptech.projectcard.domain.UrlProduct;
 import fpt.aptech.projectcard.retrofit.RetrofitService;
 import fpt.aptech.projectcard.session.SessionManager;
 import fpt.aptech.projectcard.ui.home.HomeFragment;
@@ -53,6 +50,7 @@ public class SocialFragment extends Fragment {
     ApiService apiService;
     //SOCIAL URL
     UrlRequest urlRequest;
+    TextView txtTitleName, txtTitleLink;
     EditText edUrlName, edUrlLink;
 
     Spinner spUrlType;
@@ -104,6 +102,8 @@ public class SocialFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_social, container, false);
+        txtTitleName = view.findViewById(R.id.txtUrlName);
+        txtTitleLink = view.findViewById(R.id.txtUrlLink);
         edUrlName = view.findViewById(R.id.editUrlName);
         edUrlLink = view.findViewById(R.id.editUrlLink);
         imgBackHome = view.findViewById(R.id.backHomeClick);
@@ -135,13 +135,19 @@ public class SocialFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LinkType type_id = (LinkType) spUrlType.getSelectedItem();
-                if (type_id.getId() == 6){
+                if (type_id.getId() == 6){//phone
+                    txtTitleName.setText("CALL TO");
+                    txtTitleLink.setText("PHONE NUMBER");
                     edUrlLink.setInputType(InputType.TYPE_CLASS_NUMBER);
                 }
-                if (type_id.getId() == 7){
+                if (type_id.getId() == 7){//email
+                    txtTitleName.setText("MAIL TO");
+                    txtTitleLink.setText("MAIL ADDRESS");
                     edUrlLink.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
                 }
-                if (type_id.getId() != 6 && type_id.getId() != 7){
+                if (type_id.getId() != 6 && type_id.getId() != 7){//url
+                    txtTitleName.setText(R.string.txt_url_name);
+                    txtTitleLink.setText(R.string.txt_url_link);
                     edUrlLink.setInputType(InputType.TYPE_TEXT_VARIATION_WEB_EDIT_TEXT);
                 }
             }
@@ -162,33 +168,36 @@ public class SocialFragment extends Fragment {
                 Long product_id = product.getId();
                 Long user_id = SessionManager.getSaveUser().getId();
                 urlRequest = new UrlRequest(urlName,urlLink,type_id.getId(),product_id,user_id);
-                apiService.addNewUrl(urlRequest).enqueue(new Callback<UrlRequest>() {
-                    @Override
-                    public void onResponse(Call<UrlRequest> call, Response<UrlRequest> response) {
-                        if (response.isSuccessful()) {
+                if (validateUrl(urlName,urlLink)){
+                    apiService.addNewUrl(urlRequest).enqueue(new Callback<UrlRequest>() {
+                        @Override
+                        public void onResponse(Call<UrlRequest> call, Response<UrlRequest> response) {
                             if (response.isSuccessful()) {
-                                if (response.body() != null) {
-                                    //can't save session value in onResponse, because it will null after finish run this function
-                                Toast.makeText(getActivity().getApplicationContext(), "Added success", Toast.LENGTH_SHORT).show();
-                                spUrlType.setSelection(0);
-                                edUrlName.setText("");
-                                edUrlLink.setText("");
-                                }
-                                if (response.body() == null){
-                                    Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
-                                }
-                                if (response.code() == 401){
-                                    Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                                if (response.isSuccessful()) {
+                                    if (response.body() != null) {
+                                        //can't save session value in onResponse, because it will null after finish run this function
+                                        Toast.makeText(getActivity().getApplicationContext(), "Added success", Toast.LENGTH_SHORT).show();
+                                        spUrlType.setSelection(0);
+                                        edUrlName.setText("");
+                                        edUrlLink.setText("");
+                                    }
+                                    if (response.body() == null){
+                                        Toast.makeText(getActivity().getApplicationContext(), "Null", Toast.LENGTH_SHORT).show();
+                                    }
+                                    if (response.code() == 401){
+                                        Toast.makeText(getActivity().getApplicationContext(), "Error Auth", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onFailure(Call<UrlRequest> call, Throwable t) {
-                        Toast.makeText(getActivity().getApplicationContext(), "Add Url failed", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<UrlRequest> call, Throwable t) {
+                            Toast.makeText(getActivity().getApplicationContext(), "Add Url failed", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
             }
         });
 
@@ -205,5 +214,19 @@ public class SocialFragment extends Fragment {
                 ((MainActivity) getActivity()).setActionBarTitle("Home");
             }
         });
+    }
+
+    public boolean validateUrl(String urlTitle, String urlLink){
+        if (TextUtils.isEmpty(urlTitle)){
+            edUrlName.setError("Field can not be empty");
+            edUrlName.requestFocus();
+            return false;
+        }
+        if (TextUtils.isEmpty(urlLink)){
+            edUrlLink.setError("Field can not be empty");
+            edUrlLink.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

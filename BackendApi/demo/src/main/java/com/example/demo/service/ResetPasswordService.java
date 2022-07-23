@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -87,14 +88,27 @@ public class ResetPasswordService {
         setConfirmedAt(token);
 
         RedirectView redirectView = new RedirectView();
-        redirectView.setUrl("http://localhost:8081/Admin/resetPassword");
+        redirectView.setUrl("http://localhost:8081/resetPassword");
         return redirectView;
     }
 
-    public void updatePassword(ResetPasswordRequest request){
+    public void updatePassword(@Valid ResetPasswordRequest request){
         User user = userRepository.findByEmail(request.getEmail());
         if (user == null){
             throw new ApiRequestException("email do not exist !!");
+        }
+        String date = user.getDateOfbirth().toString();
+        if (user.getUsername().contains(request.getPassword())){
+            throw new ApiRequestException("Password The user cannot have a username");
+        }
+        if (user.getEmail().contains(request.getPassword())){
+            throw new ApiRequestException("Password The user cannot have a Email");
+        }
+        if (user.getPhone().contains(request.getPassword())){
+            throw new ApiRequestException("Password The user cannot have a Phone");
+        }
+        if (date.contains(request.getPassword())){
+            throw new ApiRequestException("Password The user cannot have a BirthDay");
         }
         user.setPassword(encoder.encode(request.getPassword()));
         System.out.printf(user.getUsername());

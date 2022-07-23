@@ -27,24 +27,28 @@ public interface UserRepo extends JpaRepository<User, Long> {
             "SET a.enable = TRUE , a.locked = TRUE WHERE a.email = ?1")
     int enableAppUser(String email);
 
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User a " +
+            "SET  a.locked = FALSE WHERE a.id = ?1")
+    int BandUser(Long id);
+
+    @Transactional
+    @Modifying
+    @Query("UPDATE User a " +
+            "SET  a.locked = TRUE WHERE a.id = ?1")
+    int unlocked(Long id);
+
     User findByEmail(String email);
 
     Boolean existsByEmail(String email);
 
-    @Query("SELECT user FROM User user LEFT JOIN user.roles role WHERE role.id = ?1")
+    @Query("SELECT user FROM User user LEFT JOIN user.roles role WHERE role.id = ?1 AND user.enable = true and user.locked = true ")
     List<User> findUserByRole(Integer role);
 
-    //for android
-    //count all user role user(SNgoc)
-    @Query(value = "select count(users.id) from User users left join users.roles role where role.id = 1")
-    int getCountAllUsers();
 
-    //count user active role user(SNgoc)
-    @Query(value = "select count(users) from User users left join users.roles role where role.id = 1 and users.locked = true and users.enable = true")
-    int getCountUserActive();
-
-    //count user was locked role user(SNgoc)
-    @Query(value = "select count(users) from User users left join users.roles role where role.id = 1 and users.locked = false and users.enable = false")
-    int getCountUserLocked();
+    @Query("SELECT user FROM User user  WHERE   user.locked = false ")
+    List<User> listUserBand();
 
 }

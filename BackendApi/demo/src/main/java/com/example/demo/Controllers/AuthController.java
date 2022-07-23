@@ -34,6 +34,7 @@ import org.springframework.web.servlet.view.RedirectView;
 import javax.mail.MessagingException;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -90,7 +91,7 @@ public class AuthController  {
 
     @RequestMapping(value = "/signup")
 
-    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws IOException, MessagingException {
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) throws IOException, MessagingException, ParseException {
 
 
         String token = registerService.register(signUpRequest);

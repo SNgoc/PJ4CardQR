@@ -55,6 +55,7 @@ public class UserService {
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             throw  new ApiRequestException("Error: Email is already in use!");
         }
+
         // Create new user's account
         User user = new User(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
@@ -87,6 +88,8 @@ public class UserService {
                 }
 
         }
+
+
 //        MultipartFile multipartFile = signUpRequest.getImage();
 //        Map<String, String> options = new HashMap<>();
 //        options.put("folder", image);
@@ -186,15 +189,5 @@ public class UserService {
         userRepository.save(user);
         return "Update succesfully";
     }
-
-    //for android
-    //count all users(SNgoc)
-    public int countAllUsers(){ return userRepository.getCountAllUsers(); }
-
-    //count users active(SNgoc)
-    public int countUsersActive(){ return userRepository.getCountUserActive(); }
-
-    //count users locked(SNgoc)
-    public int countUsersLocked(){ return userRepository.getCountUserLocked(); }
 
 }

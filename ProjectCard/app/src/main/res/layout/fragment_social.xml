@@ -91,6 +91,7 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
+                            android:id="@+id/txtUrlName"
                             style="@style/viewParent"
                             android:text="@string/txt_url_name"/>
 
@@ -110,6 +111,7 @@
                         android:layout_marginTop="@dimen/loginViewsMargin">
 
                         <TextView
+                            android:id="@+id/txtUrlLink"
                             style="@style/viewParent"
                             android:text="@string/txt_url_link"/>
 

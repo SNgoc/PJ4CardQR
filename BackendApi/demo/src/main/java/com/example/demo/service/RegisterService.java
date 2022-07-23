@@ -15,7 +15,12 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Set;
 
 @Service
@@ -32,13 +37,41 @@ public class RegisterService {
     private  ConfirmationTokenService confirmationTokenService;
 
 
-    public String register(@NotNull SignupRequest request) throws IOException, MessagingException {
+    public String register(@NotNull SignupRequest request) throws IOException, MessagingException, ParseException {
         boolean isValidEmail = emailValidator.
                 test(request.getEmail());
 
         if (!isValidEmail) {
             throw new ApiRequestException("email not valid");
         }
+
+        Date d=new Date();
+        int yearBirth = request.getDateOfbirth().getYear() + 1900;
+        int year=d.getYear() + 1900;
+        int currentYear = year - yearBirth;
+        System.out.println(currentYear);
+        if (currentYear <= 0){
+            throw new ApiRequestException("date of birth cannot be greater than current date !! ");
+        }
+
+        String username = request.getUsername().trim();
+        String password = request.getPassword().trim();
+        String fullname = request.getFullname().trim();
+        String dateBirthday = request.getDateOfbirth().toString();
+        String phone = request.getPhone().trim();
+        if (username.contains(password)){
+            throw new ApiRequestException("User and password cannot be the same");
+        }
+        else if (fullname.contains(password)){
+            throw new ApiRequestException("Password must not contain personal fullname information");
+        }
+        else if (dateBirthday.contains(password)){
+            throw new ApiRequestException("Password must not contain personal dateBirthday information");
+        }
+        else if (phone.contains(password)){
+            throw new ApiRequestException("Password must not contain personal phone number information");
+        }
+
         Set<String> strRoles = request.getRoles();
 
         String token = userService.signUpUser(

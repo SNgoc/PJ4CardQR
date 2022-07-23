@@ -1,6 +1,5 @@
 package com.example.demo.Payload.Request;
 
-import com.example.demo.domain.Product;
 import lombok.*;
 
 @Data

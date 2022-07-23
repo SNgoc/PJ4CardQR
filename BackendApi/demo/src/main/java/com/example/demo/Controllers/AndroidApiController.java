@@ -104,7 +104,7 @@ public class AndroidApiController {
 
     //USER API FOR ANDROID
     //update profile user
-    @PostMapping("updateProfile/{id}")
+    @PostMapping("/updateProfile/{id}")
     public ResponseEntity<?> updateProfile(@PathVariable("id") Long id, @Valid @RequestBody UpdateProfile request) throws IOException {
         Optional<User> user = userRepo.findById(id);
         if (user.isPresent()) {
@@ -141,56 +141,4 @@ public class AndroidApiController {
         Product product = productRepository.findProductByUser(user.get());
         return ResponseEntity.ok(product);
     }
-
-
-    ///////////////////////////////////REVENUE FOR WEB API/////////////////////////////////////////
-    //get count product was bought
-    @GetMapping("/getCountProduct/")
-    public int countSum(){ return productService.countProductByID(); }
-
-    //all revenue
-    @GetMapping("/getRevenue")
-    public double getRevenueOrder(){
-        return orderService.getRevenueOrder();
-    }
-
-    //count order status
-    @GetMapping("/countOrderStatus")
-    public List<Integer> countOrderStatus(){
-        return orderService.getSumOrderStatus();
-    }
-
-    //count users
-    @GetMapping("/getCountUsers")
-    public int getCountUsers(){
-        return userService.countAllUsers();
-    }
-
-    @GetMapping("/getCountUsersActive")
-    public int getCountUsersActive(){
-        return userService.countUsersActive();
-    }
-
-    @GetMapping("/getCountUsersLocked")
-    public int getCountUsersLocked(){
-        return userService.countUsersLocked();
-    }
-    /////////////////////SN//////////////////////
-
-    //////update
-    //update social link
-//    @PostMapping("/updateSocial/{social_id}")
-//    public ResponseEntity<?> updateSocial(@PathVariable("social_id") Long social_id, @Valid @RequestBody SocialNWebRequest request){
-//        var social = socialNWebService.getSocialNwebById(social_id);
-//        social.setFacebook(request.getFacebook());
-//        social.setTwitter(request.getTwitter());
-//        social.setInstagram(request.getInstagram());
-//        social.setTiktok(request.getTiktok());
-//        social.setWeb1(request.getWeb1());
-//        social.setWeb2(request.getWeb2());
-//        social.setCompany1(request.getCompany1());
-//        social.setCompany2(request.getCompany2());
-//        socialNWebService.InsertOrUpdate(social);
-//        return ResponseEntity.ok(social);
-//    }
 }

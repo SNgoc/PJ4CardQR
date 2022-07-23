@@ -26,16 +26,16 @@ public class Product {
 
     private String token;
 
-    private Date createdAt;
+    private String createdAt;
 
-    private Date update_at;
+    private String update_at;
 
-    private Date delete_at;
+    private String delete_at;
 
     public Product() {
     }
 
-    public Product(String description, String name, String avatar, String url, String imageUrlcode, User user, Date createdAt, int status, int year, String token) {
+    public Product(String description, String name, String avatar, String url, String imageUrlcode, User user, String createdAt, int status, int year, String token) {
         this.description = description;
         this.name = name;
         this.avatar = avatar;
@@ -136,27 +136,27 @@ public class Product {
         this.token = token;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getUpdate_at() {
+    public String getUpdate_at() {
         return update_at;
     }
 
-    public void setUpdate_at(Date update_at) {
+    public void setUpdate_at(String update_at) {
         this.update_at = update_at;
     }
 
-    public Date getDelete_at() {
+    public String getDelete_at() {
         return delete_at;
     }
 
-    public void setDelete_at(Date delete_at) {
+    public void setDelete_at(String delete_at) {
         this.delete_at = delete_at;
     }
 }

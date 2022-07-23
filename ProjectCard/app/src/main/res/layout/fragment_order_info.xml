@@ -1,144 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
+    android:layout_gravity="top"
     android:background="@color/lightBlueBackground"
     android:focusableInTouchMode="true"
     android:gravity="center"
     android:id="@+id/frmOrderInfo"
     tools:context=".ui.orderInfo.OrderInfoFragment">
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true">
+        android:background="@android:color/darker_gray">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:orientation="vertical"
-            android:padding="20dp">
+        <!--FRONT CARD-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCard_front"
+            android:layout_width="400dp"
+            android:layout_height="200dp"
+            android:background="@drawable/layout_card_border"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.05">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    style="@style/viewParent.headerText.NoMode"
-                    android:layout_alignParentLeft="true"
-                    android:layout_centerVertical="true"
-                    android:text="@string/intro_header_contact_us"
-                    android:textColor="@color/whiteTextColor" />
-
-                <ImageView
-                    android:id="@+id/imgSocial"
-                    android:background="@drawable/ic_login_hero"
-                    android:layout_width="470px"
-                    android:layout_height="470px"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardBackgroundColor="@color/whiteTextColor"
-                app:cardCornerRadius="10dp">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="385dp"
+                android:layout_height="200dp"
+                android:background="@drawable/layout_card_border"
+                android:backgroundTint="@android:color/background_dark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/linearLayout2"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:orientation="vertical">
+                    app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5">
 
-                    <!-- Button type spinner -->
-                    <LinearLayout
-                        android:id="@+id/textInputBtnSpinner"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:layout_marginBottom="5dp"
-                            android:text="To:"/>
-
-                        <EditText
-                            android:id="@+id/editEmailReceiver"
-                            style="@style/modifiedEditText"
-                            android:text="ngocnsts2008030@ftp.edu.vn"
-                            android:inputType="none"
-                            android:focusable="false"
-                            android:maxLines="1"
-                            tools:ignore="TextFields" />
-                    </LinearLayout>
-
-                    <!-- URL name -->
-                    <LinearLayout
-                        android:id="@+id/textInputUrlName"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Title"/>
-
-                        <EditText
-                            android:id="@+id/editUrlName"
-                            style="@style/modifiedEditText"
-                            android:hint="Title"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <!-- URL Link -->
-                    <LinearLayout
-                        android:id="@+id/textInputUrlLink"
-                        style="@style/parent"
-                        android:orientation="vertical"
-                        android:layout_marginTop="@dimen/loginViewsMargin">
-
-                        <TextView
-                            style="@style/viewParent"
-                            android:text="Content"/>
-
-                        <EditText
-                            android:id="@+id/editUrlLink"
-                            android:layout_height="150dp"
-                            style="@style/modifiedEditText"
-                            android:gravity="top"
-                            android:hint="Write your opinion......."
-                            android:maxLines="1" />
-                    </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnSave_UpdateURL"
-                        style="@style/updateButton"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="@dimen/loginViewsMargin"
-                        android:layout_marginBottom="@dimen/loginViewsMargin"
-                        android:text="Send" />
+                    <TextView
+                        android:id="@+id/txt_front_header_card"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="@string/txt_status_card_header"
+                        android:textColor="@android:color/white"
+                        android:textSize="20sp" />
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-    </ScrollView>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginRight="11dp"
-        android:layout_marginBottom="200dp"
-        android:adjustViewBounds="false"
-        android:id="@+id/backHomeClick"
-        android:src="@drawable/ic_back_img" />
+                <TableLayout
+                    android:id="@+id/tableLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.15"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.6">
 
-</RelativeLayout>
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_card_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_card_status"
+                            android:textColor="@color/whiteTextColor" />
+
+                        <TextView
+                            android:id="@+id/txt_countDownDuration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="80dp"
+                            android:text="@string/txt_countDown"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_Buyer"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_buyer"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_BuyAt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_date_created"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_ActivateAt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_date_active"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_Duration"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_duration"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+
+                    <TableRow>
+
+                        <TextView
+                            android:id="@+id/txt_Expired"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/txt_date_expired"
+                            android:textColor="@color/whiteTextColor" />
+                    </TableRow>
+                </TableLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</FrameLayout>

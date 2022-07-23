@@ -20,12 +20,28 @@ public class UserControllers {
         return  ResponseEntity.ok(user);
     }
 
+    @GetMapping("/findUserBand")
+    public ResponseEntity<?> findUserBand(){
+        var user = userRepository.listUserBand();
+        return  ResponseEntity.ok(user);
+    }
+
 
     @GetMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Long id){
         if (userRepository.existsById(id)){
-            userRepository.deleteById(id);
-            return  ResponseEntity.ok("Delete Successfully");
+            userRepository.BandUser(id);
+            return  ResponseEntity.ok("Band User Successfully");
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Delete not found");
+        }
+    }
+
+    @GetMapping("/unlocked/{id}")
+    public ResponseEntity<?> unlocked(@PathVariable Long id){
+        if (userRepository.existsById(id)){
+            userRepository.unlocked(id);
+            return  ResponseEntity.ok("Unlocked User Successfully");
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Delete not found");
         }
@@ -39,6 +55,4 @@ public class UserControllers {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username not found");
         }
     }
-
-
 }

@@ -68,15 +68,44 @@
                     android:maxLines="1" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                style="@style/viewParent"
-                android:id="@+id/forgotPass"
-                android:layout_gravity="end"
-                android:layout_marginTop="10dp"
-                android:visibility="visible"
-                android:text="Forgot Password?"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="@dimen/newsMoreTextSize" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/aboutUs"
+                    style="@style/viewParent"
+                    android:layout_gravity="top"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/txt_aboutUs"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="@dimen/newsMoreTextSize"
+                    android:visibility="visible"
+                    app:layout_constraintBaseline_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/forgotPass"
+                    style="@style/viewParent"
+                    android:layout_gravity="end"
+                    android:text="Forgot Password?"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="@dimen/newsMoreTextSize"
+                    android:visibility="visible"
+                    app:layout_constraintBaseline_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.989"
+                    app:layout_constraintStart_toStartOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <Button
                 android:id="@+id/btnLogin"
@@ -88,13 +117,13 @@
             <TextView
                 style="@style/parent"
                 android:layout_marginTop="@dimen/loginViewsMargin"
-                android:visibility="visible"
-                android:text="New user? Register Now"
                 android:onClick="onLoginClick"
+                android:text="New user? Register Now"
                 android:textAlignment="center"
                 android:textColor="@color/themeColor"
                 android:textSize="17sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:visibility="visible" />
 
 
             <LinearLayout

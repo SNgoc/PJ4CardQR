@@ -7,6 +7,8 @@ import java.util.*;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -46,6 +48,7 @@ public class User {
 
     private String province;
     private Boolean gender;
+
     private String phone;
 
     private String address;
@@ -79,7 +82,7 @@ public class User {
     }
 
     public User(String username, String email, String password, Set<Role> roles, String nameImage, String linkImage,String phone,String address,String fullname,String lastname
-            ,String description,Date dateOfbirth,Boolean gender,String province ) {
+            ,String description,Date dateOfbirth,Boolean gender,String province, Boolean locked, Boolean enable) {
         this.username = username;
         this.email = email;
         this.password = password;
@@ -94,6 +97,8 @@ public class User {
         this.dateOfbirth = dateOfbirth;
         this.gender = gender;
         this.province = province;
+        this.locked = locked;
+        this.enable = enable;
     }
 
     public User(String username, String email, String password, Boolean enable, Boolean locked) {

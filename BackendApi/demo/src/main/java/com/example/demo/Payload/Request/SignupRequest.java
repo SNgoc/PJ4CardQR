@@ -11,6 +11,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -20,7 +21,7 @@ import java.util.Set;
 @Setter
 public class SignupRequest {
     @NotBlank
-    @Size(min = 3, max = 20)
+    @Size(min = 3, max = 20,message = "Username size min 3 or maximum 20 character")
     private String username;
 
     @NotBlank
@@ -37,6 +38,7 @@ public class SignupRequest {
     private String password;
 
     @NotBlank(message = "Phone is not blank")
+    @Pattern(regexp="\\d{10}",message="Phone number wrong format !!!")
     private String phone;
     @NotBlank(message = "Address is not blank")
     private String address;

@@ -39,7 +39,4 @@ public class ProductService {
     public List<Product> ShowAll() {
         return (List<Product>) productRepository.findAll();
     }
-
-    //count product(SNgoc)
-    public int countProductByID(){ return productRepository.countProduct();}
 }

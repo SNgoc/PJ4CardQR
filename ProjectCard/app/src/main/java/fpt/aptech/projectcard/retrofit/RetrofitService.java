@@ -24,10 +24,13 @@ public class RetrofitService {
     private static HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     //connect api for login and register
     public static Retrofit getInstance() {
+        Gson gson = new GsonBuilder()
+                .setLenient()
+                .create();//view error
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(ApiConstant.BASE_URL)
                 .addConverterFactory(ScalarsConverterFactory.create())//post raw json
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(new OkHttpClient.Builder()
                         .connectTimeout(5, TimeUnit.SECONDS) // connect timeout
                         .writeTimeout(5, TimeUnit.SECONDS) // write timeout

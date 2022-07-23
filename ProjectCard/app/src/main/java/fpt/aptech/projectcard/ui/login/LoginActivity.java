@@ -35,7 +35,7 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
     //login
-    private TextView txtError, txtForgotPass;
+    private TextView txtError,txtAboutUs,txtForgotPass;
     private EditText editUsername,editPassword;
     private Button btnLogin;
 
@@ -51,6 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         editUsername = findViewById(R.id.editUsername);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
+        txtAboutUs = findViewById(R.id.aboutUs);
         txtForgotPass = findViewById(R.id.forgotPass);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -101,6 +102,14 @@ public class LoginActivity extends AppCompatActivity {
                         }
                     });
                 }
+            }
+        });
+
+        txtAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(ApiConstant.BASE_URL_CLIENT + "/Client"));
+                startActivity(intent);
             }
         });
 
