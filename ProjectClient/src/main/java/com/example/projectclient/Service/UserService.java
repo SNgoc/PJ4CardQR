@@ -19,7 +19,9 @@ import java.net.http.HttpResponse;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -49,7 +51,7 @@ public class UserService {
     public void changeImageUser(HttpSession session, File file) throws URISyntaxException, IOException, InterruptedException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
-        Path currentRelativePath = Paths.get("D:/ProjectClient/ProjectClient/user-photos");
+        Path currentRelativePath = Paths.get("D:/ProjectClient/user-photos");
         String path = currentRelativePath.toAbsolutePath().toString();
         System.out.println(path);
         MediaType mediaType = MediaType.parse("text/plain");
@@ -96,7 +98,7 @@ public class UserService {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        System.out.println(response.body());
+
 
         return response;
     }
@@ -134,7 +136,20 @@ public class UserService {
         return response;
     }
 
+    public HttpResponse<String> FindUserBand(HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/User/findUserBand"))
+                .GET()
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
 
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
     public HttpResponse<String> deleteUserAdmin(int id,HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
@@ -150,12 +165,26 @@ public class UserService {
         return response;
     }
 
+
+    public HttpResponse<String> unlocked(int id,HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/User/unlocked/" + id))
+                .GET()
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+
+        return response;
+    }
     public HttpResponse<String> CreateAccount(String json, HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(BASE_URL + "/api/auth/signup"))
                 .headers("Content-Type","application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
                 .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 

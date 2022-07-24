@@ -82,55 +82,63 @@
                         </div>
 
                     </div>
+
+                    <span class="text-danger" th:if="${userParseError != null}">
+                        <div class="alert alert-danger" th:if="${userParseError.phone}" th:text="${userParseError.phone}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.fullname}" th:text="${userParseError.fullname}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.address}" th:text="${userParseError.address}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.lastname}" th:text="${userParseError.lastname}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.dateOfbirth}" th:text="${userParseError.dateOfbirth}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.username}" th:text="${userParseError.username}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.email}" th:text="${userParseError.email}"
+                                   role="alert">
+                        </div>
+
+
+
+
+                    </span>
+                    <span class="text-success" th:if="${successProfile != null}">
+                        <div class="alert alert-success" th:if="${successProfile}" th:text="${successProfile}"
+                             role="alert">
+                        </div>
+                    </span>
                     <form class="form" th:object="${SignUpRequest}" th:action="@{/Signup}" method="post">
                         <div class="form-group">
                             <input class="form-control" id="E-mail" required type="text" th:field="*{email}"
                                    placeholder="Email"/>
-                            <span class="text-danger" th:if="${errorAddNewEmail}">
-                        <div class="alert alert-danger" th:text="${errorAddNewEmail}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
                         <div class="form-group">
                             <input class="form-control" id="fullname" required type="text" th:field="*{fullname}"
                                    placeholder="Fullname"/>
-                            <span class="text-danger" th:if="${errorAddNewFullname}">
-                        <div class="alert alert-danger" th:text="${errorAddNewFullname}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
                         <div class="form-group">
                             <input class="form-control" id="lastname" required type="text" th:field="*{lastname}"
                                    placeholder="Lastname"/>
-                            <span class="text-danger" th:if="${errorAddNewLastname}">
-                        <div class="alert alert-danger" th:text="${errorAddNewLastname}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
                         <div class="form-group">
                             <input class="form-control" id="phone" type="text" required th:field="*{phone}"
                                    placeholder="Phone Number"/>
-                            <span class="text-danger" th:if="${errorAddNewPhone}">
-                        <div class="alert alert-danger" th:text="${errorAddNewPhone}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
                         <div class="form-group">
                             <input class="form-control" id="address" type="text" required th:field="*{address}"
                                    placeholder="Address"/>
-                            <span class="text-danger" th:if="${errorAddNewAddress}">
-                        <div class="alert alert-danger" th:text="${errorAddNewAddress}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
                         <div class="form-group">
                             <input type="date" class="form-control" required th:field="*{dateOfbirth}">
-                            <span class="text-danger" th:if="${errorAddNewFullname}">
-                        <div class="alert alert-danger" th:text="${errorAddNewFullname}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
-
                         <div class="form-group">
                             <select class="form-control" th:field="*{gender}">
                                 <option th:value="true">Female</option>
@@ -140,18 +148,10 @@
                         <div class="form-group">
                             <input class="form-control" required id="username" type="text" th:field="*{username}"
                                    placeholder="Username"/>
-                            <span class="text-danger" th:if="${errorAddNewUsername}">
-                        <div class="alert alert-danger" th:text="${errorAddNewUsername}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
-                        </div>
+
                         <div class="form-group">
                             <input class="form-control" required id="password" type="password" th:field="*{password}"
                                    placeholder="Password"/>
-                            <span class="text-danger" th:if="${errorAddNewPassword}">
-                        <div class="alert alert-danger" th:text="${errorAddNewPassword}"
-                             role="alert"><strong>Alert!</strong> The European languages are members of the same family.</div>
-                                        </span>
                         </div>
 
                         <div class="form-group">
@@ -165,4 +165,6 @@
 </main>
 
 </body>
+
+
 </html>

@@ -98,9 +98,9 @@ public class OrderService {
             Map hintMap = new HashMap();
             BitMatrix bitMatrix = new MultiFormatWriter().encode("http://localhost:8081/Display/"+user.getUsername(), BarcodeFormat.QR_CODE, 500, 500, hintMap);
             options.put("folder", image);
-            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png").toPath());
+            MatrixToImageWriter.writeToPath(bitMatrix, "PNG", new File("N:/demo/Qrcode/qrcode.png").toPath());
 
-            File file = new File("N:/PJCardTerm4/demo/Qrcode/qrcode.png");
+            File file = new File("N:/demo/Qrcode/qrcode.png");
             FileInputStream input = new FileInputStream(file);
             MultipartFile multipartFile = new MockMultipartFile("file",
                     file.getName(), "image/png", IOUtils.toByteArray(input));

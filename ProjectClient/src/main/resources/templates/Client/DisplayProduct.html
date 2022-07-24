@@ -69,6 +69,7 @@
             left: 3%;
             width: 44px;
             line-height: 44px;
+            margin-top: -3px;
         }
 
         .link {
@@ -84,23 +85,23 @@
             line-height: 1.6em;
         }
     </style>
-    <title>Title</title>
+    <title th:text="'OneTouch || ' + ${Product.name}"></title>
 </head>
-<body style="background-image: url(https://iweb.tatthanh.com.vn/pic/3/blog/20-background-dep-cho-website.png);
+<body style="background-image: url(https://res.cloudinary.com/tphcm/image/upload/v1658475992/product/bg_xhch1h.jpg);
 background-repeat: no-repeat; background-attachment: fixed; background-size: 100% 100%;">
 <div class="main">
     <div class="container">
         <section>
             <div class="container-fluid bg-1 text-center">
                 <div class="avatar">
-                    <img th:src="${Product.user.getLinkImage()}" class="img-circle" alt="@Model.Title" width="98px" height="98px">
+                    <img th:src="${Product.avatar}" class="img-circle" width="98px" height="98px">
                 </div>
-                <h3 th:text="${Product.name}"></h3>
+                <h3 th:text="${Product.name}" style="color: white"></h3>
                 <h3 class="desc" th:text="${Product.description}"></h3>
             </div>
             <div class="container-fluid bg-2 text-center">
                 <div class="link" th:if="${listUrl.size()} > 0" th:each="url : ${listUrl}">
-                    <a th:href="${url.url}" target="_blank" data-title="@item.Title" data-url="@item.Type.DataUrl" data-html="@item.Type.DataUrl" autocomplete="off" class="btn">
+                    <a th:href="${url.linkType.href + url.url}" target="_blank" data-title="@item.Title" data-url="@item.Type.DataUrl" data-html="@item.Type.DataUrl" autocomplete="off" class="btn">
                         <div class="btn-img"><img th:src="${url.linkType.linkImage}" width="44px" height="44px"/></div>
                         <span class="btn-text" th:text="${url.name}"></span>
                     </a>

@@ -23,18 +23,18 @@ public class Orders {
 
     private Product product;
 
-    private Date createdAt;
+    private String createdAt;
 
-    private Date confirmedAt;
+    private String confirmedAt;
 
-    private Date finishedAt;
+    private String finishedAt;
 
-    private Date canceledAt;
+    private String canceledAt;
 
     public Orders() {
     }
 
-    public Orders(Long id, int price, Category category, User user, String address, String phone, String fullname, Order_Process order_process, Product product, Date createdAt, Date confirmedAt, Date finishedAt, Date canceledAt) {
+    public Orders(Long id, int price, Category category, User user, String address, String phone, String fullname, Order_Process order_process, Product product, String createdAt, String confirmedAt, String finishedAt, String canceledAt) {
         this.id = id;
         this.price = price;
         this.category = category;
@@ -122,35 +122,35 @@ public class Orders {
         this.product = product;
     }
 
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
     }
 
-    public Date getConfirmedAt() {
+    public String getConfirmedAt() {
         return confirmedAt;
     }
 
-    public void setConfirmedAt(Date confirmedAt) {
+    public void setConfirmedAt(String confirmedAt) {
         this.confirmedAt = confirmedAt;
     }
 
-    public Date getFinishedAt() {
+    public String getFinishedAt() {
         return finishedAt;
     }
 
-    public void setFinishedAt(Date finishedAt) {
+    public void setFinishedAt(String finishedAt) {
         this.finishedAt = finishedAt;
     }
 
-    public Date getCanceledAt() {
+    public String getCanceledAt() {
         return canceledAt;
     }
 
-    public void setCanceledAt(Date canceledAt) {
+    public void setCanceledAt(String canceledAt) {
         this.canceledAt = canceledAt;
     }
 }

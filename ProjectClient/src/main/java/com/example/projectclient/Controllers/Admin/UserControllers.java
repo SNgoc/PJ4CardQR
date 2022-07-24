@@ -7,6 +7,7 @@ import com.example.projectclient.Models.User;
 import com.example.projectclient.Models.changePasswordReset;
 import com.example.projectclient.Service.FileUploadUtil;
 import com.example.projectclient.Service.UserService;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -31,6 +32,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 @Controller
@@ -170,8 +172,27 @@ public class UserControllers {
     @GetMapping("Admin/Users/delete/{id}")
     public String deleteUser(@PathVariable int id,HttpSession session ,RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
         var response = userService.deleteUserAdmin(id,session);
-        if (response.statusCode() != 200){
+        if (response.statusCode() == 400){
             redirectAttributes.addFlashAttribute("DeleteUserSuccess",response.body());
+            return "redirect:/Admin/Users";
+        }
+        if (response.statusCode() == 403){
+            redirectAttributes.addFlashAttribute("DeleteUserSuccess","Forbidden !!!");
+            return "redirect:/Admin/Users";
+        }
+        redirectAttributes.addFlashAttribute("DeleteUserSuccess",response.body());
+        return "redirect:/Admin/Users";
+    }
+
+    @GetMapping("Admin/Users/unlocked/{id}")
+    public String unlocked(@PathVariable int id,HttpSession session ,RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        var response = userService.unlocked(id,session);
+        if (response.statusCode() == 400){
+            redirectAttributes.addFlashAttribute("DeleteUserSuccess",response.body());
+            return "redirect:/Admin/Users";
+        }
+        if (response.statusCode() == 403){
+            redirectAttributes.addFlashAttribute("DeleteUserSuccess","Forbidden !!!");
             return "redirect:/Admin/Users";
         }
         redirectAttributes.addFlashAttribute("DeleteUserSuccess",response.body());
@@ -181,6 +202,14 @@ public class UserControllers {
 
     @GetMapping(value = "/Users/Add")
     public String  addUser( HttpSession session, ModelMap model, RedirectAttributes redirectAttributes) throws IOException, InterruptedException {
+        String role = (String) session.getAttribute("roles");
+        if (session.getAttribute("token") == null ||role.contains("[\"ROLE_USER\"]") ){
+
+            return "redirect:/Admin/login";
+        }
+        if (role.contains("[\"ROLE_MODERATOR\"]")){
+            return "Admin/403";
+        }
         model.addAttribute("AddUser", new SignUpRequest());
         return "Admin/Users/AddNewUsers";
     }
@@ -196,22 +225,24 @@ public class UserControllers {
         String json = JSONUtils.convertToJSON(request);
         var respone = userService.CreateAccount(json,session);
 
-        if (respone.statusCode() != 200){
+        if (respone.statusCode() == 400){
             JSONObject ob = new JSONObject(respone.body());
-            User userParse = JSONUtils.convertToObject(User.class,ob.toString());
-            redirectAttributes.addFlashAttribute("errorAddNewUsername",userParse.getUsername());
-            redirectAttributes.addFlashAttribute("errorAddNewPassword",userParse.getUsername());
 
-            redirectAttributes.addFlashAttribute("errorAddNewUsername",userParse.getUsername());
-            redirectAttributes.addFlashAttribute("errorAddNewFullname",userParse.getFullname());
-            redirectAttributes.addFlashAttribute("errorAddNewLastname",userParse.getLastname());
-            redirectAttributes.addFlashAttribute("errorAddNewPhone",userParse.getPhone());
-            redirectAttributes.addFlashAttribute("errorAddNewEmail",userParse.getEmail());
-            redirectAttributes.addFlashAttribute("errorAddNewAddress",userParse.getAddress());
+            User userParse = JSONUtils.convertToObject(User.class,ob.toString());
+            assert userParse != null;
+            redirectAttributes.addFlashAttribute("userParseError",userParse);
+            return "redirect:/Users/Add";
+        }
+        if(respone.statusCode() == 500){
+            JSONObject ob = new JSONObject(respone.body());
+
+            redirectAttributes.addFlashAttribute("errorMessageSignUp",ob.getString("message"));
             return "redirect:/Users/Add";
         }
 
-
+        if (respone.statusCode() == 403){
+            return "Admin/403";
+        }
 
         redirectAttributes.addFlashAttribute("successProfile","Register change successfully");
 
@@ -221,6 +252,25 @@ public class UserControllers {
         return "redirect:/Admin/Users";
 
 
+    }
+
+    @GetMapping("/Users/AccountBand")
+    public  String AccountBand(Model model,HttpSession session) throws IOException, InterruptedException {
+        var response = userService.FindUserBand(session);
+        System.out.println(response);
+        if (response.statusCode() != 200){
+            return "Admin/403";
+        }
+        JSONArray ob = new JSONArray(response.body());
+
+        User[] user = JSONUtils.convertToObject(User[].class,ob.toString());
+
+
+        assert user != null;
+        model.addAttribute("listUser", List.of(user));
+
+
+        return "Admin/Users/AccountBand";
     }
 
 }

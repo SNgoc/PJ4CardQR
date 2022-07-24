@@ -17,4 +17,6 @@ public class LinkType {
     private String dataUrl;
 
     private String linkImage;
+
+    private String href;
 }

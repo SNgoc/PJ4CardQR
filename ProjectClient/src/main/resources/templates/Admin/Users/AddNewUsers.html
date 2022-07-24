@@ -16,6 +16,47 @@
                         <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
                     </div>
 
+
+                    <div style="color: red" th:if="${errorMessageSignUp} != null">
+
+                        <div class="alert alert-danger msgAlert1" th:text="${errorMessageSignUp}" role="alert"><strong>Alert!</strong>
+                            The European languages are members of the same family.
+                        </div>
+
+                    </div>
+
+                    <span class="text-danger" th:if="${userParseError != null}">
+                        <div class="alert alert-danger" th:if="${userParseError.phone}" th:text="${userParseError.phone}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.fullname}" th:text="${userParseError.fullname}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.address}" th:text="${userParseError.address}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.lastname}" th:text="${userParseError.lastname}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.dateOfbirth}" th:text="${userParseError.dateOfbirth}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.username}" th:text="${userParseError.username}"
+                             role="alert">
+                        </div>
+                        <div class="alert alert-danger" th:if="${userParseError.email}" th:text="${userParseError.email}"
+                             role="alert">
+                        </div>
+
+
+
+
+                    </span>
+                    <span class="text-success" th:if="${successProfile != null}">
+                        <div class="alert alert-success" th:if="${successProfile}" th:text="${successProfile}"
+                             role="alert">
+                        </div>
+                    </span>
                     <div class="card card-primary">
                         <div class="card-header"><h4>Register</h4></div>
 
@@ -25,16 +66,12 @@
                                     <div class="form-group col-6">
                                         <label for="first_name">Full Name</label>
                                         <input id="first_name" th:field="*{fullname}" type="text" class="form-control" name="first_name" required autofocus>
-                                        <span class="text-danger" th:if="${errorAddNewFullname}" >
-                                            [[${errorAddNewFullname}]]
-                                        </span>
+
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="last_name">Last Name</label>
                                         <input id="last_name" th:field="*{lastname}" type="text" class="form-control" name="last_name" required>
-                                        <span class="text-danger" th:if="${errorAddNewLastname}" >
-                                            [[${errorAddNewLastname}]]
-                                        </span>
+
                                     </div>
                                 </div>
                                 <div class="row">
@@ -45,9 +82,7 @@
                                     <div class="form-group col-6">
                                         <label>Phone</label>
                                         <input type="text" th:field="*{phone}" required class="form-control">
-                                        <span class="text-danger" th:if="${errorAddNewPhone}" >
-                                            [[${errorAddNewPhone}]]
-                                        </span>
+
                                     </div>
                                     <div class="form-group col-6">
                                         <label>Gender</label>
@@ -59,9 +94,7 @@
                                     <div class="form-group col-6">
                                         <label for="email">Email</label>
                                         <input id="email" type="email" th:field="*{email}" class="form-control" name="email" required>
-                                        <span class="text-danger" th:if="${errorAddNewEmail}" >
-                                            [[${errorAddNewEmail}]]
-                                        </span>
+
                                     </div>
                                 </div>
 
@@ -70,16 +103,12 @@
                                     <div class="form-group col-6">
                                         <label for="username" class="d-block">Username</label>
                                         <input id="username" required type="text" th:field="*{username}" class="form-control">
-                                        <span class="text-danger" th:if="${errorAddNewUsername}" >
-                                            [[${errorAddNewUsername}]]
-                                        </span>
+
                                     </div>
                                     <div class="form-group col-6">
                                         <label for="password2" class="d-block">Password</label>
                                         <input id="password2"  th:field="*{password}" required type="password" class="form-control" name="password-confirm">
-                                        <span class="text-danger" th:if="${errorAddNewPassword}" >
-                                            [[${errorAddNewPassword}]]
-                                        </span>
+
                                     </div>
                                 </div>
 
@@ -108,9 +137,7 @@
                                     <div class="form-group col-6">
                                         <label>Address</label>
                                         <input  required type="text" th:field="*{address}" class="form-control">
-                                        <span class="text-danger" th:if="${errorAddNewAddress}" >
-                                            [[${errorAddNewAddress}]]
-                                        </span>
+
 
                                     </div>
                                 </div>

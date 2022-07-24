@@ -10,6 +10,7 @@ import com.example.demo.service.OrderService;
 import com.example.demo.service.UserService;
 import com.google.zxing.WriterException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +19,16 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -76,6 +85,8 @@ public class OrderController {
                     }
                     if (j == 1){
                         chart.setPrice((int) values.get(i).get(j));
+                    } if (j == 2){
+                        chart.setYear((int) values.get(i).get(j));
                     }
                 }
                 c.add(chart);
@@ -98,12 +109,13 @@ public class OrderController {
                     }
                     if (j == 1){
                         chart.setPrice((int) value.get(i).get(j));
+                    } if (j == 2){
+                        chart.setYear((int) value.get(i).get(j));
                     }
                 }
                 c.add(chart);
             }
-            return ResponseEntity.ok(c);
-        }
+            return ResponseEntity.ok(c);        }
 
 
     }
@@ -153,5 +165,64 @@ public class OrderController {
         else{
             return ResponseEntity.ok("success");
         }
+    }
+
+
+    @GetMapping("/MonthOrder/{Month}")
+    public ResponseEntity<?> MonthOrder(@PathVariable int Month) {
+        List<List<Integer>> values = orderRepository.getPriceMonthByOrder(Month);
+        List<Chart> c = new ArrayList<>();
+
+        for (int i = 0 ; i < values.size() ; i++){
+            Chart chart = new Chart();
+            for (int j = 0 ; j < values.get(i).size() ; j++){
+                if (j == 0){
+
+                    chart.setDay((int) values.get(i).get(j));
+                }
+                if (j == 1){
+                    chart.setPrice((int) values.get(i).get(j));
+                }
+                if (j == 2){
+                    chart.setMonth((int) values.get(i).get(j));
+                }
+                if (j == 3){
+                    chart.setYear((int) values.get(i).get(j));
+                }
+            }
+            c.add(chart);
+        }
+
+
+        return ResponseEntity.ok(c);
+
+    }
+
+    @GetMapping("/YearOrder")
+    public ResponseEntity<?> YearOrder(@RequestParam(name = "d2", defaultValue = "2021-01-01") @DateTimeFormat(pattern = "yyyy-MM-dd") Date d2) {
+
+        List<List<Integer>> values = orderRepository.getPriceByOrderS(d2);
+        List<Chart> c = new ArrayList<>();
+
+        for (int i = 0 ; i < values.size() ; i++){
+            Chart chart = new Chart();
+            for (int j = 0 ; j < values.get(i).size() ; j++){
+                if (j == 0){
+
+                    chart.setMonth((int) values.get(i).get(j));
+                }
+                if (j == 1){
+                    chart.setPrice((int) values.get(i).get(j));
+                }
+                if (j == 2){
+                    chart.setYear((int) values.get(i).get(j));
+                }
+            }
+            c.add(chart);
+        }
+
+
+        return ResponseEntity.ok(c);
+
     }
 }

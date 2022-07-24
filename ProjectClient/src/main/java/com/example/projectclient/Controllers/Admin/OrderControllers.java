@@ -40,7 +40,6 @@ public class OrderControllers {
         Orders[] orders = JSONUtils.convertToObject(Orders[].class,ob.toString());
         assert orders != null;
         model.addAttribute("orders", List.of(orders));
-        model.addAttribute("pdf", pdfService.Create());
         return "Admin/Orders/index";
     }
 
@@ -72,6 +71,9 @@ public class OrderControllers {
         JSONObject ob = new JSONObject(response.body());
         Orders orders = JSONUtils.convertToObject(Orders.class,ob.toString());
         model.addAttribute("orders", orders);
+        //create pdf file
+        pdfService.Create(orders.getProduct().getId(),orders.getFullname(), orders.getProduct().getImageUrlcode());
+        model.addAttribute("pdf", "./product-pdf/"+ orders.getProduct().getId().toString()+".pdf");
         return "/Admin/Orders/OrderDetails";
     }
 

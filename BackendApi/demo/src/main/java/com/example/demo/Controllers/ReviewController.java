@@ -32,11 +32,11 @@ public class ReviewController {
     ForbiddenWordRepository forbiddenWordRepository;
     @PostMapping("/add")
     public ResponseEntity<?> addReview(@RequestBody ReviewRequest review) {
-         var forbiden = forbiddenWordRepository.findAll();
+        var forbiden = forbiddenWordRepository.findAll();
         for (ForbiddenReview c : forbiden){
-             if (review.getReview().contains(c.getWord())){
-                 throw new ApiRequestException("Comment chua tu ngu khong duoc cho phep !!");
-             }
+            if (review.getReview().contains(c.getWord())){
+                throw new ApiRequestException("Comment chua tu ngu khong duoc cho phep !!");
+            }
         }
         var user = userRepo.findById(review.getUser_id()).get();
         var category = categoryRepository.findById(review.getCategory_id()).get();
@@ -61,5 +61,12 @@ public class ReviewController {
         reviewRepository.deleteById(id);
 
         return  ResponseEntity.ok("DELETE Successfully");
+    }
+
+
+    @GetMapping("/showAll/{categoryId}")
+    public ResponseEntity<?> getAllById(@PathVariable Long categoryId){
+
+        return ResponseEntity.ok(reviewRepository.findAllReview(categoryId));
     }
 }

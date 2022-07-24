@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{Admin/dashboardLayOut.html}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="main-content" layout:fragment="content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Reviews</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Components</a></div>
+                <div class="breadcrumb-item">Table</div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Comment</h4>
+                        <div class="card-header-form">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <tr>
+                                    <th>Members</th>
+                                    <th>Category</th>
+                                    <th>Due Date</th>
+                                    <th>Commnet</th>
+                                    <th>Action</th>
+                                </tr>
+                                <tr th:each="review : ${Review}">
+
+                                    <td th:text="${review.user.username}"></td>
+                                    <td th:text="${review.category.name}"></td>
+
+                                    <td th:text="${review.create_at}"></td>
+                                    <td th:text="${review.review}"></td>
+                                    <td><a href="#" class="btn btn-secondary">Detail  </a>
+                                        <a href="#" class="btn btn-secondary">Detail</a></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Forbidden word</h4>
+                        <div class="card-header-action">
+                            <form>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-striped" id="sortable-table">
+                                <thead>
+                                <tr>
+
+                                    <th>Word Forbidden</th>
+
+                                    <th>Action</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="word :  ${listForbiddenword}">
+
+                                    <td th:text="${word.getWord()}"></td>
+
+
+
+                                       <td> <a th:href="@{/Admin/reviews/delete/{id}(id=${word.id})}" class="btn btn-secondary">Delete</a></td>
+
+                                </tr>
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <form class="form-group" th:action="@{/Admin/reviews/add}" method="post" th:object="${forbiddenword}">
+                    <input class="form-control" placeholder="Add word forbidden" th:field="*{word}" type="text">
+                    <input class="form-control bth btn-success" type="submit" value="Create Word">
+                </form>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

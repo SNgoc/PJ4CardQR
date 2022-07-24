@@ -131,7 +131,7 @@ public class AuthController  {
     }
 
     @PostMapping(value = "/profile/changeImageProfile" )
-    public ResponseEntity<?> changeImageProfile(  ChangeImageUserRequest request) throws IOException {
+    public ResponseEntity<?> changeImageProfile(ChangeImageUserRequest request) throws IOException {
         String response = userService.ChangeImageProfile(request);
         if (response != null) {
             return ResponseEntity.ok("update succesfully");

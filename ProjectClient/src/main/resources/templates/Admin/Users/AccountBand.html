@@ -65,25 +65,11 @@
             <div class="col-12 col-md-12 col-lg-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4>List Account </h4>
-                    </div>
-                    <div class="form-group col-md-4 ">
-                        <form th:action="@{/Admin/Users}" method="get" >
-                            <label for="roles" class=""> Choose a Roles:</label>
-                            <select class="form-control " name="roles" id="roles" onclick="this.form.submit()">
-                                <option th:value="1">Users</option>
-                                <option th:value="2">Admin</option>
-                                <option th:value="3">Mod</option>
-                            </select>
-                        </form>
+                        <h4>List Account Band</h4>
                     </div>
 
-                    <div class="form-group col-md-4 ">
-                      <a th:href="@{/Users/Add}">Add New Account</a>
-                    </div>
-                    <div class="form-group col-md-4 ">
-                        <a th:href="@{/Users/AccountBand}">List Account Band</a>
-                    </div>
+
+
                     <span class="text-danger msgAlert1" th:if="${DeleteUserSuccess}" >
                                             [[${DeleteUserSuccess}]]
                                         </span>
@@ -123,7 +109,7 @@
                                     </td>
 
                                     <td>
-                                        <a  th:href="@{/Admin/Users/delete/{id}(id=${user.id})}" class="deleteModel btn btn-danger" id="myBtn ">Delete</a>
+                                        <a th:href="@{/Admin/Users/unlocked/{id}(id=${user.id})}" class=" btn btn-success">Unlocked</a>
                                     </td>
 
                                 </tr>
@@ -132,19 +118,7 @@
 
                             </table>
                             <!-- The Modal -->
-                            <div id="myModal" class="modal ">
 
-                                <!-- Modal content -->
-                                <div class="modal-content">
-                                    <span class="modelClose1">&times;</span>
-                                    <p>Do you want Band users ??</p>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" id="modelClose2">Close</button>
-                                        <a class="btn btn-danger" id="delRef" href="">Band Account</a>
-                                    </div>
-                                </div>
-
-                            </div>
                         </div>
                     </div>
 

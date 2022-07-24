@@ -103,36 +103,23 @@ public class LoginController {
 
         String json = JSONUtils.convertToJSON(request);
         var respone = userService.CreateAccount(json,session);
-
         if (respone.statusCode() == 400){
             JSONObject ob = new JSONObject(respone.body());
+
             User userParse = JSONUtils.convertToObject(User.class,ob.toString());
+            assert userParse != null;
+            redirectAttributes.addFlashAttribute("userParseError",userParse);
 
-            redirectAttributes.addFlashAttribute("errorMessageSignUp",ob.getString("message"));
-            redirectAttributes.addFlashAttribute("errorAddNewUsername",userParse.getUsername());
-            redirectAttributes.addFlashAttribute("errorAddNewPassword",userParse.getUsername());
 
-            redirectAttributes.addFlashAttribute("errorAddNewUsername",userParse.getUsername());
-            redirectAttributes.addFlashAttribute("errorAddNewFullname",userParse.getFullname());
-            redirectAttributes.addFlashAttribute("errorAddNewLastname",userParse.getLastname());
-            redirectAttributes.addFlashAttribute("errorAddNewPhone",userParse.getPhone());
-            redirectAttributes.addFlashAttribute("errorAddNewEmail",userParse.getEmail());
-            redirectAttributes.addFlashAttribute("errorAddNewAddress",userParse.getAddress());
-            return "/Client/Login";
+            return "redirect:/Login";
         }
         if(respone.statusCode() == 500){
             JSONObject ob = new JSONObject(respone.body());
+
             redirectAttributes.addFlashAttribute("errorMessageSignUp",ob.getString("message"));
             return "redirect:/Login";
         }
-
-
-
-        redirectAttributes.addFlashAttribute("successProfile","Register change successfully");
-
-
-
-
+        redirectAttributes.addFlashAttribute("successProfile","Successful registration please verify email");
         return "redirect:/Login";
 
 

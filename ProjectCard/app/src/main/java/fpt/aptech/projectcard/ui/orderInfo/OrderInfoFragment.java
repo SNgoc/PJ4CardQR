@@ -10,12 +10,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +48,7 @@ public class OrderInfoFragment extends Fragment {
     User getUser;
     Product getProduct;
     List<Orders> ordersListByUser;
+    ListView listView;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -94,6 +97,7 @@ public class OrderInfoFragment extends Fragment {
         duration = view.findViewById(R.id.txt_Duration);
         expired = view.findViewById(R.id.txt_Expired);
         countdown = view.findViewById(R.id.txt_countDownDuration);
+        listView = view.findViewById(R.id.lvOrderHis);
 
         return view;
     }
@@ -108,6 +112,7 @@ public class OrderInfoFragment extends Fragment {
         //call api check product status
         try {
             getProduct = apiService.getProduct(SessionManager.getSaveUsername(), SessionManager.getSaveToken()).execute().body();
+            ordersListByUser = apiService.getOrdersByUsername(SessionManager.getSaveUsername()).execute().body();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -132,5 +137,10 @@ public class OrderInfoFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        ArrayList<Orders> ordersArrayList = new ArrayList<>(ordersListByUser);
+        OrderHisAdapter adapter = new OrderHisAdapter(getActivity(),ordersArrayList);
+        adapter.notifyDataSetChanged();
+        listView.setAdapter(adapter);
     }
 }

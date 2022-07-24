@@ -1,6 +1,8 @@
 package com.example.demo.Controllers;
 
 import com.example.demo.domain.Product;
+import com.example.demo.domain.ProductAccessTime;
+import com.example.demo.repo.ProductAccessTimeRepository;
 import com.example.demo.repo.ProductRepository;
 import com.example.demo.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class DisplayController {
     UserRepo userRepo;
     @Autowired
     ProductRepository productRepository;
+
+    @Autowired
+    ProductAccessTimeRepository productAccessTimeRepository;
     //Display Product
     @GetMapping("/{username}")
     public ResponseEntity<?> displayProduct(@PathVariable String username) {
@@ -39,16 +44,23 @@ public class DisplayController {
             String strDate2 = dateFormat.format(product.getCreatedAt());
             LocalDate parsedDate2 = LocalDate.parse(strDate2, formatter);
             LocalDate expired = parsedDate2.plusYears(product.getYear());
+
             if(expired.isBefore(parsedDate)){
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fails");
             }
 
             //count visit
             product.setCount(product.getCount()+1);
-            productRepository.save(product);
+           var p = productRepository.save(product);
+            ProductAccessTime productAccessTime = new ProductAccessTime();
+            productAccessTime.setProduct(product);
+            productAccessTime.setCreate_at(new Date());
+            productAccessTimeRepository.save(productAccessTime);
             return ResponseEntity.ok(product);
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Fails");
 
     }
+
+
 }

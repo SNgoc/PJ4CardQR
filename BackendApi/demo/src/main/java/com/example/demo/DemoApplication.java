@@ -79,11 +79,32 @@ public class DemoApplication {
 			User user1 = new User("will" ,"will@gmail.com",encoder.encode("123456"),roles12,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619498","1234","Will Smith","Will","DEVERLOPER",new Date(100,9,5),true,"TPHCM",true,true);
 			User user2 = new User("john" ,"john@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619497","10 Distric HCM city","Johnny Depp","John","DEVERLOPER",new Date(100,9,5),false,"TPHCM",true,true);
 			User user3 = new User("taylor" ,"taylor@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619499","1234","Pham trong nghia","Taylor Swift ","DEVERLOPER", new Date(100,9,5),true,"TPHCM",true,true);
+			User user4 = new User("will4" ,"will4@gmail.com",encoder.encode("123456"),roles12,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619498","1234","Will Smith","Will","DEVERLOPER",new Date(100,9,5),true,"TPHCM",true,true);
+			User user5 = new User("john5" ,"john5@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619497","10 Distric HCM city","Johnny Depp","John","DEVERLOPER",new Date(100,9,5),false,"TPHCM",true,true);
+			User user6 = new User("taylor6" ,"taylor6@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619499","1234","Pham trong nghia","Taylor Swift ","DEVERLOPER", new Date(100,9,5),true,"TPHCM",true,true);
+			User user7 = new User("will7" ,"will7@gmail.com",encoder.encode("123456"),roles12,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619498","1234","Will Smith","Will","DEVERLOPER",new Date(100,9,5),true,"TPHCM",true,true);
+			User user8 = new User("john8" ,"john8@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619497","10 Distric HCM city","Johnny Depp","John","DEVERLOPER",new Date(100,9,5),false,"TPHCM",true,true);
+			User user9 = new User("taylor9" ,"taylor9@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619499","1234","Pham trong nghia","Taylor Swift ","DEVERLOPER", new Date(100,9,5),true,"TPHCM",true,true);
+			User user10 = new User("will10" ,"will10@gmail.com",encoder.encode("123456"),roles12,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619498","1234","Will Smith","Will","DEVERLOPER",new Date(100,9,5),true,"TPHCM",true,true);
+			User user11= new User("john11" ,"john11@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619497","10 Distric HCM city","Johnny Depp","John","DEVERLOPER",new Date(100,9,5),false,"TPHCM",true,true);
+			User user12= new User("taylor12" ,"taylor12@gmail.com",encoder.encode("123456"),roles11,"v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","https://res.cloudinary.com/tphcm/image/upload/v1648873229/image/o5s5twfrmgfu0q3smg0j.jpg","0794619499","1234","Pham trong nghia","Taylor Swift ","DEVERLOPER", new Date(100,9,5),true,"TPHCM",true,true);
 
 
 			userService.saveUser(user3);
 			userService.saveUser(user1);
 			userService.saveUser(user2);
+
+			userService.saveUser(user4);
+			userService.saveUser(user5);
+			userService.saveUser(user6);
+
+			userService.saveUser(user7);
+			userService.saveUser(user8);
+			userService.saveUser(user9);
+
+			userService.saveUser(user10);
+			userService.saveUser(user11);
+			userService.saveUser(user12);
 
 			Category c1 = new Category(70,"CARD",90,"https://res.cloudinary.com/tphcm/image/upload/v1658486444/category/01_fporii.jpg","https://res.cloudinary.com/tphcm/image/upload/v1658486444/category/02_k69tyn.jpg",calendar.getTime(),null,null);
 			Category c2 = new Category(50,"STICKER",10,"https://res.cloudinary.com/tphcm/image/upload/v1658486444/category/03_kudrpc.jpg","https://res.cloudinary.com/tphcm/image/upload/v1658486444/category/04_altabb.jpg",calendar.getTime(),null,null);
@@ -131,15 +152,30 @@ public class DemoApplication {
 			productRepository.save(product2);
 			productRepository.save(product3);
 
-			Orders order1 = new Orders(1L, 12 , c1, user1, " Sherman Oaks, Los Angeles, California, American", "01937464843","Will Smith",o1, product1,new Date(121, 02, 11),null,null,null);
+			Orders order1 = new Orders(1L, 12 , c1, user1, " Sherman Oaks, Los Angeles, California, American", "01937464843","Will Smith",o1, product1,new Date(122, 02, 11),null,null,null);
 			orderRepository.save(order1);
-			Orders order2 = new Orders(2L, 27 , c1, user2, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(121, 03, 11),new Date(121, 02, 11),new Date(121, 02, 11),null);
-			orderRepository.save(order1);
-			Orders order3 = new Orders(3L, 82 , c2, user3, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(121, 04, 11),new Date(121, 02, 11),new Date(121, 02, 11),null);
-
-			orderRepository.save(order1);
+			Orders order2 = new Orders(2L, 27 , c1, user2, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(122, 03, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
 			orderRepository.save(order2);
-			orderRepository.save(order3);
+			Orders order3 = new Orders(3L, 82 , c2, user3, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 04, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+            orderRepository.save(order3);
+			Orders order4= new Orders(4L, 27 , c1, user4, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(122, 05, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order4);
+			Orders order5 = new Orders(5L, 82 , c2, user5, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 06, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order5);
+			Orders order6 = new Orders(6L, 82 , c2, user6, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 07, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			Orders order7 = new Orders(7L, 27 , c1, user7, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(122, 8, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order7);
+			orderRepository.save(order6);
+			Orders order8 = new Orders(8L, 82 , c2, user8, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 9, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			Orders order9 = new Orders(9L, 27 , c1, user9, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(122, 10, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order8);
+			Orders order10 = new Orders(10L, 82 , c2, user10, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 11, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			Orders order11 = new Orders(11L, 27 , c1, user11, " Sherman Oaks, Los Angeles, California, American", "01937464843","Johnny Depp",o3, product1,new Date(122, 12, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order11);
+			Orders order12 = new Orders(12L, 82 , c2, user12, " Sherman Oaks, Los Angeles, California, American", "01937464843","Taylor Swift",o3, product1,new Date(122, 04, 11),new Date(122, 02, 11),new Date(122, 02, 11),null);
+			orderRepository.save(order9);
+			orderRepository.save(order10);
+			orderRepository.save(order12);
 
 			ForbiddenReview forbidden1 = new ForbiddenReview(1L, "bitch");
 			ForbiddenReview forbidden2 = new ForbiddenReview(2L, "fuck");

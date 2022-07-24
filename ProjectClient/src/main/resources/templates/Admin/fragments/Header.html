@@ -205,7 +205,7 @@
                 </li>
                 <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                     <img alt="image" src="../assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                    <div class="d-sm-none d-lg-inline-block" th:text="'Hi ' +${session.usernames}"></div></a>
+                    <div class="d-sm-none d-lg-inline-block" th:text="'Hi ' +${session.usernamesClient}"></div></a>
                     <div class="dropdown-menu dropdown-menu-right">
                         <div class="dropdown-title">Logged in 5 min ago</div>
                         <a th:href="@{/Admin/Profile}" class="dropdown-item has-icon">
@@ -228,7 +228,7 @@
         <div class="main-sidebar">
             <aside id="sidebar-wrapper">
                 <div class="sidebar-brand">
-                    <a href="index.html">Stisla</a>
+                    <a th:href="@{/Admin/}">Stisla</a>
                 </div>
                 <div class="sidebar-brand sidebar-brand-sm">
                     <a href="index.html">St</a>
@@ -236,37 +236,30 @@
                 <ul class="sidebar-menu">
                     <li class="menu-header">Dashboard</li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/Admin/settings}">Settings Dashboard</a></li>
-                            <li><a class="nav-link" href="index.html">Ecommerce Dashboard</a></li>
-                        </ul>
+                        <a th:href="@{/Admin/Users}" class="nav-link ">Users</a>
+
+                    </li>
+
+                    <li class="nav-item">
+                        <a th:href="@{/Category/Add}" class="nav-link ">Category Add</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/Admin/Category}" class="nav-link ">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/Admin/Product}" class="nav-link " >Product</a>
+
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link has-dropdown"><i class="far fa-square"></i><span>Category</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/Admin/Category}">List Category</a></li>
-                            <li><a class="nav-link" th:href="@{/Category/Add}">Add New Category</a></li>
-                        </ul>
+                        <a th:href="@{/Admin/Order}" class="nav-link ">Order</a>
+
                     </li>
                     <li class="nav-item dropdown">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Product</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/Admin/Product}">List Product</a></li>
-                        </ul>
+                        <a th:href="@{/Admin/reviews}" class="nav-link ">Review</a>
+
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-th-large"></i> <span>Order</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/Admin/Order}">List Order</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Revenue</span></a>
-                        <ul class="dropdown-menu">
-                            <li><a class="nav-link" th:href="@{/Admin/Revenue}">Revenue Report</a></li>
-                        </ul>
-                    </li>
+
+                </ul>
 <!--                    <li class="menu-header">Starter</li>-->
 <!--                    <li class="nav-item dropdown">-->
 <!--                        <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Layout</span></a>-->

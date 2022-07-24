@@ -1,18 +1,19 @@
 package com.example.projectclient.Controllers.Client;
 
 import com.example.projectclient.Config.JSONUtils;
-import com.example.projectclient.Models.Category;
-import com.example.projectclient.Models.CreateOrderRequest;
-import com.example.projectclient.Models.SignUpRequest;
-import com.example.projectclient.Models.changePasswordReset;
+import com.example.projectclient.Models.*;
 import com.example.projectclient.Service.CategoryService;
+import com.example.projectclient.Service.ReviewService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
@@ -25,6 +26,9 @@ public class indexController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping("/Client")
     public String index(HttpSession session, ModelMap model) throws IOException, InterruptedException {
@@ -44,12 +48,15 @@ public class indexController {
     }
 
     @GetMapping("/changeEmail")
-    public String changeEmail(HttpSession session, RedirectAttributes attributes){
+    public String changeEmail(HttpSession session, Model model){
+
         return "Client/ChangeEmail";
     }
 
     @GetMapping("/resetPassword")
-    public String resetPassword(HttpSession session, RedirectAttributes attributes){
+    public String resetPassword(HttpSession session, Model model)
+    {
+        model.addAttribute("changePassword",new changePasswordReset());
         return "Client/ResetPassword";
     }
 
@@ -95,11 +102,40 @@ public class indexController {
     @GetMapping("/Details-{id}")
     public String productDetails(@PathVariable Long id, HttpSession session, ModelMap model)throws IOException, InterruptedException{
         var response = categoryService.details(id,session);
+        var reviewCategory = reviewService.FindReviewCategory(id,session);
+        JSONArray ob = new JSONArray(reviewCategory.body());
+        Review[]  review= JSONUtils.convertToObject(Review[].class,ob.toString());
         if (response == null){
             return "error/404";
         }else{
+            assert review != null;
+            model.addAttribute("review", List.of(review));
             model.addAttribute("category", response);
             return "Client/CategoryDetails";
         }
+    }
+
+    @GetMapping("/Reviews-{id}")
+    public String Review(@PathVariable Long id,Model model,HttpSession session){
+        model.addAttribute("PostReview", new ReviewRequest());
+        session.setAttribute("categoryId",id);
+        return "Client/Review";
+    }
+
+    @PostMapping("/postComment")
+    public String postReview( RedirectAttributes attributes,Model model, @ModelAttribute("Review")ReviewRequest request,HttpSession httpSession) throws IOException, InterruptedException {
+        request.setCategory_id((Long) httpSession.getAttribute("categoryId"));
+        request.setUser_id((Long) httpSession.getAttribute("id"));
+        String json = JSONUtils.convertToJSON(request);
+
+        var response = reviewService.addReview(json,httpSession);
+        System.out.println(response.statusCode());
+        if (response.statusCode() == 500){
+            JSONObject ob = new JSONObject(response.body());
+            attributes.addFlashAttribute("errorMessage",ob.getString("message"));
+            return "redirect:/Reviews-"+httpSession.getAttribute("categoryId");
+        }
+
+        return "redirect:/Product";
     }
 }

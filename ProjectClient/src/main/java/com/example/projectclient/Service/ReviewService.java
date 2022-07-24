@@ -10,12 +10,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 @Service
-public class OrderService {
-    private final static String BASE_URL = "http://localhost:8080/";
-    public HttpResponse<String> ShowAll(HttpSession session) throws IOException, InterruptedException {
+public class ReviewService {
+    private final static String BASE_URL = "http://localhost:8080";
+    public HttpResponse<String> FindForbiddenword(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/list"))
+                .uri(URI.create("http://localhost:8080/api/forbiddenword/getAll"))
                 .GET()
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
@@ -27,39 +27,25 @@ public class OrderService {
         return response;
     }
 
-    public HttpResponse<String> getCharts(HttpSession session) throws IOException, InterruptedException {
+
+    public HttpResponse<String> addWord(String json, HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/getCharts"))
-                .GET()
+                .uri(URI.create(BASE_URL + "/api/forbiddenword/add"))
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
                 .build();
 
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
-
-        return response;
-    }
-    public HttpResponse<String> getChartsCategory(HttpSession session,Long categoryId) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/getCharts/" + categoryId))
-                .GET()
-                .headers("Content-Type","application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
         return response;
     }
 
-    public HttpResponse<String> getChartsMonth(HttpSession session,Long month) throws IOException, InterruptedException {
+    public HttpResponse<String> deleteWord(Long id,HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/MonthOrder/" + month))
+                .uri(URI.create("http://localhost:8080/api/forbiddenword/delete/" + id))
                 .GET()
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
@@ -71,10 +57,11 @@ public class OrderService {
         return response;
     }
 
-    public HttpResponse<String> getChartYear(HttpSession session,String year) throws IOException, InterruptedException {
+
+    public HttpResponse<String> FindReview(HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/YearOrder/?d2=" + year))
+                .uri(URI.create("http://localhost:8080/api/reviews/showAll"))
                 .GET()
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
@@ -85,10 +72,24 @@ public class OrderService {
 
         return response;
     }
-    public HttpResponse<String> confirm(int id,HttpSession session) throws IOException, InterruptedException {
+    public HttpResponse<String> addReview(String json, HttpSession session) throws IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/nextProcess/" + id))
+                .uri(URI.create(BASE_URL + "/api/reviews/add"))
+                .headers("Content-Type","application/json")
+                .header("Authorization","Bearer " + session.getAttribute("token"))
+                .POST(HttpRequest.BodyPublishers.ofString(json))
+                .build();
+
+        HttpResponse<String> response = client.send(request,
+                HttpResponse.BodyHandlers.ofString());
+        return response;
+    }
+
+    public HttpResponse<String> FindReviewCategory(Long id ,HttpSession session) throws IOException, InterruptedException {
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create("http://localhost:8080/api/reviews/showAll/" + id))
                 .GET()
                 .headers("Content-Type","application/json")
                 .header("Authorization","Bearer " + session.getAttribute("token"))
@@ -97,34 +98,6 @@ public class OrderService {
         HttpResponse<String> response = client.send(request,
                 HttpResponse.BodyHandlers.ofString());
 
-        return response;
-    }
-
-    public HttpResponse<String> cancel(int id,HttpSession session) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/cancelOrder/" + id))
-                .GET()
-                .headers("Content-Type","application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
-                .build();
-
-        HttpResponse<String> response = client.send(request,
-                HttpResponse.BodyHandlers.ofString());
-
-        return response;
-    }
-
-    public HttpResponse<String> details(Long id,HttpSession session) throws IOException, InterruptedException {
-        HttpClient client = HttpClient.newHttpClient();
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:8080/api/order/details/" + id))
-                .GET()
-                .headers("Content-Type","application/json")
-                .header("Authorization","Bearer " + session.getAttribute("token"))
-                .build();
-
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
         return response;
     }

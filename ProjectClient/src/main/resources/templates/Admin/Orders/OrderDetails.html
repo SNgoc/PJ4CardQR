@@ -92,6 +92,10 @@
                                     <th>Order status</th>
                                     <td><div th:class="${orders.order_process.style}" th:text="${orders.order_process.name}"></div></td>
                                 </tr>
+                                <tr>
+                                    <th>Pdf Card</th>
+                                    <td><a th:href="${pdf}" download>download</a></td>
+                                </tr>
                             </table>
                         </div>
                     </div>

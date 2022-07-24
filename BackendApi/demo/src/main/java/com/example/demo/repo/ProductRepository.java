@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -27,4 +28,9 @@ public interface ProductRepository extends CrudRepository<Product,Long> {
     int updateConfirmedAt(String token);
 
     boolean existsByUser(User user);
+
+    @Query("SELECT product from  Product product where  product.status = 1  ORDER BY product.count")
+    List<Product> findTop10Product();
+
+
 }
